@@ -19,3 +19,6 @@ data Usuario = Usuario {
 	nombre :: String,
 	billeteraInicial :: Int
 } deriving Show
+
+billetera (Usuario _ billetera) = billetera
+nombre (Usuario nombre _) = nombre
