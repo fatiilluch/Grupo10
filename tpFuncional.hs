@@ -15,6 +15,10 @@ ejecutarTests = hspec $ do
     it "Cerrar la cuenta : 0" $ cerrarCuenta 10 `shouldBe` 0
     it "Queda igual: 10" $ quedaIgual 10 `shouldBe` 10
     it "Depositar 1000, y luego tener un upgrade: 1020" $ (upgrade.depósito 1000) 10 `shouldBe` 1020
+   describe "Usuarios" $ do
+    it "Billetera de pepe es 10" $ billetera pepe `shouldBe` 10
+    it "Billetera de pepe luego de un cierre de cuenta : 0" $ cerrarCuenta (billetera pepe) `shouldBe` 0
+    it "Billetera de pepe luego de Depositar 15, extraer 2 y tener un upgrade : 27.6" $ (upgrade . (extracción 2) . (depósito 15)) (billetera pepe) `shouldBe` 27.6
 
 
  ---------------------------------------------------------------- Eventos --------------------------------------------------------------- 
@@ -37,3 +41,24 @@ cerrarCuenta billetera = 0.0
 quedaIgual   :: Evento
 quedaIgual billetera = billetera
 
+ ---------------------------------------------------------------- Usuarios --------------------------------------------------------------- 
+
+data Usuario = Usuario {
+    nombre :: String,
+    billetera :: Dinero
+ } deriving (Show, Eq)
+
+pepe = Usuario {
+    nombre = "José",
+    billetera = 10
+}
+
+lucho = Usuario {
+    nombre = "Luciano",
+    billetera = 2
+}
+
+ ---------------------------------------------------------------- Transacciones --------------------------------------------------------------- 
+ 
+ 
+ ---------------------------------------------------------------- Nuevos Eventos --------------------------------------------------------------- 
