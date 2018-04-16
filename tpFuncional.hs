@@ -123,8 +123,6 @@ aplicarPagos pago otroUsuario
 
 cinco = Pago {
     transacciónUno = Transacciones {
-    cinco = Pago {
-    transacciónUno = Transacciones {
     usuario = pepe,
     evento = extracción 7
     },
