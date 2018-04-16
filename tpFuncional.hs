@@ -19,6 +19,10 @@ ejecutarTests = hspec $ do
     it "Billetera de pepe es 10" $ billetera pepe `shouldBe` 10
     it "Billetera de pepe luego de un cierre de cuenta : 0" $ cerrarCuenta (billetera pepe) `shouldBe` 0
     it "Billetera de pepe luego de Depositar 15, extraer 2 y tener un upgrade : 27.6" $ (upgrade . (extracción 2) . (depósito 15)) (billetera pepe) `shouldBe` 27.6
+   describe "Transacciones" $ do
+    it "Aplicar transaccion 1 a pepe: quedaIgual 20 : 20" $ (aplicarTransacciones uno pepe) 20 `shouldBe` 20
+    it "Aplicar transaccion 2 a pepe: (Depositar 5) 10 : 15 " $ (aplicarTransacciones dos pepe) 10 `shouldBe` 15
+    it "Aplicar transaccion 2 a pepeDos: (Depositar 5) 50 : 55" $ (aplicarTransacciones dos pepeDos) 50 `shouldBe` 55
 
 
  ---------------------------------------------------------------- Eventos --------------------------------------------------------------- 
@@ -59,6 +63,39 @@ lucho = Usuario {
 }
 
  ---------------------------------------------------------------- Transacciones --------------------------------------------------------------- 
- 
+ data Transacciones = Transacciones{ 
+    usuario :: Usuario,             
+    evento :: Evento                
+} deriving (Show)
+
+aplicarTransacciones :: Transacciones -> Usuario -> Evento
+aplicarTransacciones transacciÃ³n otroUsuario
+                | nombre (usuario transacciÃ³n) == nombre (otroUsuario) = evento transacciÃ³n
+                | otherwise = quedaIgual
+
+uno = Transacciones {
+    usuario = lucho,
+    evento = cerrarCuenta
+}
+
+dos = Transacciones{
+    usuario = pepe,
+    evento = depÃ³sito 5
+}
  
  ---------------------------------------------------------------- Nuevos Eventos --------------------------------------------------------------- 
+tocoYMeVoy :: Evento
+tocoYMeVoy = cerrarCuenta . upgrade . (depÃ³sito 15)
+
+ahorranteErrante :: Evento
+ahorranteErrante = (depÃ³sito 10) . upgrade . (depÃ³sito 8) . (extracciÃ³n 1) . (depÃ³sito 2) . (depÃ³sito 1)
+
+tres = Transacciones{
+    usuario = lucho,
+    evento = tocoYMeVoy
+}
+
+cuatro = Transacciones{
+    usuario = lucho,
+    evento = ahorranteErrante
+}
