@@ -7,7 +7,7 @@ import Test.Hspec
  ---------------------------------------------------------------- Testing --------------------------------------------------------------- 
 
 ejecutarTests = hspec $ do
-  describe "Eventos (Con billetera de 10)" $ do
+   describe "Eventos (Con billetera de 10)" $ do
     it "Depositar 10 más. Deberia quedar con 20 monedas" $ depósito 10 10 `shouldBe` 20
     it "Extraer 3: Deberia quedar con 7" $ extracción 3 10 `shouldBe` 7
     it "Extraer 15: Deberia quedar con 0" $ extracción 15 10 `shouldBe` 0
@@ -23,10 +23,10 @@ ejecutarTests = hspec $ do
     it "Aplicar transaccion 1 a pepe: quedaIgual 20 : 20" $ (aplicarTransacciones uno pepe) 20 `shouldBe` 20
     it "Aplicar transaccion 2 a pepe: (Depositar 5) 10 : 15 " $ (aplicarTransacciones dos pepe) 10 `shouldBe` 15
     it "Aplicar transaccion 2 a pepeDos: (Depositar 5) 50 : 55" $ (aplicarTransacciones dos pepeDos) 50 `shouldBe` 55
-    describe "Nuevos Eventos" $ do
+   describe "Nuevos Eventos" $ do
     it "Aplicar transacción tres lucho: (tocoYMeVoy) 10 : 0" $ (aplicarTransacciones tres lucho) 10 `shouldBe` 0
     it "Aplicar transacción cuatro lucho: (ahorranteErrante) 10 : 34" $ (aplicarTransacciones cuatro lucho) 10 `shouldBe` 34
-  describe "Pagos entre Usuarios" $ do
+   describe "Pagos entre Usuarios" $ do
     it "Aplicar transacción cinco pepe: (extracción 7) 10 : 3" $ (aplicarPagos cinco pepe) 10 `shouldBe` 3
     it "Aplicar transacción cinco lucho: (depósito 7) 10 : 17" $ (aplicarPagos cinco lucho) 10 `shouldBe` 17
 
@@ -75,14 +75,14 @@ lucho = Usuario {
 }
 
  ---------------------------------------------------------------- Transacciones --------------------------------------------------------------- 
- data Transacciones = Transacciones{ 
+data Transacciones = Transacciones{ 
     usuario :: Usuario,             
     evento :: Evento                
 } deriving (Show)
 
 aplicarTransacciones :: Transacciones -> Usuario -> Evento
-aplicarTransacciones transacciÃ³n otroUsuario
-                | nombre (usuario transacciÃ³n) == nombre (otroUsuario) = evento transacciÃ³n
+aplicarTransacciones transacción otroUsuario
+                | nombre (usuario transacción) == nombre (otroUsuario) = evento transacción
                 | otherwise = quedaIgual
 
 uno = Transacciones {
@@ -92,15 +92,15 @@ uno = Transacciones {
 
 dos = Transacciones{
     usuario = pepe,
-    evento = depÃ³sito 5
+    evento = depósito 5
 }
  
  ---------------------------------------------------------------- Nuevos Eventos --------------------------------------------------------------- 
 tocoYMeVoy :: Evento
-tocoYMeVoy = cerrarCuenta . upgrade . (depÃ³sito 15)
+tocoYMeVoy = cerrarCuenta . upgrade . (depósito 15)
 
 ahorranteErrante :: Evento
-ahorranteErrante = (depÃ³sito 10) . upgrade . (depÃ³sito 8) . (extracciÃ³n 1) . (depÃ³sito 2) . (depÃ³sito 1)
+ahorranteErrante = (depósito 10) . upgrade . (depósito 8) . (extracción 1) . (depósito 2) . (depósito 1)
 
 tres = Transacciones{
     usuario = lucho,
