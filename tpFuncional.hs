@@ -23,6 +23,18 @@ ejecutarTests = hspec $ do
     it "Aplicar transaccion 1 a pepe: quedaIgual 20 : 20" $ (aplicarTransacciones uno pepe) 20 `shouldBe` 20
     it "Aplicar transaccion 2 a pepe: (Depositar 5) 10 : 15 " $ (aplicarTransacciones dos pepe) 10 `shouldBe` 15
     it "Aplicar transaccion 2 a pepeDos: (Depositar 5) 50 : 55" $ (aplicarTransacciones dos pepeDos) 50 `shouldBe` 55
+    describe "Nuevos Eventos" $ do
+    it "Aplicar transacción tres lucho: (tocoYMeVoy) 10 : 0" $ (aplicarTransacciones tres lucho) 10 `shouldBe` 0
+    it "Aplicar transacción cuatro lucho: (ahorranteErrante) 10 : 34" $ (aplicarTransacciones cuatro lucho) 10 `shouldBe` 34
+  describe "Pagos entre Usuarios" $ do
+    it "Aplicar transacción cinco pepe: (extracción 7) 10 : 3" $ (aplicarPagos cinco pepe) 10 `shouldBe` 3
+    it "Aplicar transacción cinco lucho: (depósito 7) 10 : 17" $ (aplicarPagos cinco lucho) 10 `shouldBe` 17
+
+pepeDos = modificarBilletera pepe 20
+
+modificarBilletera usuario nuevaBilletera = usuario {
+    billetera = nuevaBilletera
+}
 
 
  ---------------------------------------------------------------- Eventos --------------------------------------------------------------- 
@@ -99,3 +111,15 @@ cuatro = Transacciones{
     usuario = lucho,
     evento = ahorranteErrante
 }
+data Pago = Pago{
+    transacciónUno :: Transacciones,
+    transacciónDos :: Transacciones
+} deriving (Show)
+
+aplicarPagos pago otroUsuario
+            | otroUsuario == usuario (transacciónUno pago) = evento (transacciónUno pago)
+            | otroUsuario == usuario (transacciónDos pago) = evento (transacciónDos pago)
+            | otherwise = quedaIgual
+
+cinco = Pago {
+    transacciónUno = Transacciones {
