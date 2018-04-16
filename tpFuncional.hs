@@ -21,18 +21,18 @@ ejecutarTests = hspec $ do
 type Dinero = Float
 type Evento = Dinero -> Dinero
 
-depósito :: Dinero -> Evento
+depósito     :: Dinero -> Evento
 depósito monto billetera = billetera + monto
 
-extracción :: Dinero -> Evento 
+extracción   :: Dinero -> Evento 
 extracción monto billetera = max (billetera - monto) 0
 
-upgrade :: Evento
+upgrade      :: Evento
 upgrade billetera = min (billetera * 1.20) (billetera + 10)
 
 cerrarCuenta :: Evento
 cerrarCuenta billetera = 0.0
 
-quedaIgual :: Evento
+quedaIgual   :: Evento
 quedaIgual billetera = billetera
 
