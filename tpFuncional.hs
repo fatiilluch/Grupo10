@@ -4,6 +4,7 @@ import Data.List
 import Data.Maybe 
 import Test.Hspec 
 
+ ---------------------------------------------------------------- Testing --------------------------------------------------------------- 
 
 ejecutarTests = hspec $ do
   describe "Eventos (Con billetera de 10)" $ do
@@ -16,7 +17,7 @@ ejecutarTests = hspec $ do
     it "Depositar 1000, y luego tener un upgrade: 1020" $ (upgrade.depósito 1000) 10 `shouldBe` 1020
 
 
- -- Eventos 
+ ---------------------------------------------------------------- Eventos --------------------------------------------------------------- 
 
 type Dinero = Float
 type Evento = Dinero -> Dinero
