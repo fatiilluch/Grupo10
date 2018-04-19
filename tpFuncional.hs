@@ -39,13 +39,13 @@ modificarBilletera usuario nuevaBilletera = usuario {
 
  ---------------------------------------------------------------- Eventos --------------------------------------------------------------- 
 
-type Dinero = Float
-type Evento = Dinero -> Dinero
+type Billetera = Float
+type Evento = Billetera -> Billetera
 
-depósito     :: Dinero -> Evento
+depósito     :: Billetera -> Evento
 depósito monto billetera = billetera + monto
 
-extracción   :: Dinero -> Evento 
+extracción   :: Billetera -> Evento 
 extracción monto billetera = max (billetera - monto) 0
 
 upgrade      :: Evento
@@ -61,7 +61,7 @@ quedaIgual billetera = billetera
 
 data Usuario = Usuario {
     nombre :: String,
-    billetera :: Dinero
+    billetera :: Billetera
  } deriving (Show, Eq)
 
 pepe = Usuario {
