@@ -43,7 +43,7 @@ type Billetera = Float
 type Evento = Billetera -> Billetera
 
 depósito     :: Billetera -> Evento
-depósito monto billetera = billetera + monto
+depósito  = (+)
 
 extracción   :: Billetera -> Evento 
 extracción monto billetera = max (billetera - monto) 0
@@ -57,7 +57,7 @@ cerrarCuenta billetera = 0.0
 quedaIgual   :: Evento
 quedaIgual billetera = billetera
 
- ---------------------------------------------------------------- Usuarios --------------------------------------------------------------- 
+ ---------------------------------------------------------------- Usuarios (--------------------------------------------------------------- 
 
 data Usuario = Usuario {
     nombre :: String,
