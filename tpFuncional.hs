@@ -52,7 +52,7 @@ upgrade      :: Evento
 upgrade billetera = min (billetera * 1.20) (billetera + 10)
 
 cerrarCuenta :: Evento
-cerrarCuenta billetera = 0.0
+cerrarCuenta _ = 0.0
 
 quedaIgual   :: Evento
 quedaIgual billetera = billetera
