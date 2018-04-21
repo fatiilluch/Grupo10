@@ -97,10 +97,10 @@ dos = Transacciones{
  
  ---------------------------------------------------------------- Nuevos Eventos --------------------------------------------------------------- 
 tocoYMeVoy :: Evento
-tocoYMeVoy = cerrarCuenta . upgrade . (depósito 15)
+tocoYMeVoy = cerrarCuenta . upgrade . depósito 15
 
 ahorranteErrante :: Evento
-ahorranteErrante = (depósito 10) . upgrade . (depósito 8) . (extracción 1) . (depósito 2) . (depósito 1)
+ahorranteErrante = depósito 10 . upgrade . depósito 8 . extracción 1 . depósito 2 . depósito 1
 
 tres = Transacciones{
     usuario = lucho,
