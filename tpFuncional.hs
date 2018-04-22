@@ -57,7 +57,7 @@ cerrarCuenta :: Evento
 cerrarCuenta _ = 0.0
 
 quedaIgual   :: Evento
-quedaIgual billetera = billetera
+quedaIgual  = id
 
  ---------------------------------------------------------------- Usuarios (--------------------------------------------------------------- 
 
