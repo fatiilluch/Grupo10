@@ -15,10 +15,12 @@ ejecutarTests = hspec $ do
     it "Al cerrar la cuenta : queda en 0" $ cerrarCuenta 10 `shouldBe` 0
     it "La billetera queda igual, como al incio, con 10 monedas" $ quedaIgual 10 `shouldBe` 10
     it "Luego de depositar 1000, y luego de tener un upgrade: la billetera queda con 1020 monedas" $ (upgrade.depósito 1000) 10 `shouldBe` 1020
+  
    describe "Usuarios" $ do
     it "La billetera de pepe tiene 10 monedas" $ billetera pepe `shouldBe` 10
-    it "La billetera de pepe luego de un cierre de cuenta queda vacía" $ cerrarCuenta (billetera pepe) `shouldBe` 0
-    it "La billetera de pepe luego de depositar 15 monedas, extraer 2 y tener un upgrade queda con 27.6 monedas" $ (upgrade . (extracción 2) . (depósito 15)) (billetera pepe) `shouldBe` 27.6
+    it "La billetera de pepe luego de un cierre de cuenta queda vacía" $ (cerrarCuenta.billetera) pepe `shouldBe` 0
+    it "La billetera de pepe luego de depositar 15 monedas, extraer 2 y tener un upgrade queda con 27.6 monedas" $ (upgrade.extracción 2.depósito 15.billetera) pepe `shouldBe` 27.6
+  
    {-describe "Transacciones" $ do
     it "Aplicar transaccion 1 a pepe: quedaIgual 20 : 20" $ (aplicarTransaccion uno pepe) 20 `shouldBe` 20
     it "Aplicar transaccion 2 a pepe: (Depositar 5) 10 : 15 " $ (aplicarTransaccion dos pepe) 10 `shouldBe` 15
