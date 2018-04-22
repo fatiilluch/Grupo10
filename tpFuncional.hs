@@ -19,7 +19,7 @@ ejecutarTests = hspec $ do
     it "La billetera de pepe tiene 10 monedas" $ billetera pepe `shouldBe` 10
     it "La billetera de pepe luego de un cierre de cuenta queda vacía" $ cerrarCuenta (billetera pepe) `shouldBe` 0
     it "La billetera de pepe luego de depositar 15 monedas, extraer 2 y tener un upgrade queda con 27.6 monedas" $ (upgrade . (extracción 2) . (depósito 15)) (billetera pepe) `shouldBe` 27.6
-   describe "Transacciones" $ do
+   {-describe "Transacciones" $ do
     it "Aplicar transaccion 1 a pepe: quedaIgual 20 : 20" $ (aplicarTransaccion uno pepe) 20 `shouldBe` 20
     it "Aplicar transaccion 2 a pepe: (Depositar 5) 10 : 15 " $ (aplicarTransaccion dos pepe) 10 `shouldBe` 15
     it "Aplicar transaccion 2 a pepeDos: (Depositar 5) 50 : 55" $ (aplicarTransaccion dos pepeDos) 50 `shouldBe` 55
@@ -35,7 +35,7 @@ pepeDos = modificarBilletera pepe 20
 modificarBilletera usuario nuevaBilletera = usuario {
     billetera = nuevaBilletera
 }
-
+-}
 
  ---------------------------------------------------------------- Eventos --------------------------------------------------------------- 
 
