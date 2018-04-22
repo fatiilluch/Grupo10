@@ -66,14 +66,8 @@ data Usuario = Usuario {
     billetera :: Billetera
  } deriving (Show, Eq)
 
-generarUsuarios alias monedero = Usuario{
- 
-    nombre = alias,
-    billetera = monedero
-}
-
-pepe = generarUsuarios "pepe" 10.0  
-lucho = generarUsuarios "lucho" 2.0
+pepe = Usuario  "pepe" 10.0  
+lucho = Usuario "lucho" 2.0
 
 {---------------------------------------------------------------- Transacciones --------------------------------------------------------------- 
 data Transacciones = Transacciones{ 
