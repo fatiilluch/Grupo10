@@ -66,17 +66,16 @@ data Usuario = Usuario {
     billetera :: Billetera
  } deriving (Show, Eq)
 
-pepe = Usuario {
-    nombre = "José",
-    billetera = 10
+generarUsuarios alias monedero = Usuario{
+ 
+    nombre = alias,
+    billetera = monedero
 }
 
-lucho = Usuario {
-    nombre = "Luciano",
-    billetera = 2
-}
+pepe = generarUsuarios "pepe" 10.0  
+lucho = generarUsuarios "lucho" 2.0
 
- {---------------------------------------------------------------- Transacciones --------------------------------------------------------------- 
+{---------------------------------------------------------------- Transacciones --------------------------------------------------------------- 
 data Transacciones = Transacciones{ 
     usuario :: Usuario,             
     evento :: Evento                
@@ -96,8 +95,14 @@ dos = Transacciones{
     usuario = pepe,
     evento = depósito 5
 }
+
+
+
+
+
+
  
- ---------------------------------------------------------------- Nuevos Eventos --------------------------------------------------------------- 
+ -}{---------------------------------------------------------------- Nuevos Eventos --------------------------------------------------------------- 
 tocoYMeVoy :: Evento
 tocoYMeVoy = cerrarCuenta . upgrade . depósito 15
 
