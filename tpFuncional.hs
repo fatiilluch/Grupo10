@@ -66,8 +66,8 @@ data Usuario = Usuario {
     billetera :: Billetera
  } deriving (Show, Eq)
 
-pepe = Usuario  "pepe" 10.0  
-lucho = Usuario "lucho" 2.0
+pepe = Usuario  "José" 10.0  
+lucho = Usuario "Luciano" 2.0
 
 {---------------------------------------------------------------- Transacciones --------------------------------------------------------------- 
 data Transacciones = Transacciones{ 
