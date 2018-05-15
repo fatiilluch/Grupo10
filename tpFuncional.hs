@@ -14,11 +14,15 @@ import Test.Hspec
   it " Cerrar la cuenta quedaria 0 " cerrarCuenta 'shouldBe' 0.0 
   it " Queda igual 10 " quedaIgual 'shouldBe' billetera 
   it " Depositar 1000 y luego tener un upgrade 1020 " depósito 1000 ( upgrade 'shouldBe' 1020)
-describe "Transacciones: " $ do 
+ describe "Usuarios: " $ do
+  it "La billetera de pepe debería ser 10 monedas." $ billetera pepe `shouldBe` 10
+  it "La billetera de pepe luego de un cierre de cuenta debería quedar vacía." $ (cerrarCuenta.billetera) pepe `shouldBe` 0
+  it "La billetera de pepe luego de depositar 15 monedas, extraer 2 y tener un upgrade debería quedar con 27.6 monedas." $ (upgrade.extracción 2.depósito 15.billetera) pepe `shouldBe` 27.6
+ describe "Transacciones: " $ do 
   it "El resultado de aplicar la transacción 1 a pepe con una billetera de 20 monedas debería ser 20, porque queda igual" $ transacción1 (nuevaBilleteraPara pepe 20) `shouldBe` 20 
   it "El resultado de aplicar la transacción 2 a pepe con una billetera de 10 monedas debería ser 15, porque deposita 5 monedas" $ transacción2 pepe `shouldBe` 15 
   it "El resultado de aplicar la transacción 2 a pepeDos con una billetera de 50 monedas debería ser 55, porque deposita 5 monedas" $ transacción2 (nuevaBilleteraPara pepeDos 50) `shouldBe` 55  
-describe "Nuevos Eventos: " $ do
+ describe "Nuevos Eventos: " $ do
   it "El resultado de aplicar la transaccion 3 a lucho con una billetera de 10 monedas debería ser 0, ya que cierra la cuenta" $ transacción3 (nuevaBilleteraPara lucho 10) `shouldBe` 0 
   it "El resultado de aplicar la transaccion 4 a lucho con una billetera de 10 monedas debería ser 34" $ transacción4 (nuevaBilleteraPara lucho 10) `shouldBe` 34 
 
