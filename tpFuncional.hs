@@ -25,6 +25,9 @@ import Test.Hspec
  describe "Nuevos Eventos: " $ do
   it "El resultado de aplicar la transaccion 3 a lucho con una billetera de 10 monedas debería ser 0, ya que cierra la cuenta" $ transacción3 (nuevaBilleteraPara lucho 10) `shouldBe` 0 
   it "El resultado de aplicar la transaccion 4 a lucho con una billetera de 10 monedas debería ser 34" $ transacción4 (nuevaBilleteraPara lucho 10) `shouldBe` 34 
+ describe "Pagos entre Usuarios" $ do
+  it "Aplicar transacción 5 a pepe: (extracción 7) 10 : 3" $ transacción5 pepe `shouldBe` 3
+  it "Aplicar transacción 5 a lucho: (depósito 7) 10 : 17" $ transacción5 (nuevaBilleteraPara lucho 10) `shouldBe` 17
  describe "Usuario luego de transacción:" $ do
   it "Impacto de la transacción 1 a Pepe . Esto debería quedar igual que como está inicialmente Pepe con una billetera de 10 ." $ impactarLaTransacción [transacción1] pepe `shouldBe` Usuario {nombre = "Jose", billetera = 10.0}
   it "Impacto de la transacción 5 a Lucho. Esto debería producir que Lucho tenga 9 monedas en su billetera inicial de 2."  $ impactarLaTransacción [transacción5] lucho `shouldBe` Usuario {nombre = "Luciano", billetera = 9.0} 
