@@ -98,5 +98,23 @@ transacción3 = generarTransacciones lucho tocoYMeVoy
 transacción4 :: Transacción
 transacción4 = generarTransacciones lucho ahorranteErrante 
 
+---------------------------------------------------------------- Pagos entre usuarios--------------------------------------------------------------- 
+
+
+generarPagos usuario1 usuario2 evento1 evento2 usuario 
+        | funcionQueComparaNombres usuario1 usuario = (evento1.billetera) usuario
+        | funcionQueComparaNombres usuario2 usuario = (evento2.billetera) usuario
+        | otherwise = (quedaIgual.billetera) usuario 
+
+transacción5 :: Transacción
+transacción5  = generarPagos pepe lucho (extracción 7) (depósito 7)
+
+---------------------------------------------------------------- Parte 2--------------------------------------------------------------- 
+
+
+impactarLaTransacción :: [Transacción] -> Usuario -> Usuario
+impactarLaTransacción [] usuario = usuario 
+impactarLaTransacción (x:xs) usuario  = impactarLaTransacción xs (nuevaBilleteraPara usuario (x usuario)) 
+
 
 
