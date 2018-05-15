@@ -33,6 +33,15 @@ depósito     = (+)
 extracción :: Dinero -> Billetera
 extracción monto billetera = max (billetera - monto) 0
 
+upgrade :: Billetera
+upgrade billetera = min (billetera * 1.20) (billetera + 10)
+
+cerrarCuenta ::  Billetera
+cerrarCuenta _ = 0.0
+
+quedaIgual   :: Billetera
+quedaIgual  = id
+
  ---------------------------------------------------------------- Usuarios --------------------------------------------------------------- 
 
 data Usuario = Usuario {
