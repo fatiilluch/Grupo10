@@ -74,8 +74,19 @@ transacción1 = generarTransacciones lucho cerrarCuenta
 transacción2 :: Transacción
 transacción2 = generarTransacciones pepe (depósito 5)
 
- ---------------------------------------------------------------- Nuevos Eventos --------------------------------------------------------------- 
+---------------------------------------------------------------- Nuevos Eventos --------------------------------------------------------------- 
 
+tocoYMeVoy :: Billetera
+tocoYMeVoy = cerrarCuenta.upgrade.depósito 15
+
+ahorranteErrante :: Billetera
+ahorranteErrante = depósito 10.upgrade.depósito 8.extracción 1.depósito 2.depósito 1
+
+transacción3:: Transacción
+transacción3 = generarTransacciones lucho tocoYMeVoy
+
+transacción4 :: Transacción
+transacción4 = generarTransacciones lucho ahorranteErrante 
 
 
 
