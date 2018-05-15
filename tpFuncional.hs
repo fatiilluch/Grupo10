@@ -5,10 +5,21 @@ import Data.Maybe
 import Test.Hspec 
 
  ---------------------------------------------------------------- Testing --------------------------------------------------------------- 
-    describe "Transacciones: " $do 
-        it "El resultado de aplicar la transacción 1 a pepe con una billetera de 20 monedas debería ser 20, porque queda igual" $ transacción1 (nuevaBilleteraPara pepe 20) `shouldBe` 20 
-        it "El resultado de aplicar la transacción 2 a pepe con una billetera de 10 monedas debería ser 15, porque deposita 5 monedas" $ transacción2 pepe `shouldBe` 15 
-        it "El resultado de aplicar la transacción 2 a pepeDos con una billetera de 50 monedas debería ser 55, porque deposita 5 monedas" $ transacción2 (nuevaBilleteraPara pepeDos 50) `shouldBe` 55  
+   ejecutarTests = hspec $do
+ describe "Eventos: " $do 
+        it " Aplicar Depositar 10 más Debería quedar con 20 monedas "  deposito 10 'shouldBe' 20
+		it " Extraer 3 y Debería quedar con 7 " extracción 3 'shouldBe'7
+		it " Extraer 15 y Debería quedar con 0 " extracción 15 'shouldBe'0
+		it " Un upgrade debería quedar con 12 "  upgrade 'shouldBe'12
+		it " Cerrar la cuenta quedaria 0 " cerrarCuenta 'shouldBe' 0.0
+		it " Queda igual 10 " quedaIgual 'shouldBe' billetera
+		it " Depositar 1000 y luego tener un upgrade 1020 " depósito 1000 ( upgrade 'shouldBe' 1020)
+   
+   
+describe "Transacciones: " $do 
+  it "El resultado de aplicar la transacción 1 a pepe con una billetera de 20 monedas debería ser 20, porque queda igual" $ transacción1 (nuevaBilleteraPara pepe 20) `shouldBe` 20 
+  it "El resultado de aplicar la transacción 2 a pepe con una billetera de 10 monedas debería ser 15, porque deposita 5 monedas" $ transacción2 pepe `shouldBe` 15 
+  it "El resultado de aplicar la transacción 2 a pepeDos con una billetera de 50 monedas debería ser 55, porque deposita 5 monedas" $ transacción2 (nuevaBilleteraPara pepeDos 50) `shouldBe` 55  
 
 
  ---------------------------------------------------------------- Eventos --------------------------------------------------------------- 
