@@ -24,7 +24,14 @@ describe "Transacciones: " $do
 
  ---------------------------------------------------------------- Eventos --------------------------------------------------------------- 
 
+type Dinero    = Float
+type Billetera = Dinero -> Dinero
 
+depósito     ::  Dinero -> Billetera
+depósito     = (+)
+
+extracción :: Dinero -> Billetera
+extracción monto billetera = max (billetera - monto) 0
 
  ---------------------------------------------------------------- Usuarios --------------------------------------------------------------- 
 
