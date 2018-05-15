@@ -4,34 +4,35 @@ import Data.List
 import Data.Maybe 
 import Test.Hspec 
 
- ---------------------------------------------------------------- Testing --------------------------------------------------------------- 
- ejecutarTests = hspec $ do
- describe "Eventos: " $ do 
-  it " Aplicar Depositar 10 más Debería quedar con 20 monedas "  deposito 10 'shouldBe' 20
-  it " Extraer 3 y Debería quedar con 7 " extracción 3 'shouldBe'7
-  it " Extraer 15 y Debería quedar con 0 " extracción 15 'shouldBe'0 
-  it " Un upgrade debería quedar con 12 "  upgrade 'shouldBe'12 
-  it " Cerrar la cuenta quedaria 0 " cerrarCuenta 'shouldBe' 0.0 
-  it " Queda igual 10 " quedaIgual 'shouldBe' billetera 
-  it " Depositar 1000 y luego tener un upgrade 1020 " depósito 1000 ( upgrade 'shouldBe' 1020)
- describe "Usuarios: " $ do
-  it "La billetera de pepe debería ser 10 monedas." $ billetera pepe `shouldBe` 10
-  it "La billetera de pepe luego de un cierre de cuenta debería quedar vacía." $ (cerrarCuenta.billetera) pepe `shouldBe` 0
-  it "La billetera de pepe luego de depositar 15 monedas, extraer 2 y tener un upgrade debería quedar con 27.6 monedas." $ (upgrade.extracción 2.depósito 15.billetera) pepe `shouldBe` 27.6
- describe "Transacciones: " $ do 
-  it "El resultado de aplicar la transacción 1 a pepe con una billetera de 20 monedas debería ser 20, porque queda igual" $ transacción1 (nuevaBilleteraPara pepe 20) `shouldBe` 20 
-  it "El resultado de aplicar la transacción 2 a pepe con una billetera de 10 monedas debería ser 15, porque deposita 5 monedas" $ transacción2 pepe `shouldBe` 15 
-  it "El resultado de aplicar la transacción 2 a pepeDos con una billetera de 50 monedas debería ser 55, porque deposita 5 monedas" $ transacción2 (nuevaBilleteraPara pepeDos 50) `shouldBe` 55  
- describe "Nuevos Eventos: " $ do
-  it "El resultado de aplicar la transaccion 3 a lucho con una billetera de 10 monedas debería ser 0, ya que cierra la cuenta" $ transacción3 (nuevaBilleteraPara lucho 10) `shouldBe` 0 
-  it "El resultado de aplicar la transaccion 4 a lucho con una billetera de 10 monedas debería ser 34" $ transacción4 (nuevaBilleteraPara lucho 10) `shouldBe` 34 
- describe "Pagos entre Usuarios" $ do
-  it "Aplicar transacción 5 a pepe: (extracción 7) 10 : 3" $ transacción5 pepe `shouldBe` 3
-  it "Aplicar transacción 5 a lucho: (depósito 7) 10 : 17" $ transacción5 (nuevaBilleteraPara lucho 10) `shouldBe` 17
- describe "Usuario luego de transacción:" $ do
-  it "Impacto de la transacción 1 a Pepe . Esto debería quedar igual que como está inicialmente Pepe con una billetera de 10 ." $ impactarLaTransacción [transacción1] pepe `shouldBe` Usuario {nombre = "Jose", billetera = 10.0}
-  it "Impacto de la transacción 5 a Lucho. Esto debería producir que Lucho tenga 9 monedas en su billetera inicial de 2."  $ impactarLaTransacción [transacción5] lucho `shouldBe` Usuario {nombre = "Luciano", billetera = 9.0} 
-  it "Impacto de la transacción 5 y luego la 2 a Pepe. Eso hace que tenga 8 en su billetera inicial de 10."$ impactarLaTransacción [transacción5,transacción2] pepe `shouldBe` Usuario {nombre = "Jose", billetera = 8.0} 
+---------------------------------------------------------------- Testing --------------------------------------------------------------- 
+ejecutarTests = hspec $ do
+    describe "Eventos: " $ do 
+        it "Depositar 10 más. Deberia quedar con 20 monedas" $ depósito 10 10 `shouldBe` 20
+        it "Extraer 3: Deberia quedar con 7" $ extracción 3 10 `shouldBe` 7
+        it "Extraer 15: Deberia quedar con 0" $ extracción 15 10 `shouldBe` 0
+        it "Un upgrade: Deberia quedar con 12" $ upgrade 10 `shouldBe` 12
+        it "Cerrar la cuenta : 0" $ cerrarCuenta 10 `shouldBe` 0
+        it "Queda igual: 10" $ quedaIgual 10 `shouldBe` 10
+        it "Depositar 1000, y luego tener un upgrade: 1020" $ (upgrade.depósito 1000) 10 `shouldBe` 1020
+    describe "Usuarios: " $ do
+        it "La billetera de pepe debería ser 10 monedas." $ billetera pepe `shouldBe` 10
+        it "La billetera de pepe luego de un cierre de cuenta debería quedar vacía." $ (cerrarCuenta.billetera) pepe `shouldBe` 0
+        it "La billetera de pepe luego de depositar 15 monedas, extraer 2 y tener un upgrade debería quedar con 27.6 monedas." $ (upgrade.extracción 2.depósito 15.billetera) pepe `shouldBe` 27.6
+    describe "Transacciones: " $ do 
+        it "El resultado de aplicar la transacción 1 a pepe con una billetera de 20 monedas debería ser 20, porque queda igual" $ transacción1 (nuevaBilleteraPara pepe 20) `shouldBe` 20 
+        it "El resultado de aplicar la transacción 2 a pepe con una billetera de 10 monedas debería ser 15, porque deposita 5 monedas" $ transacción2 pepe `shouldBe` 15 
+        it "El resultado de aplicar la transacción 2 a pepeDos con una billetera de 50 monedas debería ser 55, porque deposita 5 monedas" $ transacción2 (nuevaBilleteraPara pepeDos 50) `shouldBe` 55  
+    describe "Nuevos Eventos: " $ do
+        it "El resultado de aplicar la transaccion 3 a lucho con una billetera de 10 monedas debería ser 0, ya que cierra la cuenta" $ transacción3 (nuevaBilleteraPara lucho 10) `shouldBe` 0 
+        it "El resultado de aplicar la transaccion 4 a lucho con una billetera de 10 monedas debería ser 34" $ transacción4 (nuevaBilleteraPara lucho 10) `shouldBe` 34 
+    describe "Pagos entre Usuarios" $ do
+        it "Aplicar transacción 5 a pepe: (extracción 7) 10 : 3" $ transacción5 pepe `shouldBe` 3
+        it "Aplicar transacción 5 a lucho: (depósito 7) 10 : 17" $ transacción5 (nuevaBilleteraPara lucho 10) `shouldBe` 17
+    describe "Usuario luego de transacción:" $ do
+        it "Impacto de la transacción 1 a Pepe . Esto debería quedar igual que como está inicialmente Pepe con una billetera de 10 ." $ impactarLaTransacción [transacción1] pepe `shouldBe` Usuario {nombre = "Jose", billetera = 10.0}
+        it "Impacto de la transacción 5 a Lucho. Esto debería producir que Lucho tenga 9 monedas en su billetera inicial de 2."  $ impactarLaTransacción [transacción5] lucho `shouldBe` Usuario {nombre = "Luciano", billetera = 9.0} 
+        it "Impacto de la transacción 5 y luego la 2 a Pepe. Eso hace que tenga 8 en su billetera inicial de 10."$ impactarLaTransacción [transacción5,transacción2] pepe `shouldBe` Usuario {nombre = "Jose", billetera = 8.0} 
+ 
  ---------------------------------------------------------------- Eventos --------------------------------------------------------------- 
 
 type Dinero    = Float
