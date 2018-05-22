@@ -32,6 +32,22 @@ ejecutarTests = hspec $ do
         it "Impacto de la transacción 1 a Pepe . Esto debería quedar igual que como está inicialmente Pepe con una billetera de 10 ." $ impactarLaTransacción [transacción1] pepe `shouldBe` Usuario {nombre = "Jose", billetera = 10.0}
         it "Impacto de la transacción 5 a Lucho. Esto debería producir que Lucho tenga 9 monedas en su billetera inicial de 2."  $ impactarLaTransacción [transacción5] lucho `shouldBe` Usuario {nombre = "Luciano", billetera = 9.0} 
         it "Impacto de la transacción 5 y luego la 2 a Pepe. Eso hace que tenga 8 en su billetera inicial de 10."$ impactarLaTransacción [transacción5,transacción2] pepe `shouldBe` Usuario {nombre = "Jose", billetera = 8.0} 
+    describe "Usuario luego de transacción: " $do
+        it "18 - El resultado de impactar la transacción 1 a Pepe debería devolver a Pepe como estaba inicialmente." $ impactarTransacción transacción1 pepe `shouldBe` pepe
+        it "19 - El resultado de impactar la transacción 5 a Lucho debería devolver a Lucho con una billetera de 9 unidades." $ impactarTransacción transacción5 lucho `shouldBe` nuevaBilleteraPara lucho 9 pepe
+        it "20 - El resultado de impactar la transacción 5 y luego la transacción 2 a Pepe debería devolver a Pepe con una billetera de 8 unidades." $ impactarDobletransaccion pepe `shouldBe` nuevaBilleteraPara pepe 8 
+    describe "Bloque: " $do
+        it "21 - A partir del bloque 1 y de Pepe, este debería quedar con 18 unidades en su billetera." $ (billetera . aplicarBloque bloqueUno) pepe `shouldBe` 18
+        it "22 - Las personas que tienen mas de 10 créditos dado una lista de usuarios y un bloque de transacciones debería ser pepe." $ saldoDealMenosNCreditos bloqueUno 10 usuarios `shouldBe` pepe 
+        it "23 - El mas adinerado con cierto bloque sería pepe" $ esMasAdinerado bloqueUno usuarios `shouldBe`  pepe
+        it "24 - El menos adinerado con cierto bloque sería lucho" $ esMenosAdinerado bloqueUno usuarios `shouldBe` lucho
+    describe "Block Chain: " $do
+        it "25 -  La billetera de pepe luego de verificar cual sería su peor bloque es 18." $ (billetera . aplicarBloque (peorBloque pepe blockchain)) pepe `shouldBe 18
+        it "26 -  A partir de la block chain creada de ejemplo y Pepe, este debería quedar con 115 unidades en su billetera." $ (billetera . aplicarBloqueDeBloques blockchain) pepe `shouldBe` 115
+        it "27 -  Siguiendo el ejemplo anterior, tomando los primeros 3 bloques, Pepe debería quedar con 51 monedas." $ ejecutarHastaN 3 blockchain   pepe `shouldBe` Usuario {nombre = "Jose", billetera = 51.0}
+        it "28 -  El conjunto de usuarios conformado por pepe y lucho, se ve afectado de tal manera que la billetera de pepe queda con 115  monedas mientras que la billetera de lucho queda con 0. Su suma debería ser 115. " $ sum (map billetera (conjuntoDespuesDeBlockChain blockchain usuarios))usuarios `shouldBe` 115
+    describe "Block Chain Infinito: " $do
+        it "29 - La cantidad de bloques necesarios para que Pepe llegue a tener 10000 creditos debería ser 11" $ cantidadDeBloquesNecesarios bloqueInfinito pepe `shouldBe` 11
  
  ---------------------------------------------------------------- Eventos --------------------------------------------------------------- 
 
@@ -101,7 +117,7 @@ transacción4 = generarTransacciones lucho ahorranteErrante
 
 ---------------------------------------------------------------- Pagos entre usuarios--------------------------------------------------------------- 
 
-
+generarPagos:: Usuario -> Usuario -> Billetera -> Billetera -> Usuario -> Evento
 generarPagos usuario1 usuario2 evento1 evento2 usuario 
         | funcionQueComparaNombres usuario1 usuario = (evento1.billetera) usuario
         | funcionQueComparaNombres usuario2 usuario = (evento2.billetera) usuario
@@ -110,12 +126,102 @@ generarPagos usuario1 usuario2 evento1 evento2 usuario
 transacción5 :: Transacción
 transacción5  = generarPagos pepe lucho (extracción 7) (depósito 7)
 
----------------------------------------------------------------- Parte 2--------------------------------------------------------------- 
+----------------------------------------------------------- PARTE 2 (CHAIN CHAIN CHAAAAAAIN) --------------------------------------------------------------------
+
+------------------------------------------------------------- Usuario luego de transacción ------------------------------------------------------------------------
 
 
-impactarLaTransacción :: [Transacción] -> Usuario -> Usuario
-impactarLaTransacción [] usuario = usuario 
-impactarLaTransacción (x:xs) usuario  = impactarLaTransacción xs (nuevaBilleteraPara usuario (x usuario)) 
+impactarTransacción :: Transacción -> Usuario -> Usuario
+impactarTransacción transacción usuario =  nuevaBilleteraPara usuario (transacción usuario)
 
+
+impactarDobletransaccion :: Usuario -> Usuario
+impactarDobletransaccion = impactarTransacción transacción2 . impactarTransacción transacción5
+
+---------------------------------------------------------------------- Bloque ------------------------------------------------------------------------------------
+type Bloque = [Transacción]
+
+bloqueUno :: Bloque
+bloqueUno = [transacción1, transacción2, transacción2, transacción2, transacción3, transacción4, transacción5, transacción3]
+
+usuarios :: [Usuario]
+usuarios = [pepe, lucho]
+
+aplicarBloque :: Bloque -> Usuario -> Usuario
+aplicarBloque bloqueUno usuario = componerTodo (map impactarTransacción bloqueUno) usuario
+
+componerTodo :: [a -> a] -> a -> a 
+componerTodo = foldr (.) id
+
+-- 22
+
+saldoDealMenosNCreditos :: Bloque -> Dinero ->  [Usuario] -> [Usuario] 
+saldoDealMenosNCreditos bloqueUno créditos usuarios = 
+      filter ((<=) créditos . billetera . aplicarBloque bloqueUno) usuarios
+
+-- 23 y 24
+esMasAdinerado bloqueUno (primerUsuario : restoUsuarios) = foldr (tieneMayorBilletera bloqueUno) primerUsuario  restoUsuarios 
+
+esMenosAdinerado bloqueUno (primerUsuario : restoUsuarios) = foldr (tieneMenorBilletera bloqueUno) primerUsuario  restoUsuarios 
+
+tieneMayorBilletera bloqueUno usuario1 usuario2 
+ | (>) ((billetera . aplicarBloque bloqueUno) usuario1) ((billetera . aplicarBloque bloqueUno) usuario2) = usuario1
+ | otherwise                                                                                             = usuario2
+
+tieneMenorBilletera bloqueUno usuario1 usuario2
+ | (<) ((billetera . aplicarBloque bloqueUno) usuario1) ((billetera . aplicarBloque bloqueUno) usuario2) = usuario1
+ | otherwise                                                                                             = usuario2
+-------------------------------------------------------------------- Block Chain ------------------------------------------------------------------------------------
+
+type BlockChain = [Bloque]
+
+bloqueDos :: Bloque
+bloqueDos = [transacción2, transacción2, transacción2, transacción2, transacción2]
+
+blockchain :: BlockChain
+blockchain = [bloqueDos, bloqueUno, bloqueUno, bloqueUno, bloqueUno, bloqueUno, bloqueUno, bloqueUno, bloqueUno, bloqueUno, bloqueUno]
+
+--25
+
+
+peorBloque :: Usuario -> BlockChain -> Bloque
+peorBloque usuario (primerBloque : restoBloques)  = foldr (esPeor usuario) primerBloque restoBloques 
+
+esPeor :: Usuario -> Bloque -> Bloque -> Bloque
+esPeor usuario bloque1 bloque2
+ |(billetera . aplicarBloque bloque1) usuario < (billetera . aplicarBloque bloque2) usuario = bloque1
+ |otherwise                                                                                 = bloque2
+
+-- 26 
+
+aplicarBloqueDeBloques :: BlockChain -> Usuario -> Usuario
+aplicarBloqueDeBloques blockchain usuario = componerTodo (map impactarTransacción (concat blockchain)) usuario
+
+-- 27
+
+ejecutarHastaN :: Int -> BlockChain -> Usuario -> Usuario
+ejecutarHastaN primerosN blockchain usuario 
+  |primerosN > length blockchain = aplicarBloque (concat blockchain) usuario
+  |otherwise = aplicarBloque ((concat.take primerosN) blockchain) usuario
+
+-- 28
+
+conjuntoDespuesDeBlockChain :: BlockChain -> [Usuario] -> [Usuario]
+conjuntoDespuesDeBlockChain blockchain usuarios = map (aplicarBloqueDeBloques blockchain) usuarios
+
+---------------------------------------------------------------- Block Chain infinito -------------------------------------------------------------------------------------- 29
+
+-- 29
+
+bloqueInfinito = blockChainInfinito bloqueUno 
+
+blockChainInfinito bloqueUno = bloqueUno : blockChainInfinito (bloqueUno++bloqueUno)
+
+cantidadDeBloquesNecesarios :: BlockChain -> Usuario -> Int 
+cantidadDeBloquesNecesarios bloque usuario = length (filtrarBloquesNecesarios bloque usuario)
+
+filtrarBloquesNecesarios (primerBloque : restoDeBloques) usuario 
+ | ((>=) 10000 . billetera . aplicarBloque primerBloque) usuario  = primerBloque : filtrarBloquesNecesarios restoDeBloques usuario
+ | otherwise = []
 
 
