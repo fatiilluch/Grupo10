@@ -23,10 +23,11 @@ quiereVer(juan, hoc).
 quiereVer(aye, got).
 quiereVer(gastón, himym).
 
-espisodiosPorTemporadaDe(got, 12, 3).
-espisodiosPorTemporadaDe(got, 10, 2).
-espisodiosPorTemporadaDe(himym, 23, 1).
-espisodiosPorTemporadaDe(drHouse, 16, 8).
+%                 serie,temporada,episodios issue #17
+espisodiosPorTemporadaDe(got, 3, 12).
+espisodiosPorTemporadaDe(got, 2, 10).
+espisodiosPorTemporadaDe(himym, 1, 23).
+espisodiosPorTemporadaDe(drHouse, 8, 16).
 
 
 % Por definición de universo cerrado se omita de la base de conocimientos los siguientes fragmentos del enunciado:
