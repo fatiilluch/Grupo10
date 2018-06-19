@@ -86,18 +86,19 @@ Los tipos de consultas que se pueden hacer a la base de conocimientos son:
 %-------------------------------------------------------4 Punto C: Te pedí que no me lo dijeras------------------------------------------------------
 
 % Issue #20  Expresividad en punto 4
+% Issue #22 Predicado segunLaSerie 
 
-segúnLaSerie(Televidente, Serie):- mira(Persona, Serie).
-segúnLaSerie(Televidente, Serie):- quiereVer(Persona, Serie).
+loQueVeElTelevidente(Televidente, Serie):- mira(Persona, Serie).
+loQueVeElTelevidente(Televidente, Serie):- quiereVer(Persona, Serie).
 
 leSpoileo(PersonaInnombrable, PersonaPerjudicado, Serie):-
-  segúnLaSerie(PersonaPerjudicado, Serie),
+  loQueVeElTelevidente(PersonaPerjudicado, Serie),
   leDijo(PersonaInnombrable, PersonaPerjudicado, Serie, Spoiler),
   esSpoiler(Serie, Spoiler).
 
 
 /*
-Issue #21 Justificacion teorica punto 4 
+Issue #21 Justificacion teorica punto 4
 
 Se pueden hacer consultas:
                           Individuales como:
