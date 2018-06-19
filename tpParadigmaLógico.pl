@@ -97,6 +97,8 @@ leSpoileo(PersonaInnombrable, PersonaPerjudicado, Serie):-
 
 
 /*
+Issue #21 Justificacion teorica punto 4 
+
 Se pueden hacer consultas:
                           Individuales como:
                                               leSpoileo(gastón,maiu,got).
