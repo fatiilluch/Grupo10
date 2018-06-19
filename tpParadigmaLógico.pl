@@ -1,6 +1,7 @@
 % Trabajo Practico De Prolog
 % Parte 1: https://docs.google.com/document/d/1zEWqw1M1wiZpKjSjvVd_FdV9yVrXW9Ks2xN7smN3icI/edit
 %-------------------------------------------------------1 Punto A: Quién mira qué------------------------------------------------------
+:- encoding(utf8).
 
 mira(juan, himym).
 mira(juan, futurama).
@@ -61,15 +62,22 @@ leDijo(aye, gastón, got, relación(amistad,tyrion,dragón)).
 esSpoiler(Serie,Spoiler):- paso(Serie,_,_,Spoiler).
 
 /*
+
+issue #19
+
 Los tipos de consultas que se pueden hacer a la base de conocimientos son:
   .- Existenciales.
                     Por ejemplo haciendo la siguiente consulta:
                                                                 esSpoiler(Serie,Spoiler).
-                   donde consulto si hay alguna serie q tiene spoiler en dicha base de conocimientos.
+                   Donde consulto si hay alguna serie que tiene spoiler en dicha base de conocimientos .Gracias a la
+                   inversibilidad pasamos 2 (dos) incognicas  sin unificar para que después el motor nos las
+                   unifique .
   .- Individual.
                   Por ejemplo haciendo la siguiente consulta:
                                                               esSpoiler(starWars,muerte(emperor)).
-                   donde se consulta si una serie tiene un cierto spoiler que se encuentre en la base de conocimientos.
+                   Donde se consulta si una serie tiene un cierto spoiler que se encuentre en la base de conocimientos. Aca mandamos
+                   las variables unificadas y esperamos que nos diga true o false.
+
 */
 
 %-------------------------------------------------------4 Punto C: Te pedí que no me lo dijeras------------------------------------------------------
