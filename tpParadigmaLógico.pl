@@ -24,19 +24,22 @@ quiereVer(juan, hoc).
 quiereVer(aye, got).
 quiereVer(gastón, himym).
 
-%                 serie,temporada,episodios issue #17
+% Issue #17 Recomendacion pava
+
 espisodiosPorTemporadaDe(got, 3, 12).
 espisodiosPorTemporadaDe(got, 2, 10).
 espisodiosPorTemporadaDe(himym, 1, 23).
 espisodiosPorTemporadaDe(drHouse, 8, 16).
 
 /*
+ Issue #18 Justificacion Principio de universo cerrado
+
 Por definición de principio de universo cerrado se omita de la base de conocimientos los siguientes fragmentos del enunciado:
  .- Nadie mira “Mad men”
  .- Alf no ve ninguna serie porque el doctorado le consume toda la vida
  .- No recordamos cuántos episodios tiene la segunda temporada de “Mad men”
 
-porque el motor asume como falso todo lo que no pueda probar como verdadero. Issue #18
+porque el motor asume como falso todo lo que no pueda probar como verdadero.
 
 */
 
@@ -63,39 +66,49 @@ esSpoiler(Serie,Spoiler):- paso(Serie,_,_,Spoiler).
 
 /*
 
-issue #19
+Issue #19 Justificacion punto 3
 
 Los tipos de consultas que se pueden hacer a la base de conocimientos son:
   .- Existenciales.
                     Por ejemplo haciendo la siguiente consulta:
                                                                 esSpoiler(Serie,Spoiler).
                    Donde consulto si hay alguna serie que tiene spoiler en dicha base de conocimientos .Gracias a la
-                   inversibilidad pasamos 2 (dos) incognicas  sin unificar para que después el motor nos las
+                   inversibilidad pasamos 2 (dos) incognicas Serie y Spoiler sin unificar para que después el motor nos las
                    unifique .
   .- Individual.
                   Por ejemplo haciendo la siguiente consulta:
                                                               esSpoiler(starWars,muerte(emperor)).
-                   Donde se consulta si una serie tiene un cierto spoiler que se encuentre en la base de conocimientos. Aca mandamos
+                   Donde se consulta si una serie tiene un cierto spoiler que se encuentre en la base de conocimientos. Mandamos
                    las variables unificadas y esperamos que nos diga true o false.
 
 */
 
 %-------------------------------------------------------4 Punto C: Te pedí que no me lo dijeras------------------------------------------------------
 
-segúnLaSerie(Persona, Serie):- mira(Persona, Serie).
-segúnLaSerie(Persona, Serie):- quiereVer(Persona, Serie).
+% Issue #20  Expresividad en punto 4
 
-leSpoileo(Persona1, Persona2, Serie):-
-  segúnLaSerie(Persona2, Serie),
-  leDijo(Persona1, Persona2, Serie, Spoiler),
+segúnLaSerie(Televidente, Serie):- mira(Persona, Serie).
+segúnLaSerie(Televidente, Serie):- quiereVer(Persona, Serie).
+
+leSpoileo(PersonaInnombrable, PersonaPerjudicado, Serie):-
+  segúnLaSerie(PersonaPerjudicado, Serie),
+  leDijo(PersonaInnombrable, PersonaPerjudicado, Serie, Spoiler),
   esSpoiler(Serie, Spoiler).
 
 
 /*
-Se pueden hacer consultas Individuales como:
-                                          leSpoileo(gastón,maiu,got).
-y también pueden ser Existencial como:
-                                      leSpoileo(gastón,maiu,Serie).
+Se pueden hacer consultas:
+                          Individuales como:
+                                              leSpoileo(gastón,maiu,got).
+                        Consultamos si gastón le spoileo a maiu la serie got (Game of Thore).
+                        Mandando las variables unificadas y esperamos que nos diga true o false.
+y también pueden ser :
+                        Existencial como:
+                                              leSpoileo(gastón,maiu,Serie).
+                        Consultamos si gastón le spoileo maiu alguna serie de nuestra base de conocimientos.
+                        Gracias a la inversibilidad pasamos como incognicas a Serie sin unificar para que después el motor nos las
+                        unifique .
+
 */
 %-------------------------------------------------------5 Punto D: Responsable------------------------------------------------------
 
