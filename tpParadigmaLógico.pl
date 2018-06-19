@@ -29,12 +29,15 @@ espisodiosPorTemporadaDe(got, 2, 10).
 espisodiosPorTemporadaDe(himym, 1, 23).
 espisodiosPorTemporadaDe(drHouse, 8, 16).
 
+/*
+Por definición de principio de universo cerrado se omita de la base de conocimientos los siguientes fragmentos del enunciado:
+ .- Nadie mira “Mad men”
+ .- Alf no ve ninguna serie porque el doctorado le consume toda la vida
+ .- No recordamos cuántos episodios tiene la segunda temporada de “Mad men”
 
-% Por definición de universo cerrado se omita de la base de conocimientos los siguientes fragmentos del enunciado:
-% .- Nadie mira “Mad men”
-% .- Alf no ve ninguna serie porque el doctorado le consume toda la vida
-% .- No recordamos cuántos episodios tiene la segunda temporada de “Mad men”
+porque el motor asume como falso todo lo que no pueda probar como verdadero. Issue #18
 
+*/
 
 %-------------------------------------------------------2 Anexo: Lo que pasó, pasó------------------------------------------------------
 
