@@ -134,7 +134,7 @@ laSerieEsPopularOEsFuerte(Serie):-
 
 
 vieneZafando(Televidente, Serie):-
- loQueVeElTelevidente(Televidente, Serie),
+  loQueVeElTelevidente(Televidente, Serie),
   not(leSpoileo(_, Televidente, Serie)),
   laSerieEsPopularOEsFuerte(Serie).
 
