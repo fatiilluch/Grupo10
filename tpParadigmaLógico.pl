@@ -128,10 +128,11 @@ laSerieEsPopularOEsFuerte(Serie):-
   espisodiosPorTemporadaDe(Serie,Temporada,_),
   forall(espisodiosPorTemporadaDe(Serie,Temporada,_), esFuerte(Serie,Temporada)).
 
-vieneZafando(Persona2, Serie):-
- laSerieEsPopularOEsFuerte(Persona2, Serie),
-  not( leSpoileo(_,Persona2, Serie) ),
-  segúnLaSerie(Serie).
+vieneZafando(Televidente, Serie):-
+ loQueVeElTelevidente(Televidente, Serie),
+  not( leSpoileo(_,Televidente, Serie) ),
+  laSerieEsPopularOEsFuerte(Serie).
+
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 7 Testing  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
