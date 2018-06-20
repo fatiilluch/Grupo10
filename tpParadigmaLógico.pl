@@ -14,7 +14,7 @@ mira(maiu, starWars).
 mira(maiu, onePiece).
 mira(maiu, got).
 
-mira(gastón,hoc).
+mira(gastón, hoc).
 
 popular(got).
 popular(hoc).
@@ -56,13 +56,13 @@ paso(got, 4, 5, relación(amistad, tyrion, dragón)).
 leDijo(gastón, maiu, got, relación(amistad,tyrion,dragón)).
 leDijo(nico, maiu, starWars, relación(parentesco, vader, luke)).
 leDijo(nico, juan, got, muerte(tyrion)).
-leDijo(aye, juan, got, relación(amistad,tyrion,jhon)).
-leDijo(aye, maiu, got, relación(amistad,tyrion,jhon)).
-leDijo(aye, gastón, got, relación(amistad,tyrion,dragón)).
+leDijo(aye, juan, got, relación(amistad, tyrion, jhon)).
+leDijo(aye, maiu, got, relación(amistad, tyrion, jhon)).
+leDijo(aye, gastón, got, relación(amistad, tyrion, dragón)).
 
 %-------------------------------------------------------3 Punto B: Es spoiler------------------------------------------------------
 
-esSpoiler(Serie,Spoiler):- paso(Serie,_,_,Spoiler).
+esSpoiler(Serie, Spoiler):- paso(Serie, _, _, Spoiler).
 
 /*
 
@@ -115,27 +115,27 @@ y también pueden ser :
 */
 %-------------------------------------------------------5 Punto D: Responsable------------------------------------------------------
 
-televidenteResponsable(Televidente):- loQueVeElTelevidente(Televidente, _), not( leSpoileo(Televidente, _, _) ).
+televidenteResponsable(Televidente):- loQueVeElTelevidente(Televidente, _), not(leSpoileo(Televidente, _, _)).
 
 % BONUS:​ Lograr que el predicado sea inversible.
 
 %-------------------------------------------------------6 Punto E: Viene Zafando------------------------------------------------------
 
-esFuerte(Serie,Temporada):-paso(Serie,Temporada,_,muerte(_)).
-esFuerte(Serie,Temporada):-paso(Serie,Temporada,_,relación(amorosa, _, _)).
-esFuerte(Serie,Temporada):-paso(Serie,Temporada,_,relación(parentesco, _, _)).
+esFuerte(Serie, Temporada):-paso(Serie, Temporada, _, muerte(_)).
+esFuerte(Serie, Temporada):-paso(Serie, Temporada, _, relación(amorosa, _, _)).
+esFuerte(Serie, Temporada):-paso(Serie, Temporada, _, relación(parentesco, _, _)).
 
 %Issue #23 Pedicado segúnLaSerie
 
 laSerieEsPopularOEsFuerte(Serie):- popular(Serie).
 laSerieEsPopularOEsFuerte(Serie):-
-  espisodiosPorTemporadaDe(Serie,Temporada,_),
-  forall(espisodiosPorTemporadaDe(Serie,Temporada,_), esFuerte(Serie,Temporada)). %Issue 24 Pequeño cambio en forall
+  espisodiosPorTemporadaDe(Serie, Temporada, _),
+  forall( espisodiosPorTemporadaDe(Serie, Temporada, _), esFuerte(Serie, Temporada)). %Issue 24 Pequeño cambio en forall
 
 
 vieneZafando(Televidente, Serie):-
  loQueVeElTelevidente(Televidente, Serie),
-  not( leSpoileo(_,Televidente, Serie) ),
+  not(leSpoileo(_, Televidente, Serie)),
   laSerieEsPopularOEsFuerte(Serie).
 
 
@@ -152,7 +152,7 @@ test(es_cierto_que_la_muerte_de_Emperor_para_Star_Wars, nondet):-
 test(es_cierto_que_la_muerte_de_Pedro_para_Star_Wars, fail):-
   esSpoiler(starWars, muerte(pedro)).
 
-test(es_cierto_que_la_relación_de_parentesco_entre_Anakin_y_el_Rey_es_un_spoiler_para_Star_Wars,nondet):-
+test(es_cierto_que_la_relación_de_parentesco_entre_Anakin_y_el_Rey_es_un_spoiler_para_Star_Wars, nondet):-
   esSpoiler(starWars, relación(parentesco, anakin, rey)).
 
 test(es_cierto_que_la_relación_de_parentesco_entre_Anakin_y_Lavezzi_sea_un_spoiler_para_Star_Wars, fail):-
@@ -160,7 +160,7 @@ test(es_cierto_que_la_relación_de_parentesco_entre_Anakin_y_Lavezzi_sea_un_spoi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Test: 4 Punto C: Te pedí que no me lo dijeras %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-tets(gastón_le_dijo_a_Maiu_un_spoiler_de_Game_of_Thrones , nondet):-
+tets(gastón_le_dijo_a_Maiu_un_spoiler_de_Game_of_Thrones, nondet):-
     leSpoileo(gastón, maiu, got).
 
 test(nico_le_dijo_a_Maiu_un_spoiler_de_Star_War, nondet):-
@@ -193,13 +193,13 @@ test(maiu_no_viene_zafando_con_ninguna_serie, fail):-
   vieneZafando(maiu, _).
 
 test(juan_viene_zafando_tanto_con_himym, nondet ):-
-  vieneZafando(juan,himym).
+  vieneZafando(juan, himym).
 
 test(juan_viene_zafando_tanto_con_got, nondet):-
-  vieneZafando(juan,got).
+  vieneZafando(juan, got).
 
 test(juan_viene_zafando_tanto_con_hoc, nondet):-
-  vieneZafando(juan,hoc).
+  vieneZafando(juan, hoc).
 
 test(nico_viene_zafando_con_Star_Wars, [ true(Televidente == nico), nondet ] ):-
   vieneZafando(Televidente, starWars).
