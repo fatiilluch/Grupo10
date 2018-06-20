@@ -117,6 +117,8 @@ y también pueden ser :
 
 televidenteResponsable(Televidente):- loQueVeElTelevidente(Televidente, _), not( leSpoileo(Televidente, _, _) ).
 
+% BONUS:​ Lograr que el predicado sea inversible.
+
 %-------------------------------------------------------6 Punto E: Viene Zafando------------------------------------------------------
 
 esFuerte(Serie,Temporada):-paso(Serie,Temporada,_,muerte(_)).
@@ -146,7 +148,7 @@ vieneZafando(Televidente, Serie):-
 test(es_cierto_que_la_muerte_de_Emperor_para_Star_Wars, nondet):-
   esSpoiler(starWars, muerte(emperor)).
 
-%Issue #25 test(es_cierto_que_la_muerte_de_Emperor_para_Star_Wars, fail) 
+%Issue #25 test(es_cierto_que_la_muerte_de_Emperor_para_Star_Wars, fail)
 test(es_cierto_que_la_muerte_de_Pedro_para_Star_Wars, fail):-
   esSpoiler(starWars, muerte(pedro)).
 
@@ -167,21 +169,33 @@ test(nico_le_dijo_a_Maiu_un_spoiler_de_Star_War, nondet):-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Test: 5 Punto D: Responsable %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-test(juan_aye_y_maiu_son_televidentes_responsables, set(Personas == [juan, aye, maiu])):-
-    televidenteResponsable(Personas).
+%Issue #26 test juan_aye_y_maiu_son_televidentes_responsables
 
-% BONUS:​ Lograr que el predicado sea inversible.
+test(juan_es_televidente_responsable, [ true(Televidente == juan), nondet]):-
+    televidenteResponsable(Televidente).
+
+test(aye_es_televidente_responsable, [ true(Televidente == aye)], nondet):-
+    televidenteResponsable(Televidente).
+
+test(maiu_es_televidente_responsable, [ true(Televidente == maiu)], nondet):-
+    televidenteResponsable(Televidente).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Test: 6 Punto E: Viene Zafando %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 test(maiu_no_viene_zafando_con_ninguna_serie, fail):-
   vieneZafando(maiu, _).
 
-test(juan_viene_zafando_tanto_con_himym_got_y_hoc, set( Series == [himym, got, hoc]) ):-
-  vieneZafando(juan,Series).
+test(juan_viene_zafando_tanto_con_himym, nondet ):-
+  vieneZafando(juan,himym).
 
-test(nico_viene_zafando_con_Star_Wars, nondet):-
-  vieneZafando(nico, starWars).
+test(juan_viene_zafando_tanto_con_got, nondet):-
+  vieneZafando(juan,got).
+
+test(juan_viene_zafando_tanto_con_hoc, nondet):-
+  vieneZafando(juan,hoc).
+
+test(nico_viene_zafando_con_Star_Wars, [ true(Televidente == nico) ], nondet ):-
+  vieneZafando(Televidente, starWars).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
