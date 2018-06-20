@@ -91,9 +91,9 @@ Los tipos de consultas que se pueden hacer a la base de conocimientos son:
 loQueVeElTelevidente(Televidente, Serie):- mira(Televidente, Serie).
 loQueVeElTelevidente(Televidente, Serie):- quiereVer(Televidente, Serie).
 
-leSpoileo(PersonaInnombrable, PersonaPerjudicado, Serie):-
-  loQueVeElTelevidente(PersonaPerjudicado, Serie),
-  leDijo(PersonaInnombrable, PersonaPerjudicado, Serie, Spoiler),
+leSpoileo(PersonaChamuyera, PersonaPerjudicada, Serie):-
+  loQueVeElTelevidente(PersonaPerjudicada, Serie),
+  leDijo(PersonaChamuyera, PersonaPerjudicada, Serie, Spoiler),
   esSpoiler(Serie, Spoiler).
 
 
