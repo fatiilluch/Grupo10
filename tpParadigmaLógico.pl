@@ -123,10 +123,13 @@ esFuerte(Serie,Temporada):-paso(Serie,Temporada,_,muerte(_)).
 esFuerte(Serie,Temporada):-paso(Serie,Temporada,_,relación(amorosa, _, _)).
 esFuerte(Serie,Temporada):-paso(Serie,Temporada,_,relación(parentesco, _, _)).
 
+%Issue #23 Pedicado segúnLaSerie
+
 laSerieEsPopularOEsFuerte(Serie):- popular(Serie).
 laSerieEsPopularOEsFuerte(Serie):-
   espisodiosPorTemporadaDe(Serie,Temporada,_),
-  forall(espisodiosPorTemporadaDe(Serie,Temporada,_), esFuerte(Serie,Temporada)).
+  forall(espisodiosPorTemporadaDe(Serie,Temporada,_), esFuerte(Serie,Temporada)). %Issue 24 Pequeño cambio en forall
+
 
 vieneZafando(Televidente, Serie):-
  loQueVeElTelevidente(Televidente, Serie),
