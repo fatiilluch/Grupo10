@@ -171,14 +171,21 @@ test(nico_le_dijo_a_Maiu_un_spoiler_de_Star_War, nondet):-
 
 %Issue #26 test juan_aye_y_maiu_son_televidentes_responsables
 
-test(juan_es_televidente_responsable, [ true(Televidente == juan), nondet]):-
-    televidenteResponsable(Televidente).
+test(juan_es_televidente_responsable, nondet):-
+    televidenteResponsable(juan).
 
-test(aye_es_televidente_responsable, [ true(Televidente == aye)], nondet):-
-    televidenteResponsable(Televidente).
+test(aye_es_televidente_responsable, nondet):-
+    televidenteResponsable(aye).
 
-test(maiu_es_televidente_responsable, [ true(Televidente == maiu)], nondet):-
-    televidenteResponsable(Televidente).
+test(maiu_es_televidente_responsable, nondet):-
+    televidenteResponsable(maiu).
+
+test(nico_es_televidente_responsable, fail):-
+    televidenteResponsable(nico).
+
+test(gastón_es_televidente_responsable, fail):-
+    televidenteResponsable(gastón).
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Test: 6 Punto E: Viene Zafando %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -194,7 +201,7 @@ test(juan_viene_zafando_tanto_con_got, nondet):-
 test(juan_viene_zafando_tanto_con_hoc, nondet):-
   vieneZafando(juan,hoc).
 
-test(nico_viene_zafando_con_Star_Wars, [ true(Televidente == nico) ], nondet ):-
+test(nico_viene_zafando_con_Star_Wars, [ true(Televidente == nico), nondet ] ):-
   vieneZafando(Televidente, starWars).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
