@@ -136,7 +136,7 @@ vieneZafando(Televidente, Serie):-
   not( leSpoileo(_,Televidente, Serie) ),
   laSerieEsPopularOEsFuerte(Serie).
 
-/*
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 7 Testing  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 :- begin_tests(debug).
@@ -146,7 +146,8 @@ vieneZafando(Televidente, Serie):-
 test(es_cierto_que_la_muerte_de_Emperor_para_Star_Wars, nondet):-
   esSpoiler(starWars, muerte(emperor)).
 
-test(es_cierto_que_la_muerte_de_Emperor_para_Star_Wars, fail):-
+%Issue #25 test(es_cierto_que_la_muerte_de_Emperor_para_Star_Wars, fail) 
+test(es_cierto_que_la_muerte_de_Pedro_para_Star_Wars, fail):-
   esSpoiler(starWars, muerte(pedro)).
 
 test(es_cierto_que_la_relación_de_parentesco_entre_Anakin_y_el_Rey_es_un_spoiler_para_Star_Wars,nondet):-
@@ -187,4 +188,3 @@ test(nico_viene_zafando_con_Star_Wars, nondet):-
 :- end_tests(debug).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-*/
