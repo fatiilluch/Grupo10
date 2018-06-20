@@ -86,10 +86,10 @@ Los tipos de consultas que se pueden hacer a la base de conocimientos son:
 %-------------------------------------------------------4 Punto C: Te pedí que no me lo dijeras------------------------------------------------------
 
 % Issue #20  Expresividad en punto 4
-% Issue #22 Predicado segunLaSerie 
+% Issue #22 Predicado segunLaSerie
 
-loQueVeElTelevidente(Televidente, Serie):- mira(Persona, Serie).
-loQueVeElTelevidente(Televidente, Serie):- quiereVer(Persona, Serie).
+loQueVeElTelevidente(Televidente, Serie):- mira(Televidente, Serie).
+loQueVeElTelevidente(Televidente, Serie):- quiereVer(Televidente, Serie).
 
 leSpoileo(PersonaInnombrable, PersonaPerjudicado, Serie):-
   loQueVeElTelevidente(PersonaPerjudicado, Serie),
@@ -115,7 +115,7 @@ y también pueden ser :
 */
 %-------------------------------------------------------5 Punto D: Responsable------------------------------------------------------
 
-televidenteResponsable(Persona1):- segúnLaSerie(Persona1, _), not( (leSpoileo(Persona1, _, _)) ).
+televidenteResponsable(Televidente):- loQueVeElTelevidente(Televidente, _), not( leSpoileo(Televidente, _, _) ).
 
 %-------------------------------------------------------6 Punto E: Viene Zafando------------------------------------------------------
 
@@ -123,16 +123,16 @@ esFuerte(Serie,Temporada):-paso(Serie,Temporada,_,muerte(_)).
 esFuerte(Serie,Temporada):-paso(Serie,Temporada,_,relación(amorosa, _, _)).
 esFuerte(Serie,Temporada):-paso(Serie,Temporada,_,relación(parentesco, _, _)).
 
-segúnLaSerie(Serie):- popular(Serie).
-segúnLaSerie(Serie):-
-  espisodiosPorTemporadaDe(Serie,_,Temporada),
-  forall(paso(Serie,Temporada,_,_), esFuerte(Serie,Temporada)).
+laSerieEsPopularOEsFuerte(Serie):- popular(Serie).
+laSerieEsPopularOEsFuerte(Serie):-
+  espisodiosPorTemporadaDe(Serie,Temporada,_),
+  forall(espisodiosPorTemporadaDe(Serie,Temporada,_), esFuerte(Serie,Temporada)).
 
 vieneZafando(Persona2, Serie):-
-  segúnLaSerie(Persona2, Serie),
+ laSerieEsPopularOEsFuerte(Persona2, Serie),
   not( leSpoileo(_,Persona2, Serie) ),
   segúnLaSerie(Serie).
-
+/*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 7 Testing  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 :- begin_tests(debug).
@@ -183,3 +183,4 @@ test(nico_viene_zafando_con_Star_Wars, nondet):-
 :- end_tests(debug).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+*/
