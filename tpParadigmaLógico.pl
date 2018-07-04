@@ -209,7 +209,7 @@ test(juan_viene_zafando_tanto_con_got, nondet):-
 
 test(juan_viene_zafando_tanto_con_hoc, nondet):-
   vieneZafando(juan, hoc).
-7
+
 test(nico_viene_zafando_con_Star_Wars, [ true(Televidente == nico), nondet ] ):-
   vieneZafando(Televidente, starWars).
 
