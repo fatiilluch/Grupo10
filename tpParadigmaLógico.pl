@@ -228,3 +228,18 @@ test(nico_viene_zafando_con_Star_Wars, [ true(Televidente == nico), nondet ] ):-
 #                                                                    |_|   \__,_|_|   \__\___| |____|                                                                                       #
 #                                                                                                                                                                                           #
 ############################################################################################################################################################################################*/
+
+%-------------------------------------------------------1 Punto A: Malo, malo, malo eres... ------------------------------------------------------
+
+hablo(gastón, maiu).
+hablo(nico, maiu).
+hablo(nico, juan).
+hablo(aye, juan).
+hablo(aye, maiu).
+hablo(aye, gastón).
+
+malaGente(MalaPersona):- hablo(MalaPersona,Incauto), forall(hablo(MalaPersona,Incauto), leSpoileo(MalaPersona,Incauto , _)).
+malaGente(MalaPersona):- mira(Incauto,Serie),
+	                        not(mira(MalaPersona,Serie)),
+			                      leSpoileo(MalaPersona,Incauto,Serie).
+
