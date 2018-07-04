@@ -1,4 +1,4 @@
-% Trabajo Practico De Prolog
+% Trabajo Práctico De Prolog
 % Parte 1: https://docs.google.com/document/d/1zEWqw1M1wiZpKjSjvVd_FdV9yVrXW9Ks2xN7smN3icI/edit
 %-------------------------------------------------------1 Punto A: Quién mira qué------------------------------------------------------
 :- encoding(utf8).
@@ -26,10 +26,10 @@ quiereVer(gastón, himym).
 
 % Issue #17 Recomendacion pava
 
-espisodiosPorTemporadaDe(got, 3, 12).
-espisodiosPorTemporadaDe(got, 2, 10).
-espisodiosPorTemporadaDe(himym, 1, 23).
-espisodiosPorTemporadaDe(drHouse, 8, 16).
+temporardaPorEpisodios(got, 3, 12).
+temporardaPorEpisodios(got, 2, 10).
+temporardaPorEpisodios(himym, 1, 23).
+temporardaPorEpisodios(drHouse, 8, 16).
 
 /*
  Issue #18 Justificacion Principio de universo cerrado
@@ -129,8 +129,8 @@ esFuerte(Serie, Temporada):-paso(Serie, Temporada, _, relación(parentesco, _, _
 
 laSerieEsPopularOEsFuerte(Serie):- popular(Serie).
 laSerieEsPopularOEsFuerte(Serie):-
-  espisodiosPorTemporadaDe(Serie, Temporada, _),
-  forall( espisodiosPorTemporadaDe(Serie, Temporada, _), esFuerte(Serie, Temporada)). %Issue 24 Pequeño cambio en forall
+  temporardaPorEpisodios(Serie, Temporada, _),
+  forall( temporardaPorEpisodios(Serie, Temporada, _), esFuerte(Serie, Temporada)). %Issue 24 Pequeño cambio en forall
 
 
 vieneZafando(Televidente, Serie):-
