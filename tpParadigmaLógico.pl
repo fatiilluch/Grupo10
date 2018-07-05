@@ -25,6 +25,9 @@ mira(maiu, got).
 
 mira(gastón, hoc).
 
+% Agregado del Punto 1 Punto A: Malo, malo, malo eres... (Parte 2)
+mira(pedro,got). 
+
 popular(got).
 popular(hoc).
 popular(starWars).
@@ -68,6 +71,11 @@ leDijo(nico, juan, got, muerte(tyrion)).
 leDijo(aye, juan, got, relación(amistad, tyrion, jhon)).
 leDijo(aye, maiu, got, relación(amistad, tyrion, jhon)).
 leDijo(aye, gastón, got, relación(amistad, tyrion, dragón)).
+
+% Agregado del Punto 1 Punto A: Malo, malo, malo eres... (Parte 2)
+leDijo(nico,juan,futurama,muerte(seymourDiera)).
+leDijo(pedro,aye,got,relación(amistad,tyron,dragón)).
+leDijo(aye,nico,got,relación(parentesco,tyron,dragón)).
 
 %-------------------------------------------------------3 Punto B: Es spoiler------------------------------------------------------
 
@@ -239,7 +247,5 @@ hablo(aye, maiu).
 hablo(aye, gastón).
 
 malaGente(MalaPersona):- hablo(MalaPersona,Incauto), forall(hablo(MalaPersona,Incauto), leSpoileo(MalaPersona,Incauto , _)).
-malaGente(MalaPersona):- mira(Incauto,Serie),
-	                        not(mira(MalaPersona,Serie)),
-			                      leSpoileo(MalaPersona,Incauto,Serie).
+malaGente(MalaPersona):- mira(Incauto,Serie), not(mira(MalaPersona,Serie)), leSpoileo(MalaPersona,Incauto,Serie).
 
