@@ -6,16 +6,17 @@ Trabajo Práctico De Prolog
 
 :- encoding(utf8).
 
-/*###########################################################################################################################################################################################
-#                                                                       _____           _         __                                                                                        #
-#                                                                      |  __ \         | |       /_ |                                                                                       #
-#                                                                      | |__) |_ _ _ __| |_ ___   | |                                                                                       #
-#                                                                      |  ___/ _` | '__| __/ _ \  | |                                                                                       #
-#                                                                      | |  | (_| | |  | ||  __/  | |                                                                                       #
-#                                                                      |_|   \__,_|_|   \__\___|  |_|                                                                                       #
-############################################################################################################################################################################################*/
+/*#################################################################################################################################
+#                                                  _____           _         __                                                   #
+#                                                 |  __ \         | |       /_ |                                                  #
+#                                                 | |__) |_ _ _ __| |_ ___   | |                                                  #
+#                                                 |  ___/ _` | '__| __/ _ \  | |                                                  #
+#                                                 | |  | (_| | |  | ||  __/  | |                                                  #
+#                                                 |_|   \__,_|_|   \__\___|  |_|                                                  #
+#                                                                                                                                 #
+###################################################################################################################################*/
 
-%-------------------------------------------------------1 Punto A: Quién mira qué------------------------------------------------------
+%----------------------------------------------       1 Punto A: Quién mira qué      ----------------------------------------------
 
 mira(juan, himym).
 mira(juan, futurama).
@@ -60,7 +61,7 @@ porque el motor asume como falso todo lo que no pueda probar como verdadero.
 
 */
 
-%-------------------------------------------------------2 Anexo: Lo que pasó, pasó------------------------------------------------------
+%----------------------------------------------      2 Anexo: Lo que pasó, pasó      ----------------------------------------------
 
 paso(futurama, 2, 3, muerte(seymourDiera)).
 paso(starWars, 10, 9, muerte(emperor)).
@@ -82,7 +83,7 @@ leDijo(nico,juan,futurama,muerte(seymourDiera)).
 leDijo(pedro,aye,got,relación(amistad,tyron,dragón)).
 leDijo(aye,nico,got,relación(parentesco,tyron,dragón)).
 
-%-------------------------------------------------------3 Punto B: Es spoiler------------------------------------------------------
+%----------------------------------------------          3 Punto B: Es spoiler       ----------------------------------------------
 
 esSpoiler(Serie, Spoiler):- paso(Serie, _, _, Spoiler).
 
@@ -105,7 +106,7 @@ Los tipos de consultas que se pueden hacer a la base de conocimientos son:
 
 */
 
-%-------------------------------------------------------4 Punto C: Te pedí que no me lo dijeras------------------------------------------------------
+%---------------------------------------------- 4 Punto C: Te pedí que no me lo dijeras -------------------------------------------
 
 % Issue #20  Expresividad en punto 4
 % Issue #22 Predicado segunLaSerie
@@ -135,13 +136,13 @@ y también pueden ser :
                         unifique .
 
 */
-%-------------------------------------------------------5 Punto D: Responsable------------------------------------------------------
+%----------------------------------------------        5 Punto D: Responsable        ----------------------------------------------
 
 televidenteResponsable(Televidente):- loQueVeElTelevidente(Televidente, _), not(leSpoileo(Televidente, _, _)).
 
 % BONUS:​ Lograr que el predicado sea inversible.
 
-%-------------------------------------------------------6 Punto E: Viene Zafando------------------------------------------------------
+%----------------------------------------------       6 Punto E: Viene Zafando       ----------------------------------------------
 
 esFuerte(Serie, Temporada):-paso(Serie, Temporada, _, muerte(_)).
 esFuerte(Serie, Temporada):-paso(Serie, Temporada, _, relación(amorosa, _, _)).
@@ -161,11 +162,11 @@ vieneZafando(Televidente, Serie):-
   laSerieEsPopularOEsFuerte(Serie).
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 7 Testing  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%              7 Testing              %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 :- begin_tests(debugParte1).
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Test: 3 Punto B: Es spoiler %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%      Test: 3 Punto B: Es spoiler    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 test(es_cierto_que_la_muerte_de_Emperor_para_Star_Wars, nondet):-
   esSpoiler(starWars, muerte(emperor)).
@@ -180,7 +181,7 @@ test(es_cierto_que_la_relación_de_parentesco_entre_Anakin_y_el_Rey_es_un_spoile
 test(es_cierto_que_la_relación_de_parentesco_entre_Anakin_y_Lavezzi_sea_un_spoiler_para_Star_Wars, fail):-
   esSpoiler(starWars, relación(parentesco, anakin, lavezzi)).
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Test: 4 Punto C: Te pedí que no me lo dijeras %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Test: 4 Punto C: Te pedí que no me lo dijeras %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 tets(gastón_le_dijo_a_Maiu_un_spoiler_de_Game_of_Thrones, nondet):-
     leSpoileo(gastón, maiu, got).
@@ -189,7 +190,7 @@ test(nico_le_dijo_a_Maiu_un_spoiler_de_Star_War, nondet):-
     leSpoileo(nico, maiu, starWars).
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Test: 5 Punto D: Responsable %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%     Test: 5 Punto D: Responsable    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %Issue #26 test juan_aye_y_maiu_son_televidentes_responsables
 
@@ -209,7 +210,7 @@ test(gastón_es_televidente_responsable, fail):-
     televidenteResponsable(gastón).
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Test: 6 Punto E: Viene Zafando %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   Test: 6 Punto E: Viene Zafando   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 test(maiu_no_viene_zafando_con_ninguna_serie, fail):-
   vieneZafando(maiu, _).
@@ -226,23 +227,22 @@ test(juan_viene_zafando_tanto_con_hoc, nondet):-
 test(nico_viene_zafando_con_Star_Wars, [ true(Televidente == nico), nondet ] ):-
   vieneZafando(Televidente, starWars).
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 :- end_tests(debugParte1).
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-/*###########################################################################################################################################################################################
-#                                                                     _____           _         ___                                                                                         #
-#                                                                    |  __  \        | |       |__  \                                                                                       #
-#                                                                    | |__) |_ _ _ __| |_ ___     ) |                                                                                       #
-#                                                                    |  ___/ _` | '__| __/ _ \   / /                                                                                        #
-#                                                                    | |  | (_| | |  | ||  __/  / /_                                                                                        #
-#                                                                    |_|   \__,_|_|   \__\___| |____|                                                                                       #
-#                                                                                                                                                                                           #
-############################################################################################################################################################################################*/
+/*#################################################################################################################################
+#                                                  _____           _         ___                                                  #
+#                                                 |  __  \        | |       |__  \                                                #
+#                                                 | |__) |_ _ _ __| |_ ___     ) |                                                #
+#                                                 |  ___/ _` | '__| __/ _ \   / /                                                 #
+#                                                 | |  | (_| | |  | ||  __/  / /_                                                 #
+#                                                 |_|   \__,_|_|   \__\___| |____|                                                #
+#                                                                                                                                 #
+###################################################################################################################################*/
 
-%-------------------------------------------------------1 Punto A: Malo, malo, malo eres...------------------------------------------------------
+%---------------------------------------------- 1 Punto A: Malo, malo, malo eres...  ----------------------------------------------
 
 eresMalo(PersonaMala, PersonaInocente, Serie):-
   forall(leDijo(PersonaMala, PersonaInocente, Serie, _), leSpoileo(PersonaMala, PersonaInocente, Serie)).
@@ -255,10 +255,48 @@ malaGente(PersonaMala):-
   leDijo(PersonaMala, PersonaInocente, Serie, _),
   eresMalo(PersonaMala, PersonaInocente, Serie).
 
-%------------------------------------------------------- 2 Punto B: Series con cosas fuertes ------------------------------------------------------
+%---------------------------------------------- 2 Punto B: Series con cosas fuertes  ----------------------------------------------
+
+plotTwists(got,3,2,[suenio,sinPiernas]).
+plotTwists(got,3,12,[fuego,boda]).
+plotTwists(superCampeones,9,9,[suenio,coma,sinPiernas]).
+plotTwists(drHouse,8,7,[coma,pastillas]).
 
 
-%-------------------------------------------------------3 Punto C: Popularidad ------------------------------------------------------
+fuerte(plotTwists(Serie, Temporada, Episodios, PalabrasClaves)):-
+  plotTwists(Serie, Temporada, Episodios, PalabrasClaves),
+  not(cliché(Serie, PalabrasClaves)),
+  pasóEnELFinalDeTemporada(Serie, Temporada, Episodios).
+
+pasóEnELFinalDeTemporada(Serie, Temporada, Episodios):-
+  temporardaPorEpisodios(Serie, Temporada, Episodios).
+
+
+cliché(Serie,PalabrasClaves):-
+  sonPlotTwistsDistintos(Serie, PalabrasClaves, OtraLista),
+  intersección(PalabrasClaves, OtraLista, Intersección),
+  contieneTodasLasPalabrasClaves(Intersección, PalabrasClaves).
+
+
+intersección(Lista, OtraLista, Intersección):-
+  findall( Elemento,
+           ( member(Elemento, Lista), member(Elemento, OtraLista) ),
+           Intersección
+          ).
+
+contieneTodasLasPalabrasClaves(Intersección,PalabrasClaves):-
+  length(PalabrasClaves,Cantidad),
+  length(Intersección,Cantidad).
+
+sonPlotTwistsDistintos(Serie,PalabrasClaves,OtraPalabras):-
+  plotTwists(Serie, _, _,PalabrasClaves),
+  plotTwists(OtraSerie, _, _, OtraPalabras),
+  Serie \= OtraSerie.
+
+relacionesFuertes(Serie,Relación):-
+  paso(Serie, _, _, Relación).
+
+%----------------------------------------------         3 Punto C: Popularidad       ----------------------------------------------
 
 popular(hoc).
 popular(Serie):- popularidad(Serie, Popularidad1), popularidad(starWars,Popularidad2), Popularidad1 >= Popularidad2.
@@ -269,7 +307,7 @@ cantidadPersonasMiran(Serie, CantPers):- mira(_, Serie), findall(Persona, mira(P
 
 cantConversaciones(Serie, CantConv):- leDijo(_,_,Serie,_), findall(Persona,leDijo(Persona,_,Serie,_), Conversación), length(Conversación,CantConv).
 
-%-------------------------------------------------------4 Punto D: Amigos son los amigos... ------------------------------------------------------
+%---------------------------------------------- 4 Punto D: Amigos son los amigos...  ----------------------------------------------
 amigo(nico, maiu).
 amigo(maiu, gaston).
 amigo(maiu, juan).
@@ -279,11 +317,11 @@ fullSpoil(Spoileador, Spoileado):- leSpoileo(Spoileador, Spoileado,_).
 fullSpoil(Spoileador, Spoileado):- amigo(Amigo, Spoileado), leSpoileo(Spoileador, Amigo,_), Spoileador \= Spoileado.
 fullSpoil(Spoileador, Spoileado):- amigo(Amigo, Spoileado), fullSpoil(Spoileador, Amigo), Spoileador \= Spoileado.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 5 Testing  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%                5 Testing            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 :- begin_tests(debugParte2).
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 1 Punto A: Malo, malo, malo eres... %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 1 Punto A: Malo, malo, malo eres... %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 test(es_cierto_que_gastón_es_mala_gente, nondet):-
   malaGente(gastón).
@@ -293,7 +331,7 @@ test(es_cierto_que_nico_es_mala_gente, nondet):-
 
 test(no_es_cierto_que_pedro_es_mala_gente, fail):-
   malaGente(pedro).
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2 Punto B: Series con cosas fuertes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  2 Punto B: Series con cosas fuertes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 test(la_muerte_de_Seymour_Diera_en_Futurama_es_fuerte, nondet):-
   relacionesFuertes(futurama,muerte(seymourDiera)).
@@ -320,7 +358,7 @@ test(el_plot_twist_que_contiene_la_palabra_sueño_en_Game_of_Thrones_no_es_fuert
 test(el_plot_twist_que_contiene_las_palabras_coma_y_pastillas_en_Doctor_House_no_es_fuerte, fail):-
   fuerte(plotTwists(drHouse,8,7,[coma,pastillas])).
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 3 Punto C: Popularidad %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%       3 Punto C: Popularidad        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 test(es_cierto_que_game_of_thrones_es_popular, nondet):-
   popular(got).
@@ -331,7 +369,7 @@ test(es_cierto_que_starWars_es_popular, nondet):-
 test(es_cierto_que_house_of_cards_es_popular, nondet):-
   popular(hoc).
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 4 Punto D: Amigos son los amigos... %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 4 Punto D: Amigos son los amigos... %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 test(es_cierto_que_nico_le_hizo_fullSpoil_a_Aye, nondet):-
   fullSpoil(nico, aye).
@@ -357,8 +395,8 @@ test(es_cierto_que_gastón_le_hizo_fullSpoil_a_maiu, nondet):-
 test(no_es_cierto_que_maiu_le_hizo_fullSpoil_a_alguien, fail):-
   fullSpoil(maiu, PersonaALaQueLeHicieronFullSpoil ).
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 :- end_tests(debugParte2).
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
