@@ -1,6 +1,11 @@
-% Trabajo Práctico De Prolog
-% Parte 1: https://docs.google.com/document/d/1zEWqw1M1wiZpKjSjvVd_FdV9yVrXW9Ks2xN7smN3icI/edit
+/*
+Trabajo Práctico De Prolog
+  Parte 1: https://docs.google.com/document/d/1zEWqw1M1wiZpKjSjvVd_FdV9yVrXW9Ks2xN7smN3icI/edit
+  Parte 2: https://docs.google.com/document/d/1FEHfmBmZJvgLqUsCLQTLKmA50fGhznyct7o0s3YQRuE/edit
+*/
+
 :- encoding(utf8).
+
 /*###########################################################################################################################################################################################
 #                                                                       _____           _         __                                                                                        #
 #                                                                      |  __ \         | |       /_ |                                                                                       #
@@ -26,7 +31,7 @@ mira(maiu, got).
 mira(gastón, hoc).
 
 % Agregado del Punto 1 Punto A: Malo, malo, malo eres... (Parte 2)
-mira(pedro,got). 
+mira(pedro,got).
 
 popular(got).
 popular(hoc).
@@ -158,7 +163,7 @@ vieneZafando(Televidente, Serie):-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 7 Testing  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-:- begin_tests(debug).
+:- begin_tests(debugParte1).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Test: 3 Punto B: Es spoiler %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -223,7 +228,7 @@ test(nico_viene_zafando_con_Star_Wars, [ true(Televidente == nico), nondet ] ):-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-:- end_tests(debug).
+:- end_tests(debugParte1).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -237,16 +242,21 @@ test(nico_viene_zafando_con_Star_Wars, [ true(Televidente == nico), nondet ] ):-
 #                                                                                                                                                                                           #
 ############################################################################################################################################################################################*/
 
-%-------------------------------------------------------1 Punto A: Malo, malo, malo eres... ------------------------------------------------------
-hablo(gastón, maiu).
-hablo(nico, maiu).
-hablo(nico, juan).
-hablo(aye, juan).
-hablo(aye, maiu).
-hablo(aye, gastón).
+%-------------------------------------------------------1 Punto A: Malo, malo, malo eres...------------------------------------------------------
 
-malaGente(MalaPersona):- hablo(MalaPersona,Incauto), forall(hablo(MalaPersona,Incauto), leSpoileo(MalaPersona,Incauto , _)).
-malaGente(MalaPersona):- mira(Incauto,Serie), not(mira(MalaPersona,Serie)), leSpoileo(MalaPersona,Incauto,Serie).
+eresMalo(PersonaMala, PersonaInocente, Serie):-
+  forall(leDijo(PersonaMala, PersonaInocente, Serie, _), leSpoileo(PersonaMala, PersonaInocente, Serie)).
+
+eresMalo(PersonaMala, PersonaInocente, Serie):-
+  leSpoileo(PersonaInocente, PersonaMala, Serie),
+  mira(PersonaMala, Serie).
+
+malaGente(PersonaMala):-
+  leDijo(PersonaMala, PersonaInocente, Serie, _),
+  eresMalo(PersonaMala, PersonaInocente, Serie).
+
+
+
 
 %-------------------------------------------------------3 Punto C: Popularidad ------------------------------------------------------
 
@@ -271,7 +281,7 @@ fullSpoil(Spoileador, Spoileado):- amigo(Amigo, Spoileado), fullSpoil(Spoileador
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 5 Testing  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-:- begin_tests(debug).
+:- begin_tests(debugParte2).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 1 Punto A: Malo, malo, malo eres... %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -283,7 +293,7 @@ test(es_cierto_que_nico_es_mala_gente, nondet):-
 
 test(no_es_cierto_que_pedro_es_mala_gente, fail):-
   malaGente(pedro).
-  
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 3 Punto C: Popularidad %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 test(es_cierto_que_game_of_thrones_es_popular, nondet):-
@@ -299,19 +309,19 @@ test(es_cierto_que_house_of_cards_es_popular, nondet):-
 
 test(es_cierto_que_nico_le_hizo_fullSpoil_a_Aye, nondet):-
   fullSpoil(nico, aye).
-  
+
 test(es_cierto_que_nico_le_hizo_fullSpoil_a_Juan, nondet):-
   fullSpoil(nico, juan).
 
 test(es_cierto_que_nico_le_hizo_fullSpoil_a_maiu, nondet):-
   fullSpoil(nico, maiu).
- 
+
 test(es_cierto_que_nico_le_hizo_fullSpoil_a_gastón, nondet):-
   fullSpoil(nico, gastón).
- 
+
 test(es_cierto_que_gastón_le_hizo_fullSpoil_a_Aye, nondet):-
   fullSpoil(gastón, aye).
-  
+
 test(es_cierto_que_gastón_le_hizo_fullSpoil_a_Juan, nondet):-
   fullSpoil(gastón, juan).
 
@@ -323,5 +333,6 @@ test(no_es_cierto_que_maiu_le_hizo_fullSpoil_a_alguien, fail):-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-:- end_tests(debug).
+:- end_tests(debugParte2).
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
