@@ -136,6 +136,7 @@ y también pueden ser :
                         unifique .
 
 */
+
 %----------------------------------------------        5 Punto D: Responsable        ----------------------------------------------
 
 televidenteResponsable(Televidente):- loQueVeElTelevidente(Televidente, _), not(leSpoileo(Televidente, _, _)).
@@ -210,7 +211,7 @@ test(gastón_es_televidente_responsable, fail):-
     televidenteResponsable(gastón).
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   Test: 6 Punto E: Viene Zafando   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    Test: 6 Punto E: Viene Zafando   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 test(maiu_no_viene_zafando_con_ninguna_serie, fail):-
   vieneZafando(maiu, _).
