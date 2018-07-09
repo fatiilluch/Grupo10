@@ -238,7 +238,6 @@ test(nico_viene_zafando_con_Star_Wars, [ true(Televidente == nico), nondet ] ):-
 ############################################################################################################################################################################################*/
 
 %-------------------------------------------------------1 Punto A: Malo, malo, malo eres... ------------------------------------------------------
-
 hablo(gastón, maiu).
 hablo(nico, maiu).
 hablo(nico, juan).
@@ -248,4 +247,81 @@ hablo(aye, gastón).
 
 malaGente(MalaPersona):- hablo(MalaPersona,Incauto), forall(hablo(MalaPersona,Incauto), leSpoileo(MalaPersona,Incauto , _)).
 malaGente(MalaPersona):- mira(Incauto,Serie), not(mira(MalaPersona,Serie)), leSpoileo(MalaPersona,Incauto,Serie).
+
+%-------------------------------------------------------3 Punto C: Popularidad ------------------------------------------------------
+
+popular(hoc).
+popular(Serie):- popularidad(Serie, Popularidad1), popularidad(starWars,Popularidad2), Popularidad1 >= Popularidad2.
+
+popularidad(Serie, Popularidad):- cantidadPersonasMiran(Serie, CantPers), cantConversaciones(Serie,CantConv), Popularidad is CantPers * CantConv.
+
+cantidadPersonasMiran(Serie, CantPers):- mira(_, Serie), findall(Persona, mira(Persona,Serie), Personas), length(Personas, CantPers).
+
+cantConversaciones(Serie, CantConv):- leDijo(_,_,Serie,_), findall(Persona,leDijo(Persona,_,Serie,_), Conversación), length(Conversación,CantConv).
+
+%-------------------------------------------------------4 Punto D: Amigos son los amigos... ------------------------------------------------------
+amigo(nico, maiu).
+amigo(maiu, gaston).
+amigo(maiu, juan).
+amigo(juan, aye).
+
+fullSpoil(Spoileador, Spoileado):- leSpoileo(Spoileador, Spoileado,_).
+fullSpoil(Spoileador, Spoileado):- amigo(Amigo, Spoileado), leSpoileo(Spoileador, Amigo,_), Spoileador \= Spoileado.
+fullSpoil(Spoileador, Spoileado):- amigo(Amigo, Spoileado), fullSpoil(Spoileador, Amigo), Spoileador \= Spoileado.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 5 Testing  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+:- begin_tests(debug).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 1 Punto A: Malo, malo, malo eres... %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+test(es_cierto_que_gastón_es_mala_gente, nondet):-
+  malaGente(gastón).
+
+test(es_cierto_que_nico_es_mala_gente, nondet):-
+  malaGente(nico).
+
+test(no_es_cierto_que_pedro_es_mala_gente, fail):-
+  malaGente(pedro).
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 3 Punto C: Popularidad %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+test(es_cierto_que_game_of_thrones_es_popular, nondet):-
+  popular(got).
+
+test(es_cierto_que_starWars_es_popular, nondet):-
+  popular(starWars).
+
+test(es_cierto_que_house_of_cards_es_popular, nondet):-
+  popular(hoc).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 4 Punto D: Amigos son los amigos... %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+test(es_cierto_que_nico_le_hizo_fullSpoil_a_Aye, nondet):-
+  fullSpoil(nico, aye).
+  
+test(es_cierto_que_nico_le_hizo_fullSpoil_a_Juan, nondet):-
+  fullSpoil(nico, juan).
+
+test(es_cierto_que_nico_le_hizo_fullSpoil_a_maiu, nondet):-
+  fullSpoil(nico, maiu).
+ 
+test(es_cierto_que_nico_le_hizo_fullSpoil_a_gastón, nondet):-
+  fullSpoil(nico, gastón).
+ 
+test(es_cierto_que_gastón_le_hizo_fullSpoil_a_Aye, nondet):-
+  fullSpoil(gastón, aye).
+  
+test(es_cierto_que_gastón_le_hizo_fullSpoil_a_Juan, nondet):-
+  fullSpoil(gastón, juan).
+
+test(es_cierto_que_gastón_le_hizo_fullSpoil_a_maiu, nondet):-
+  fullSpoil(gastón, maiu).
+
+test(no_es_cierto_que_maiu_le_hizo_fullSpoil_a_alguien, fail):-
+  fullSpoil(maiu, PersonaALaQueLeHicieronFullSpoil ).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+:- end_tests(debug).
 
