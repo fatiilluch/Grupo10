@@ -255,7 +255,7 @@ malaGente(PersonaMala):-
   leDijo(PersonaMala, PersonaInocente, Serie, _),
   eresMalo(PersonaMala, PersonaInocente, Serie).
 
-
+%------------------------------------------------------- 2 Punto B: Series con cosas fuertes ------------------------------------------------------
 
 
 %-------------------------------------------------------3 Punto C: Popularidad ------------------------------------------------------
@@ -293,6 +293,32 @@ test(es_cierto_que_nico_es_mala_gente, nondet):-
 
 test(no_es_cierto_que_pedro_es_mala_gente, fail):-
   malaGente(pedro).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 2 Punto B: Series con cosas fuertes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+test(la_muerte_de_Seymour_Diera_en_Futurama_es_fuerte, nondet):-
+  relacionesFuertes(futurama,muerte(seymourDiera)).
+
+test(la_muerte_de_Emperor_en_Star_Wars_es_fuerte, nondet):-
+  relacionesFuertes(starWars, muerte(emperor)).
+
+test(la_relación_de_parentesco_de_Anakin_y_el_Rey_en_Star_Wars_es_fuerte, nondet):-
+  relacionesFuertes(starWars, relación(parentesco, anakin, rey)).
+
+test(la_relación_de_parentesco_de_Darth_Vader_y_Luke_en_Star_Wars_es_fuerte, nondet):-
+  relacionesFuertes(himym,relación(amorosa, ted, robin)).
+
+test(la_relación_amorosa_de_Swarley_y_Robin_en_How_I_met_your_mother_es_fuerte, nondet):-
+  relacionesFuertes(himym,relación(amorosa, swarley, robin)).
+
+
+test(el_plot_twist_que_contiene_las_palabras_fuego_y_boda_en_Game_of_Thrones_es_fuerte, nondet):-
+  fuerte(plotTwists(got,3,12,[fuego,boda])).
+
+test(el_plot_twist_que_contiene_la_palabra_sueño_en_Game_of_Thrones_no_es_fuerte, fail):-
+  fuerte(plotTwists(got,3,2,[suenio,sinPiernas])).
+
+test(el_plot_twist_que_contiene_las_palabras_coma_y_pastillas_en_Doctor_House_no_es_fuerte, fail):-
+  fuerte(plotTwists(drHouse,8,7,[coma,pastillas])).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 3 Punto C: Popularidad %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
