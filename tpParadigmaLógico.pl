@@ -303,11 +303,11 @@ relacionesFuertes(Serie,Relación):-
 popular(hoc).
 popular(Serie):- popularidad(Serie, Popularidad1), popularidad(starWars,Popularidad2), Popularidad1 >= Popularidad2.
 
-popularidad(Serie, Popularidad):- cantidadPersonasMiran(Serie, CantPers), cantConversaciones(Serie,CantConv), Popularidad is CantPers * CantConv.
+popularidad(Serie, Popularidad):- cantidadDePersonasQueMiran(Serie, CantidadDePersonas), cantidadDeConversaciones(Serie,CantidadDeConversaciones), Popularidad is CantidadDePersonas * CantidadDeConversaciones.
 
-cantidadPersonasMiran(Serie, CantPers):- mira(_, Serie), findall(Persona, mira(Persona,Serie), Personas), length(Personas, CantPers).
+cantidadDePersonasQueMiran(Serie, CantidadDePersonas):- mira(_, Serie), findall(Persona, mira(Persona,Serie), Personas), length(Personas, CantidadDePersonas).
 
-cantConversaciones(Serie, CantConv):- leDijo(_,_,Serie,_), findall(Persona,leDijo(Persona,_,Serie,_), Conversación), length(Conversación,CantConv).
+cantidadDeConversaciones(Serie, CantidadDeConversaciones):- leDijo(_,_,Serie,_), findall(Persona,leDijo(Persona,_,Serie,_), Conversaciones), length(Conversaciones,CantidadDeConversaciones).
 
 %---------------------------------------------- 4 Punto D: Amigos son los amigos...  ----------------------------------------------
 amigo(nico, maiu).
@@ -316,7 +316,6 @@ amigo(maiu, juan).
 amigo(juan, aye).
 
 fullSpoil(Spoileador, Spoileado):- leSpoileo(Spoileador, Spoileado,_).
-fullSpoil(Spoileador, Spoileado):- amigo(Amigo, Spoileado), leSpoileo(Spoileador, Amigo,_), Spoileador \= Spoileado.
 fullSpoil(Spoileador, Spoileado):- amigo(Amigo, Spoileado), fullSpoil(Spoileador, Amigo), Spoileador \= Spoileado.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%                5 Testing            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -395,7 +394,7 @@ test(es_cierto_que_gastón_le_hizo_fullSpoil_a_maiu, nondet):-
   fullSpoil(gastón, maiu).
 
 test(no_es_cierto_que_maiu_le_hizo_fullSpoil_a_alguien, fail):-
-  fullSpoil(maiu, PersonaALaQueLeHicieronFullSpoil ).
+  fullSpoil(maiu, _ ).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
