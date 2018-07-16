@@ -246,16 +246,14 @@ test(nico_viene_zafando_con_Star_Wars, [ true(Televidente == nico), nondet ] ):-
 
 %---------------------------------------------- 1 Punto A: Malo, malo, malo eres...  ----------------------------------------------
 
-eresMalo(PersonaMala, PersonaInocente, Serie):-
-  forall(leDijo(PersonaMala, PersonaInocente, Serie, _), leSpoileo(PersonaMala, PersonaInocente, Serie)).
-
-eresMalo(PersonaMala, PersonaInocente, Serie):-
-  leSpoileo(PersonaInocente, PersonaMala, Serie),
-  mira(PersonaMala, Serie).
-
 malaGente(PersonaMala):-
   leDijo(PersonaMala, PersonaInocente, Serie, _),
-  eresMalo(PersonaMala, PersonaInocente, Serie).
+  forall(leDijo(PersonaMala, PersonaInocente, Serie, _), leSpoileo(PersonaMala, PersonaInocente, Serie)).
+
+malaGente(PersonaMala):-
+  leSpoileo(_, PersonaMala, Serie),
+  not(mira(PersonaMala, Serie)).
+
 
 %---------------------------------------------- 2 Punto B: Series con cosas fuertes  ----------------------------------------------
 
