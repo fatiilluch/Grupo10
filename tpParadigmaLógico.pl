@@ -71,6 +71,12 @@ paso(himym, 1, 1, relación(amorosa, ted, robin)).
 paso(himym, 4, 3, relación(amorosa, swarley, robin)).
 paso(got, 4, 5, relación(amistad, tyrion, dragón)).
 
+% Agregado del Punto 2 Punto B: Series con cosas fuertes (Parte 2)
+paso(got, 3, 2, plotTwist([sueño, sinPiernas])).
+paso(got, 3, 12, plotTwist([fuego, boda])).
+paso(supercampeones, 9, 9, plotTWist([sueño, coma, sinPiernas])).
+paso(drHouse, 8, 7, plotTwist([coma, pastillas])).
+
 leDijo(gastón, maiu, got, relación(amistad,tyrion,dragón)).
 leDijo(nico, maiu, starWars, relación(parentesco, vader, luke)).
 leDijo(nico, juan, got, muerte(tyrion)).
@@ -82,6 +88,8 @@ leDijo(aye, gastón, got, relación(amistad, tyrion, dragón)).
 leDijo(nico,juan,futurama,muerte(seymourDiera)).
 leDijo(pedro,aye,got,relación(amistad,tyron,dragón)).
 leDijo(aye,nico,got,relación(parentesco,tyron,dragón)).
+leDijo(pedro, nico, got, relacion(parentesco,tyrion,dragon)).
+leDijo(pedro, aye, got, relacion(amistad,tyrion,dragon)).
 
 %----------------------------------------------          3 Punto B: Es spoiler       ----------------------------------------------
 
@@ -156,12 +164,10 @@ laSerieEsPopularOEsFuerte(Serie):-
   temporardaPorEpisodios(Serie, Temporada, _),
   forall( temporardaPorEpisodios(Serie, Temporada, _), esFuerte(Serie, Temporada)). %Issue 24 Pequeño cambio en forall
 
-
 vieneZafando(Televidente, Serie):-
   loQueVeElTelevidente(Televidente, Serie),
   not(leSpoileo(_, Televidente, Serie)),
   laSerieEsPopularOEsFuerte(Serie).
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%              7 Testing              %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -257,44 +263,13 @@ malaGente(PersonaMala):-
 
 %---------------------------------------------- 2 Punto B: Series con cosas fuertes  ----------------------------------------------
 
-plotTwists(got,3,2,[suenio,sinPiernas]).
-plotTwists(got,3,12,[fuego,boda]).
-plotTwists(superCampeones,9,9,[suenio,coma,sinPiernas]).
-plotTwists(drHouse,8,7,[coma,pastillas]).
+esFuerte(Serie, plotTwist(Palabras)):- paso(Serie, Temporada, Episodio, plotTwist(Palabras)), finalTemporada(Serie, Temporada, Episodio), not(cliche(Serie, Palabras)).
 
+finalTemporada(Serie, Temporada,Episodio):- espisodiosPorTemporadaDe(Serie, Temporada, Episodio).
 
-fuerte(plotTwists(Serie, Temporada, Episodios, PalabrasClaves)):-
-  plotTwists(Serie, Temporada, Episodios, PalabrasClaves),
-  not(cliché(Serie, PalabrasClaves)),
-  pasóEnELFinalDeTemporada(Serie, Temporada, Episodios).
+cliche(Serie, Palabras):- forall(member(Palabra, Palabras),apareceEnPlotTwistDeOtraSerie(Serie, Palabra)).
 
-pasóEnELFinalDeTemporada(Serie, Temporada, Episodios):-
-  temporardaPorEpisodios(Serie, Temporada, Episodios).
-
-
-cliché(Serie,PalabrasClaves):-
-  sonPlotTwistsDistintos(Serie, PalabrasClaves, OtraLista),
-  intersección(PalabrasClaves, OtraLista, Intersección),
-  contieneTodasLasPalabrasClaves(Intersección, PalabrasClaves).
-
-
-intersección(Lista, OtraLista, Intersección):-
-  findall( Elemento,
-           ( member(Elemento, Lista), member(Elemento, OtraLista) ),
-           Intersección
-          ).
-
-contieneTodasLasPalabrasClaves(Intersección,PalabrasClaves):-
-  length(PalabrasClaves,Cantidad),
-  length(Intersección,Cantidad).
-
-sonPlotTwistsDistintos(Serie,PalabrasClaves,OtraPalabras):-
-  plotTwists(Serie, _, _,PalabrasClaves),
-  plotTwists(OtraSerie, _, _, OtraPalabras),
-  Serie \= OtraSerie.
-
-relacionesFuertes(Serie,Relación):-
-  paso(Serie, _, _, Relación).
+apareceEnPlotTwistDeOtraSerie(Serie, Palabra):- paso(Serie1, _, _, plotTwist([PalabrasDeSerie2])), member(Palabra, PalabrasDeSerie2), Serie \= Serie1.
 
 %----------------------------------------------         3 Punto C: Popularidad       ----------------------------------------------
 
@@ -333,29 +308,28 @@ test(no_es_cierto_que_pedro_es_mala_gente, fail):-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  2 Punto B: Series con cosas fuertes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 test(la_muerte_de_Seymour_Diera_en_Futurama_es_fuerte, nondet):-
-  relacionesFuertes(futurama,muerte(seymourDiera)).
+  esFuerte(futurama,muerte(seymourDiera)).
 
 test(la_muerte_de_Emperor_en_Star_Wars_es_fuerte, nondet):-
-  relacionesFuertes(starWars, muerte(emperor)).
+  esFuerte(starWars, muerte(emperor)).
 
 test(la_relación_de_parentesco_de_Anakin_y_el_Rey_en_Star_Wars_es_fuerte, nondet):-
-  relacionesFuertes(starWars, relación(parentesco, anakin, rey)).
+  esFuerte(starWars, relación(parentesco, anakin, rey)).
 
 test(la_relación_de_parentesco_de_Darth_Vader_y_Luke_en_Star_Wars_es_fuerte, nondet):-
-  relacionesFuertes(himym,relación(amorosa, ted, robin)).
+  esFuerte(himym,relación(amorosa, ted, robin)).
 
 test(la_relación_amorosa_de_Swarley_y_Robin_en_How_I_met_your_mother_es_fuerte, nondet):-
-  relacionesFuertes(himym,relación(amorosa, swarley, robin)).
+  esFuerte(himym,relación(amorosa, swarley, robin)).
 
+test(el_plotTwist_que_contiene_las_palabras_fuego_y_boda_es_fuerte, nondet):-
+  esFuerte(got, plotTwist([fuego,boda])).
 
-test(el_plot_twist_que_contiene_las_palabras_fuego_y_boda_en_Game_of_Thrones_es_fuerte, nondet):-
-  fuerte(plotTwists(got,3,12,[fuego,boda])).
+test(el_plotTwist_que_contiene_las_palabras_sueño_es_fuerte, fail):-
+  esFuerte(got, plotTwist([sueño])).
 
-test(el_plot_twist_que_contiene_la_palabra_sueño_en_Game_of_Thrones_no_es_fuerte, fail):-
-  fuerte(plotTwists(got,3,2,[suenio,sinPiernas])).
-
-test(el_plot_twist_que_contiene_las_palabras_coma_y_pastillas_en_Doctor_House_no_es_fuerte, fail):-
-  fuerte(plotTwists(drHouse,8,7,[coma,pastillas])).
+test(el_plotTwist_que_contiene_las_palabras_coma_y_pastillas_es_fuerte, fail):-
+  esFuerte(drhouse, plotTwist([sueño])).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%       3 Punto C: Popularidad        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
