@@ -1,0 +1,29 @@
+import rolando.*
+import mascaraOscura.*
+import collarDivino.*
+import espadaDelDestino.*
+
+describe "Tests_Punto2" {
+
+	test "Si eliminamos los artefactos de Rolando, su habilidad de Lucha es 1" {
+		rolando.removerTodosLosArtefactos()
+		assert.equals(rolando.habilidadDeLucha(),1)
+	}
+	
+	test "Si agregamos artefactos y luego eliminamos los artefactos de Rolando, su habilidad de Lucha es 1" {		
+		rolando.agregaArtefacto(collarDivino)
+		rolando.agregaArtefacto(mascaraOscura)
+		rolando.removerTodosLosArtefactos()
+		assert.equals(rolando.habilidadDeLucha(),1)
+	}	
+	
+	test "La habilidad para la lucha de Rolando con todos los artefactos es 13" {
+		rolando.agregaArtefacto(collarDivino)
+		rolando.agregaArtefacto(mascaraOscura)
+		rolando.agregaArtefacto(espadaDelDestino)
+		assert.equals(rolando.habilidadDeLucha(),13)
+		//tiene problemas el "habilidadDeLucha", ver que onda
+	}	
+	
+	test ""
+}
