@@ -1,6 +1,7 @@
 import rolando.*
 import espectroMalefico.*
 import hechizoBasico.*
+import fuerzaOscura.*
 
 describe "Tests_Punto1" {
 	test "El nivel de hechiceria de Rolando es 56" {
@@ -19,7 +20,7 @@ describe "Tests_Punto1" {
 	
 	//Hacer que ocurra un eclipse. Conocer el nivel de hechicería de Rolando.
 	test "Cuando ocurre un eclipse, el nivel de Hechiceria de Rolando es 61" {
-		rolando.eclipse()
+		fuerzaOscura.eclipse()
 		assert.equals(rolando.nivelDeHechiceria(),61)
 	}
 	

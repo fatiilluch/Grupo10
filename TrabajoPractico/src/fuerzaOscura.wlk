@@ -5,6 +5,10 @@ object fuerzaOscura {
 	method fuerza(nuevaFuerza) {
 		fuerza = nuevaFuerza
 	}
+	
+	method eclipse() {
+		fuerza = fuerza * 2
+	} 
 }
 
 //El valor de la fuerza oscura es un cálculo global 
