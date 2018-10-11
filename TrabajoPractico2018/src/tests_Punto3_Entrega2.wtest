@@ -1,0 +1,63 @@
+import Personaje.*
+import HechizoDeLogo.*
+import ArmasFilosas.*
+
+describe "Tests Punto 3 de la Entrega 2" {
+
+	var rolando
+	var espadaDelDestino
+	var mascaraOscura
+	var armadura
+	//var espejo
+	fixture 
+	{
+		
+		espadaDelDestino = new ArmaFilosa()
+		rolando = new Personaje()
+		
+	}
+	test "Rolando esta cargado" 
+	{
+		
+//Saber si Rolando está cargado
+//Sí lo está (tiene 5 artefactos >= 5)
+
+		assert.that(true)
+
+	}
+}
+
+
+
+/*Hacer que Rolando se saque la armadura.
+Saber si Rolando está cargado.
+No lo está (queda con 4 artefactos, no es mayor o igual  a 5)
+
+Saber cuánta habilidad para la lucha tiene Rolando.
+20 = 13 (lo que sabemos que suman el valor de lucha de Rolando + la espada, el collar y la máscara) + 2 de la armadura sin refuerzo + 5 nuevamente, porque el espejo replica los puntos de lucha del mejor artefacto que es la espada. 
+
+Saber cuál es la habilidad para la lucha de la armadura de Rolando si tiene una bendición de refuerzo
+58 = 2 + 56 que es el nivel de hechicería de Rolando
+
+Saber cuál es la habilidad para la lucha de la armadura de Rolando si tiene una cota de malla de refuerzo
+3 = 2 + 1 que es lo que agrega la cota de malla
+
+Saber cuál es la habilidad para la lucha de la armadura de Rolando si tiene el hechizo básico de refuerzo
+12 = 2 + 10 que es el poder del hechizo básico (= puntos de lucha)
+
+Saber cuál es la habilidad para la lucha de la armadura de Rolando si tiene el hechizo espectro maléfico de refuerzo
+19 = 2 + 17 que es el poder del espectro maléfico (= puntos de lucha)
+
+Eliminar todos los artefactos de Rolando.
+Incorporar solamente el espejo.
+Saber cuál es la habilidad para la lucha de Rolando.
+1 = valor base de lucha para Rolando y no suma más ya que el espejo solo no da puntos.
+
+Reemplazar al hechizo preferido por un libro de hechizos que contenga el Hechizo de Logos (con nombre “espectro maléfico”) y al hechizo básico.
+Saber cuál es el nivel de hechicería de Rolando.
+56 = 3 * 17 (17 poder del espectro maléfico, el hechizo básico no suma porque no es poderoso) + 5 (valor de la fuerza oscura) 
+
+Agregarle a Rolando una armadura extra, cuyo valor base es 5, con un refuerzo cota de malla que tiene un valor de lucha 6.
+Saber cuál es la habilidad para la lucha de Rolando.
+37 = 13 (valor de lucha de Rolando + la espada, el collar y la máscara) + 2 de la armadura sin refuerzo + 11 de la armadura nueva (5 valor base + 6 del refuerzo) + 11 por el espejo que replica el artefacto que más valor para la lucha le da, que pasa a ser la nueva armadura. 
+*/

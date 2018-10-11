@@ -1,0 +1,57 @@
+import Personaje.*
+import HechizoDeLogo.*
+import hechizoBasico.*
+import fuerzaOscura.*
+
+
+describe "Tests Punto 1 de la Entrega 2" {
+	
+	var rolando
+	var espectroMalefico
+	
+	fixture
+	{
+		espectroMalefico = new HechizoDeLogo (nombre = "espectro malefico", multiplicador = 1)
+		rolando = new Personaje (hechizoPreferido = espectroMalefico)
+	}
+	
+	test "El nivel de hechiceria de rolando es 56" 
+	{
+		assert.equals(rolando.nivelDeHechiceria(),56)
+	}
+	
+	test "Si cambiamos el nombre del espectro malefico a espectro superrecontramalefico muajajaja el nivel de hechiceria de Rolando es 125"
+	{
+		espectroMalefico.nombre("espectro superrecontramalefico muajajaja")
+		rolando.hechizoPreferido(espectroMalefico)
+		assert.equals(rolando.nivelDeHechiceria(),125)
+	}
+	
+	test "Si cambiamos el hechizo preferido de Rolando por el hechizo basico, si nivel de hechiceria es 35"
+	{
+		rolando.hechizoPreferido(hechizoBasico)		
+		assert.equals(rolando.nivelDeHechiceria(),35)
+	}
+	
+	test "Si ocurre un eclipse, el nivel de hechiceria de Rolando es 61"
+	{
+		fuerzaOscura.eclipse()
+		assert.equals(rolando.nivelDeHechiceria(),61)
+	}
+	
+	test "El espectro malefico es poderoso"
+	{
+		assert.that(espectroMalefico.esPoderoso())
+	}
+	
+	test "Si cambiamos el nombre del espectro malefico a pepe, el hechizo no es poderoso"
+	{
+		espectroMalefico.nombre("pepe")	
+		assert.notThat(espectroMalefico.esPoderoso())
+	}
+	
+	test "El hechizo basico no es poderoro"
+	{
+		assert.notThat(hechizoBasico.esPoderoso())
+	}	
+}

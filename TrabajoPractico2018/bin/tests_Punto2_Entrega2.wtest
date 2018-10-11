@@ -1,0 +1,77 @@
+import Personaje.*
+import ArmasFilosas.*
+import collarDivino.*
+import fuerzaOscura.*
+import HechizoDeLogo.*
+
+describe "Tests Punto 2 de la Entrega 2" {
+	
+	var rolando
+	var espadaDelDestino
+	var mascaraOscura
+	var espectroMalefico
+	
+	fixture
+	{
+		collarDivino.perlas(5)
+		espadaDelDestino = new ArmaFilosa()
+		mascaraOscura = new MascaraOscura(indiceDeOscuridad = 1, minimoDePoder = 4)
+		espectroMalefico = new HechizoDeLogo(nombre = "espectro malefico", multiplicador = 1) 
+		rolando = new Personaje(hechizoPreferido = espectroMalefico)
+		rolando.agregaArtefacto(collarDivino)
+		rolando.agregaArtefacto(espadaDelDestino)
+		rolando.agregaArtefacto(mascaraOscura)
+		
+	}
+	
+	test "Si eliminamos todos los artefactos de Rolando, su habilidad de lucha es 1" 
+	{
+		rolando.removeTodosLosArtefactos()		
+		assert.equals(rolando.habilidadDeLucha(),1)
+	}
+	
+	test "La habilidad de lucha de Rolando con todos los artefactos es 13"
+	{
+		assert.equals(rolando.habilidadDeLucha(),13)
+	}
+	
+	test "Si cambiamos la cantidad de perlas a 3, la habilidad de lucha de Rolando es de 11"
+	{
+		rolando.removeArtefacto(collarDivino)
+		collarDivino.perlas(3)
+		rolando.agregaArtefacto(collarDivino)
+		assert.equals(rolando.habilidadDeLucha(),11)
+	}
+	
+	test "Si cambiamos el valor de la base para la lucha de Rolando a 8, la habilidad para la lucha de Rolando es 20"
+	{
+		rolando.valorBaseDeLucha(8)
+		assert.equals(rolando.habilidadDeLucha(),20)
+	}
+	
+	test "Si ocurre un eclipse, el valor de lucha de la mascara oscura es 5"
+	{
+		fuerzaOscura.eclipse()
+		assert.equals(mascaraOscura.poderDeLucha(),5)	
+	}
+	
+	test "Si eliminamos la mascara oscura de los artefactos de rolando, su habilidad de lucha es 9"
+	{
+		rolando.removeArtefacto(mascaraOscura)
+		assert.equals(rolando.habilidadDeLucha(),9)
+	}
+	
+	test "Si tenemos una mascara para nada oscura con indice de oscuridad 0, el valor de lucha de la mascara oscura de rolando es 4"
+	{
+		rolando.removeArtefacto(mascaraOscura)
+		var mascaraParaNadaOscura = new MascaraOscura(indiceDeOscuridad = 0)
+		assert.equals(mascaraParaNadaOscura.poderDeLucha(),4) 
+	}
+	
+	test "Si tenemos una mascara para nada oscura con indice de oscuridad 0 y valor minimo en 2, el valor de lucha de la mascara oscura es 2"
+	{
+		rolando.removeArtefacto(mascaraOscura)
+		var mascaraParaNadaOscura = new MascaraOscura(indiceDeOscuridad = 0, minimoDePoder = 2) 
+		assert.equals(mascaraParaNadaOscura.poderDeLucha(),2)
+	}	
+}
