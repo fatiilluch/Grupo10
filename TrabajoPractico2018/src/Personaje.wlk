@@ -13,8 +13,46 @@ class Personaje
 	var hechizoPreferido = new HechizoDeLogo()
 	const property artefactos = []
 	
+	var property monedas = 100
+	const property objetivos = [] // Cada vez que cumple un objetivo gana 10 monedas
+	
+	method canjeaPor (nuevoProducto) 
+	{	
+		var mitadMonedas = self.monedas(hechizoPreferido.precioDeLista(self) / 2)
+		if (self.puedeComprarlo(nuevoProducto)) 
+		{
+			self.monedas(mitadMonedas + self.monedas())
+			if (mitadMonedas > nuevoProducto.precioDeLista(self))
+			{
+				self.hechizoPreferido(nuevoProducto)
+				self.monedas(self.monedas() - mitadMonedas)
+			}
+			else
+			{
+				self.hechizoPreferido(nuevoProducto)
+				self.monedas(self.monedas() - nuevoProducto.precioDeLista(self))
+			}
+		}
+	}
+
+
+	method compra (artefacto)
+	{
+		if (self.puedeComprarlo(artefacto))
+		{
+			self.agregaArtefacto(artefacto)
+			self.monedas((self.monedas() - artefacto.precioDeLista(self))
+		}		
+	}
+
+	method puedeComprarlo(artefacto)
+	{
+		return !(artefacto.precioDeLista(self) >= self.monedas())
+	}
+	
 	// Modificar a gusto el valor base de lucha de Rolando.	
-	method valorBaseHechiceria(nuevoValorBase){
+	method valorBaseHechiceria(nuevoValorBase)
+	{
 		valorBaseHechiceria = nuevoValorBase
 	}
 	
@@ -29,7 +67,8 @@ class Personaje
 	method nivelDeHechiceria() = self.valorBaseHechiceria() * self.hechizoPreferido().poder() + fuerzaOscura.poder()
 
 	//Cambiar el hechizo preferido de Rolando en cualquier momento. 1	
-	method hechizoPreferido(nuevoHechizoPreferido) {
+	method hechizoPreferido(nuevoHechizoPreferido) 
+	{
 		hechizoPreferido = nuevoHechizoPreferido
 	}
 	
@@ -39,7 +78,7 @@ class Personaje
 	method seCreePoderoso() = hechizoPreferido.esPoderoso()
 	
 	// Saber el valor de lucha de Rolando. 2
-	method habilidadDeLucha() = self.artefactos().sum( {poder => poder.poderDeLucha()} ) + self.valorBaseDeLucha()
+	method habilidadDeLucha() = self.artefactos().sum( {poder => poder.poderDeLucha(self)} ) + self.valorBaseDeLucha()
 
 	// Agregar y remover artefactos de Rolando. 2
 	method agregaArtefacto(unArtefacto) {
@@ -73,19 +112,5 @@ class Personaje
 	
 	method artefactoSinEspejo() = self.artefactos().filter({elemento => elemento.equals(espejo).negate()})
 	
-	method mejorPoder() = self.artefactoSinEspejo().max({artefacto => artefacto.poderDeLucha()})
-	
+	method mejorPoder() = self.artefactoSinEspejo().map({artefacto => artefacto.poderDeLucha(self)}).max()
 }
-	
-	
- 
-/*Además del maléfico hay muchos otros hechizos a los que llamamos de "logos", 
-cada uno con su propio nombre. El poder de hechicería es un múltiplo 
-de la cantidad de letras de su nombre, donde el valor por el cual 
-se multiplica puede variar de hechizo en hechizo. La forma de saber 
-si es poderoso sigue siendo si su poder es mayor a 15. 
-Se confirma que la fuerza oscura es única para todo el juego y 
-que si su valor cambia, afecta el poder de hechicería de todos los personajes existentes.*/
-
-
-
