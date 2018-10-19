@@ -1,4 +1,5 @@
-object espectroMalefico {
+object espectroMalefico 
+{
 	var nombre = "Espectro Malefico"
 
 	//Tener la posibilidad de que el espectro maléfico cambie de nombre.	

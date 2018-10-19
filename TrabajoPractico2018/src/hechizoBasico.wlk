@@ -1,4 +1,5 @@
-object hechizoBasico {
+object hechizoBasico 
+{
 	var nombre = "Hechizo Basico"
 	
 	method nombre() = nombre
@@ -9,4 +10,14 @@ object hechizoBasico {
 
 	method poder() = 10		
 	method esPoderoso() = false 
+	
+	method precioDeLista(duenio) = 10
+
+	/*method peso()
+	{
+		if (self.poder().odd())
+			return 2
+		else 
+			return 1
+	}*/
 }

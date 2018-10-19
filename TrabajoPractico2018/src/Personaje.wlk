@@ -1,10 +1,12 @@
 import fuerzaOscura.*
 import collarDivino.*
 import espadaDelDestino.*
-import mascaraOscura.*
-import armadura.*
+//import mascaraOscura.*
+import ArmaduraGeneral.*
 import espejo.*
 import HechizoDeLogo.*
+import Comerciante.*
+import Mascara.*
 
 class Personaje 
 {
@@ -14,14 +16,20 @@ class Personaje
 	const property artefactos = []
 	
 	var property monedas = 100
-	const property objetivos = [] // Cada vez que cumple un objetivo gana 10 monedas
 	
-	method canjeaPor (nuevoProducto) 
-	{	
-		var mitadMonedas = self.monedas(hechizoPreferido.precioDeLista(self) / 2)
+	
+	
+	//const property objetivos = [] // Cada vez que cumple un objetivo gana 10 monedas
+
+	//var property cantidadMaximaDeCarga = 0
+
+	//var comerciante = new Comerciante() 
+	
+	method canjeaPor(nuevoProducto) 
+	{	var mitadMonedas = self.monedas(self.hechizoPreferido().precioDeLista(self) / 2)
 		if (self.puedeComprarlo(nuevoProducto)) 
 		{
-			self.monedas(mitadMonedas + self.monedas())
+			self.monedas(self.monedas() + mitadMonedas)
 			if (mitadMonedas > nuevoProducto.precioDeLista(self))
 			{
 				self.hechizoPreferido(nuevoProducto)
@@ -33,21 +41,33 @@ class Personaje
 				self.monedas(self.monedas() - nuevoProducto.precioDeLista(self))
 			}
 		}
+		else 
+		{
+			//TODO
+		}
 	}
 
+	//method puedeCargarlo(objeto)
+	//{
+	//	return !(objeto.pesoTotal() >= self.cantidadMaximaDeCarga())
+	//}
 
 	method compra (artefacto)
 	{
 		if (self.puedeComprarlo(artefacto))
 		{
 			self.agregaArtefacto(artefacto)
-			self.monedas((self.monedas() - artefacto.precioDeLista(self))
-		}		
+			self.monedas((self.monedas() - artefacto.precioDeLista(self)))
+		}	
+		else
+		{
+			throw new Exception("No puede Comprar este Artefacto")
+		}	
 	}
 
 	method puedeComprarlo(artefacto)
 	{
-		return !(artefacto.precioDeLista(self) >= self.monedas())
+		return (artefacto.precioDeLista(self) <= self.monedas())
 	}
 	
 	// Modificar a gusto el valor base de lucha de Rolando.	
@@ -58,7 +78,8 @@ class Personaje
 	
 	method valorBaseHechiceria() = valorBaseHechiceria
 	
-	method valorBaseDeLucha(nuevoValorDeLucha){
+	method valorBaseDeLucha(nuevoValorDeLucha)
+	{
 		valorBaseDeLucha = nuevoValorDeLucha
 	}
 	method valorBaseDeLucha() = valorBaseDeLucha
@@ -81,8 +102,10 @@ class Personaje
 	method habilidadDeLucha() = self.artefactos().sum( {poder => poder.poderDeLucha(self)} ) + self.valorBaseDeLucha()
 
 	// Agregar y remover artefactos de Rolando. 2
-	method agregaArtefacto(unArtefacto) {
-		artefactos.add(unArtefacto)
+	method agregaArtefacto(unArtefacto) 
+	{
+		//if (self.puedeCargarlo(unArtefacto))
+			artefactos.add(unArtefacto)
 	}
 
 	method removeArtefacto(artefacto) {
@@ -113,4 +136,6 @@ class Personaje
 	method artefactoSinEspejo() = self.artefactos().filter({elemento => elemento.equals(espejo).negate()})
 	
 	method mejorPoder() = self.artefactoSinEspejo().map({artefacto => artefacto.poderDeLucha(self)}).max()
+
+
 }

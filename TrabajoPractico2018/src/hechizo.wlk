@@ -1,10 +1,10 @@
 import hechizoBasico.*
 import espectroMalefico.*
 
-object hechizo {
-	
+object hechizo 
+{
 	var property hechizoDeseado = hechizoBasico
 	 
-	method unidadesDeLucha() = hechizoDeseado.poder()  
+	method poder() = hechizoDeseado.poder()  
 		
 }

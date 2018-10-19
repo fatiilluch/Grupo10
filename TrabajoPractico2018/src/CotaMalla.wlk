@@ -1,12 +1,5 @@
-class CotaMalla {
-	
-	var property unidadDeLucha
-	
-	method unidadDeLucha() = unidadDeLucha
-	
-	method unidadDeLucha(nuevaUnidad) 
-	{
-		unidadDeLucha = nuevaUnidad
-	}
-	
+class CotaMalla 
+{	
+	var property poder = 1
+	method poder() = 1	
 }

@@ -1,6 +1,6 @@
 object cotaDeMalla {
 	
-	method unidadesDeLucha() = 1
+	method poder() = 1
 	
 }
 

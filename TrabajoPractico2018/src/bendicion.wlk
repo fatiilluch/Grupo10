@@ -1,7 +1,9 @@
 import rolando.*
 
-object bendicion {
+object bendicion 
+{
 
-	method unidadesDeLucha() = rolando.nivelDeHechiceria()	
-	
+	method poder() = rolando.nivelDeHechiceria()	
+
+	//method peso() = 0	
 }

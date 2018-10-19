@@ -7,14 +7,16 @@ import mascaraOscura.*
 import armadura.*
 import espejo.*
 
-object rolando {
+object rolando 
+{
 	var valorBaseHechiceria = 3
 	var valorBaseDeLucha = 1
 	var hechizoPreferido = espectroMalefico
-	const property artefactos = #{}
+	const property artefactos = []
 	
 	// Modificar a gusto el valor base de lucha de Rolando.	
-	method valorBaseHechiceria(nuevoValorBase){
+	method valorBaseHechiceria(nuevoValorBase)
+	{
 		valorBaseHechiceria = nuevoValorBase
 	}
 	
@@ -39,18 +41,21 @@ object rolando {
 	method seCreePoderoso() = hechizoPreferido.esPoderoso()
 	
 	// Saber el valor de lucha de Rolando. 2
-	method habilidadDeLucha() = self.artefactos().sum( {poder => poder.poderDeLucha()} ) + self.valorBaseDeLucha()
+	method habilidadDeLucha() = self.artefactos().sum( {poder => poder.poderDeLucha(self)} ) + self.valorBaseDeLucha()
 
 	// Agregar y remover artefactos de Rolando. 2
-	method agregaArtefacto(unArtefacto) {
+	method agregaArtefacto(unArtefacto) 
+	{
 		artefactos.add(unArtefacto)
 	}
 
-	method removeArtefacto(artefacto) {
+	method removeArtefacto(artefacto) 
+	{
 		artefactos.remove(artefacto)
 	}
 	
-	method removeTodosLosArtefactos() {
+	method removeTodosLosArtefactos() 
+	{
 		self.artefactos().forEach({artefacto => self.removeArtefacto(artefacto)})
 	}
 	
@@ -73,9 +78,5 @@ object rolando {
 	
 	method artefactoSinEspejo() = self.artefactos().filter({elemento => elemento.equals(espejo).negate()})
 	
-	method mejorPoder() = self.artefactoSinEspejo().max({artefacto => artefacto.poderDeLucha()})
-	
+	method mejorPoder() = self.artefactoSinEspejo().map({artefacto => artefacto.poderDeLucha(self)}).max()
 }
-	
-	 //probar levantando solo a rolando y ver q me devuelven los metodos
-	 

@@ -2,7 +2,11 @@ import fuerzaOscura.*
 
 class ArmaFilosa 
 {	
-	method poderDeLucha() = 3	
+	method poderDeLucha(duenio) = 3
+	
+	method precioDeLista(duenio) = 5 * self.poderDeLucha(duenio)
+		
+	//method pesoTotal() = 0
 }
 
 class Espada inherits ArmaFilosa {}
@@ -11,14 +15,5 @@ class Hacha inherits ArmaFilosa {}
  
 class Lanza inherits ArmaFilosa {} 
 
-class MascaraOscura {
-	
-	var property indiceDeOscuridad = 0
-	
-	var property minimoDePoder = 4 
-	
-	method poderDeLucha() = self.minimoDePoder().max((fuerzaOscura.poder()/2) * self.indiceDeOscuridad())
-}
 
-	
 	

@@ -2,30 +2,26 @@ import rolando.*
 import hechizoBasico.*
 import espectroMalefico.*
 
-object libroDeHechizos {
-	
+object libroDeHechizos 
+{	
 	var property hechizos = []
+	//var property peso = 10 
+	//var property fechaCompra = 200
+
+	//method pesoTotal() = self.peso() - self.factorDeCorreccion()
+
+	//method factorDeCorreccion() = (self.fechaCompra() / 1000).max(1)
 	
-	method poder() = self.sumarPoderDeLucha(self.filtrarPoderosos(   ))
+	method poder() = self.filtraLibroDeHechizos().filter({poderoso => poderoso.esPoderoso()}).sum({poder => poder.poder()})
 	
-	method filtrarLibroDeHechizos() = self.hechizos().filter({artefacto => artefacto.equals(self)})
-	
-	method filtrarPoderosos() = self.filtrarLibroDeHechizos().filter({artefacto => artefacto.esPoderoso()})
-	
-	method sumarPoderDeLucha(lista) = self.filtrarPoderosos().sum({obj => obj.poderDeLucha()})
+	method filtraLibroDeHechizos() = self.hechizos().filter({artefacto => artefacto.equals(self).negate()})
 	
 	method agregaHechizo(nuevoHechizo){
 		hechizos.add(nuevoHechizo)
 	}
+	
+	method precioDeLista(duenio) = (10 * self.decimeCuantosPoderososHay()) + self.hechizos().sum({poder => poder.poder()})
+		
+	method decimeCuantosPoderososHay() = self.hechizos().map({hechizo => hechizo.esPoderoso()}).size() 
+	
 }
-
-//el resultado de filtrarlbro da una lista, la lista no entiende filtrarpoderosos
-
-/*Por otra parte, puede suceder que Rolando 
-en vez de tener un simple hechizo preferido, 
-adopte como preferido un libro de hechizos, 
-en el que están detallados varios hechizos. 
-En este caso, el poder de hechicería 
-que aporta es la sumatoria del poder de 
-todos los hechizos poderosos que contenga.
-*/

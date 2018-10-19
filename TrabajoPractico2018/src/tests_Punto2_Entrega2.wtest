@@ -3,6 +3,7 @@ import ArmasFilosas.*
 import collarDivino.*
 import fuerzaOscura.*
 import HechizoDeLogo.*
+import Mascara.*
 
 describe "Tests Punto 2 de la Entrega 2" {
 	
@@ -21,7 +22,6 @@ describe "Tests Punto 2 de la Entrega 2" {
 		rolando.agregaArtefacto(collarDivino)
 		rolando.agregaArtefacto(espadaDelDestino)
 		rolando.agregaArtefacto(mascaraOscura)
-		
 	}
 	
 	test "Si eliminamos todos los artefactos de Rolando, su habilidad de lucha es 1" 

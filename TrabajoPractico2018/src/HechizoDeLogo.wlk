@@ -20,4 +20,14 @@ class HechizoDeLogo
 	method poder() = self.nombre().size() * self.multiplicador()
 		
 	method esPoderoso() = self.poder() > 15 
+
+	/*method peso()
+	{
+		if (self.poder().odd())
+			return 2
+		else 
+			return 1
+	}*/
+	
+	method precioDeLista(duenio) = self.poder()	
 }
