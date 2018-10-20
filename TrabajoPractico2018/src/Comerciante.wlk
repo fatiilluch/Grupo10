@@ -1,24 +1,28 @@
-//import Personaje.*
-
 class Comerciante
 {
-	var property comision
+	var property comision 
+	var property comerciante = independiente
+	
+	method cobrarImpuesto() = self.comision() + self.comerciante().valorAgregado() 
 }
 
-class ComercianteIndependiente inherits Comerciante
+object independiente 
 {
-	method impuestoAdicional() = comision
+	var property comision = 10
+	method valorAgregado() = comision
 }
 
-class ComercianteRegistrado inherits Comerciante
+object registrado 
 {
-	method impuestoAdicional() = 0.21
+	method valorAgregado() = 0.21
 }
 
-class ComercianteConImpuestoALasGanancias inherits Comerciante
+object conImpuestoALasGanancias
 {
-	method impuestoAdicional() = 0
+	var property comision = 10
+	method valorAgregado(){} // TODO
 }
-/*i el importe de lo que se vende es menor al mínimo no imponible 
+
+/*si el importe de lo que se vende es menor al mínimo no imponible 
 (definidos para todos por igual), 
 no tiene recargo, pero si lo supera, se le suma el 35% de la diferencia de importes.*/ 

@@ -52,7 +52,7 @@ describe "Tests Punto 2 de la Entrega 2" {
 	test "Si ocurre un eclipse, el valor de lucha de la mascara oscura es 5"
 	{
 		fuerzaOscura.eclipse()
-		assert.equals(mascaraOscura.poderDeLucha(),5)	
+		assert.equals(mascaraOscura.poderDeLucha(rolando),5)	
 	}
 	
 	test "Si eliminamos la mascara oscura de los artefactos de rolando, su habilidad de lucha es 9"
@@ -65,13 +65,13 @@ describe "Tests Punto 2 de la Entrega 2" {
 	{
 		rolando.removeArtefacto(mascaraOscura)
 		var mascaraParaNadaOscura = new MascaraOscura(indiceDeOscuridad = 0)
-		assert.equals(mascaraParaNadaOscura.poderDeLucha(),4) 
+		assert.equals(mascaraParaNadaOscura.poderDeLucha(rolando),4) 
 	}
 	
 	test "Si tenemos una mascara para nada oscura con indice de oscuridad 0 y valor minimo en 2, el valor de lucha de la mascara oscura es 2"
 	{
 		rolando.removeArtefacto(mascaraOscura)
 		var mascaraParaNadaOscura = new MascaraOscura(indiceDeOscuridad = 0, minimoDePoder = 2) 
-		assert.equals(mascaraParaNadaOscura.poderDeLucha(),2)
+		assert.equals(mascaraParaNadaOscura.poderDeLucha(rolando),2)
 	}	
 }

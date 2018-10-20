@@ -2,8 +2,11 @@ import rolando.*
 
 object bendicion 
 {
-
-	method poder() = rolando.nivelDeHechiceria()	
+	var property personaje = rolando
+	
+	method poder() = self.personaje().nivelDeHechiceria()
+	
+	method precioRefuerzo(valorBase, duenio) = valorBase
 
 	//method peso() = 0	
 }

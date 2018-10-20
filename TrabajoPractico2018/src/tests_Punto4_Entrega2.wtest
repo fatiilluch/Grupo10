@@ -10,9 +10,8 @@ import bendicion.*
 import espejo.*
 import libroDeHechizos.*
 
-
-describe "Tests Punto 4 de la Entrega 2" {
-
+describe "Tests Punto 4 de la Entrega 2" 
+{
 	var xenia
 	var thor
 	var loki
@@ -52,15 +51,23 @@ describe "Tests Punto 4 de la Entrega 2" {
 	
 	test"Loki no puede canjear el hechizo por el de alacachula cachicomula del juego de datos ya que no dispone de suficientes monedas"
 	{
-		assert.notThat(loki.canjeaPor(alacachulaCachicomula))
+		const mensajeDeError = "No puede adquirir este producto"
+		
+		const excepcionEsperada = new ExcepcionPorFaltaDeMonedas (mensajeDeError)
+		
+		const bloqueQueDebeExplotar = 
+		{
+			loki.canjeaPor(alacachulaCachicomula)	
+		}
+		assert.throwsExceptionLike(excepcionEsperada, bloqueQueDebeExplotar)
 	}
 	
 	test "Si Xenia compra una espada, un collar divino (de 5 perlas), una armadura sin refuerzo y otra armadura con malla de cota cuyo valor de lucha es 5. A xenia le quedan 70.5 monedas."
 	{
 		var espada = new Espada()
 		var cotaDeMalla = new CotaMalla(poder = 5)
-		var armaduraSinRefuerzo = new ArmaduraGeneral(refuerzo = ninguno, valorBase = 0)
-		var armaduraConMalla = new ArmaduraGeneral (refuerzo = cotaDeMalla, valorBase = 0) 
+		var armaduraSinRefuerzo = new ArmaduraGeneral(refuerzo = ninguno)
+		var armaduraConMalla = new ArmaduraGeneral (refuerzo = cotaDeMalla) 
 		xenia.compra(espada)
 		xenia.compra(collarDivino)
 		xenia.compra(armaduraSinRefuerzo)
@@ -92,8 +99,17 @@ describe "Tests Punto 4 de la Entrega 2" {
 	
 	test "Loki quiere comprar el espejo,pero como tiene solo 5 monedas no puede"
 	{
-		assert.notThat(loki.compra(espejo))
+		const mensajeDeError = "No puede Comprar este Artefacto"
+		
+		const excepcionEsperada = new ExcepcionPorFaltaDeMonedas (mensajeDeError)
+		
+		const bloqueQueDebeExplotar =
+		{
+			loki.compra(espejo)
+		} 
+		assert.throwsExceptionLike(excepcionEsperada, bloqueQueDebeExplotar)
 	}
+
 	
 	test "xenia canjea un libro de hechizos que contiene el hechizo de logos de nombre alacachula cachicomula y el hechizo basico. Le quedan 69 monedas."
 	{

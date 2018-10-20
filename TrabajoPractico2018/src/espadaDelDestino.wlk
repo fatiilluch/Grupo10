@@ -2,8 +2,7 @@ import rolando.*
 
 object espadaDelDestino 
 {
-	
-	//var property peso = 20
+		//var property peso = 20
 	//var property fechaCompra = 100
 	
 	//method pesoTotal() = self.peso() - self.factorDeCorreccion()

@@ -30,4 +30,12 @@ class HechizoDeLogo
 	}*/
 	
 	method precioDeLista(duenio) = self.poder()	
+	
+	method precioRefuerzo(valorBase, duenio) = valorBase + self.precioDeLista(duenio)
+}
+
+class HechizoComercial inherits HechizoDeLogo
+{
+	var property multiplicadorComercial = 2
+	override method poder() = self.nombre().size() * 0.2 * self.multiplicadorComercial()
 }

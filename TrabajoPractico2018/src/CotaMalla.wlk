@@ -1,5 +1,9 @@
 class CotaMalla 
 {	
-	var property poder = 1
-	method poder() = 1	
+	var property poder
+	
+	method precioRefuerzo(valorBase, duenio) = self.poder()/2
 }
+
+
+

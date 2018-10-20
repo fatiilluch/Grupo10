@@ -20,4 +20,6 @@ object hechizoBasico
 		else 
 			return 1
 	}*/
+	
+	method precioRefuerzo(valorBase, duenio) = valorBase + self.precioDeLista(duenio) 
 }

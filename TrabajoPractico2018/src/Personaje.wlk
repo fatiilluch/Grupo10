@@ -1,12 +1,17 @@
 import fuerzaOscura.*
 import collarDivino.*
 import espadaDelDestino.*
-//import mascaraOscura.*
 import ArmaduraGeneral.*
 import espejo.*
 import HechizoDeLogo.*
 import Comerciante.*
 import Mascara.*
+import hechizoBasico.*
+import bendicion.*
+import ArmasFilosas.*
+import CotaMalla.*
+import armadura.*
+import libroDeHechizos.*
 
 class Personaje 
 {
@@ -17,8 +22,6 @@ class Personaje
 	
 	var property monedas = 100
 	
-	
-	
 	//const property objetivos = [] // Cada vez que cumple un objetivo gana 10 monedas
 
 	//var property cantidadMaximaDeCarga = 0
@@ -26,49 +29,43 @@ class Personaje
 	//var comerciante = new Comerciante() 
 	
 	method canjeaPor(nuevoProducto) 
-	{	var mitadMonedas = self.monedas(self.hechizoPreferido().precioDeLista(self) / 2)
-		if (self.puedeComprarlo(nuevoProducto)) 
+	{
+		var mitadMonedas = self.hechizoPreferido().precioDeLista(self) / 2 	
+		
+		if (self.podesComprarlo(nuevoProducto).negate()) 
 		{
-			self.monedas(self.monedas() + mitadMonedas)
-			if (mitadMonedas > nuevoProducto.precioDeLista(self))
-			{
-				self.hechizoPreferido(nuevoProducto)
-				self.monedas(self.monedas() - mitadMonedas)
-			}
-			else
-			{
-				self.hechizoPreferido(nuevoProducto)
-				self.monedas(self.monedas() - nuevoProducto.precioDeLista(self))
-			}
+			throw new ExcepcionPorFaltaDeMonedas("No puede adquirir este producto")
 		}
-		else 
-		{
-			//TODO
-		}
+		
+		var costo = nuevoProducto.precioDeLista(self) - mitadMonedas
+		
+		self.restaMonedas(costo.max(0))
+		
+		self.hechizoPreferido(nuevoProducto)
 	}
-
+	
+	method restaMonedas(cantidad) 
+	{
+		self.monedas((self.monedas() - cantidad).max(0))
+		return self.monedas()
+	}
+	
 	//method puedeCargarlo(objeto)
 	//{
 	//	return !(objeto.pesoTotal() >= self.cantidadMaximaDeCarga())
 	//}
 
-	method compra (artefacto)
+	method compra(artefacto)
 	{
-		if (self.puedeComprarlo(artefacto))
+		if (self.podesComprarlo(artefacto).negate())
 		{
-			self.agregaArtefacto(artefacto)
-			self.monedas((self.monedas() - artefacto.precioDeLista(self)))
-		}	
-		else
-		{
-			throw new Exception("No puede Comprar este Artefacto")
-		}	
+			throw new ExcepcionPorFaltaDeMonedas("No puede Comprar este Artefacto")
+		}
+		self.agregaArtefacto(artefacto)
+		self.monedas((self.monedas() - artefacto.precioDeLista(self)))
 	}
 
-	method puedeComprarlo(artefacto)
-	{
-		return (artefacto.precioDeLista(self) <= self.monedas())
-	}
+	method podesComprarlo(artefacto) = artefacto.precioDeLista(self) <= self.monedas()
 	
 	// Modificar a gusto el valor base de lucha de Rolando.	
 	method valorBaseHechiceria(nuevoValorBase)
@@ -108,11 +105,13 @@ class Personaje
 			artefactos.add(unArtefacto)
 	}
 
-	method removeArtefacto(artefacto) {
+	method removeArtefacto(artefacto) 
+	{
 		artefactos.remove(artefacto)
 	}
 	
-	method removeTodosLosArtefactos() {
+	method removeTodosLosArtefactos() 
+	{
 		self.artefactos().forEach({artefacto => self.removeArtefacto(artefacto)})
 	}
 	
@@ -136,6 +135,7 @@ class Personaje
 	method artefactoSinEspejo() = self.artefactos().filter({elemento => elemento.equals(espejo).negate()})
 	
 	method mejorPoder() = self.artefactoSinEspejo().map({artefacto => artefacto.poderDeLucha(self)}).max()
-
-
 }
+
+
+class ExcepcionPorFaltaDeMonedas inherits Exception {}

@@ -22,6 +22,6 @@ object libroDeHechizos
 	
 	method precioDeLista(duenio) = (10 * self.decimeCuantosPoderososHay()) + self.hechizos().sum({poder => poder.poder()})
 		
-	method decimeCuantosPoderososHay() = self.hechizos().map({hechizo => hechizo.esPoderoso()}).size() 
+	method decimeCuantosPoderososHay() = self.hechizos().filter({hechizo => hechizo.esPoderoso()}).size() 
 	
 }
