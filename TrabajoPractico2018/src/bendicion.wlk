@@ -8,5 +8,5 @@ object bendicion
 	
 	method precioRefuerzo(valorBase, duenio) = valorBase
 
-	//method peso() = 0	
+	method peso() = 0	
 }

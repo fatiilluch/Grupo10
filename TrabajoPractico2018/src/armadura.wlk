@@ -24,7 +24,8 @@ object ninguno
 	method poder() = 0 
 
 	method precioRefuerzo(valorBase, duenio) = 2
-	//method peso() = 0 
+	
+	method peso() = 0 
 }
 
 

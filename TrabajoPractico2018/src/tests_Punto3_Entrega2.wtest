@@ -24,11 +24,11 @@ describe "Tests Punto 3 de la Entrega 2" {
 	
 	fixture 
 	{
-		armaduraPunto3 = new ArmaduraGeneral(refuerzo = ninguno)
-		mascaraOscura = new MascaraOscura()
-		espadaDelDestino = new ArmaFilosa()
+		armaduraPunto3 = new ArmaduraGeneral(refuerzo = ninguno, peso = 0, fechaCompra = new Date())
+		mascaraOscura = new MascaraOscura(peso = 0, fechaCompra =  new Date())
+		espadaDelDestino = new ArmaFilosa(peso = 0, fechaCompra =  new Date())
 		espectroMalefico = new HechizoDeLogo(nombre = "espectro malefico", multiplicador = 1) 
-		rolando = new Personaje(hechizoPreferido = espectroMalefico)
+		rolando = new Personaje(hechizoPreferido = espectroMalefico, capacidadMaximaDeCarga = 200)
 		rolando.agregaArtefacto(armaduraPunto3)
 		rolando.agregaArtefacto(mascaraOscura)
 		rolando.agregaArtefacto(espadaDelDestino)
@@ -98,7 +98,7 @@ describe "Tests Punto 3 de la Entrega 2" {
 	test "Si le agregamos a Rolando otra armadura (cuyo valor base es 5 y refuerzo cota de malla que tiene un valor de lucha 6), la habilidad para la lucha de Rolando es 37"
 	{
 		cotaDeMalla2 = new CotaMalla(poder = 6)
-		armadura2 = new ArmaduraGeneral(refuerzo = cotaDeMalla2, valorBase = 5)
+		armadura2 = new ArmaduraGeneral(refuerzo = cotaDeMalla2, valorBase = 5, peso = 0, fechaCompra =  new Date())
 		rolando.agregaArtefacto(armadura2)
 		assert.equals(rolando.habilidadDeLucha(),37)
 	} 

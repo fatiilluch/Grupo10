@@ -1,7 +1,7 @@
 class HechizoDeLogo 
 {
-	var nombre
-	var multiplicador
+	var property nombre
+	var property multiplicador
 	
 	method nombre () = nombre 
 	
@@ -21,13 +21,13 @@ class HechizoDeLogo
 		
 	method esPoderoso() = self.poder() > 15 
 
-	/*method peso()
+	method peso()
 	{
 		if (self.poder().odd())
-			return 2
-		else 
 			return 1
-	}*/
+		else 
+			return 2
+	}
 	
 	method precioDeLista(duenio) = self.poder()	
 	

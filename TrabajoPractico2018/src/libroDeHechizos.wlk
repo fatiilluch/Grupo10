@@ -5,18 +5,23 @@ import espectroMalefico.*
 object libroDeHechizos 
 {	
 	var property hechizos = []
-	//var property peso = 10 
-	//var property fechaCompra = 200
+	var property peso = 0
+	
+	var property fechaCompra
+	var property fecha = new Date()
 
-	//method pesoTotal() = self.peso() - self.factorDeCorreccion()
+	method diasDesdeQueSeComproElArtefacto() = self.fechaCompra() - self.fecha() // ver una manera de convertir esta fehca en un nro
 
-	//method factorDeCorreccion() = (self.fechaCompra() / 1000).max(1)
+	method pesoTotal(duenio) = self.peso() - self.factorDeCorreccion()
+
+	method factorDeCorreccion() = (self.diasDesdeQueSeComproElArtefacto() / 1000).min(1)
 	
 	method poder() = self.filtraLibroDeHechizos().filter({poderoso => poderoso.esPoderoso()}).sum({poder => poder.poder()})
 	
 	method filtraLibroDeHechizos() = self.hechizos().filter({artefacto => artefacto.equals(self).negate()})
 	
-	method agregaHechizo(nuevoHechizo){
+	method agregaHechizo(nuevoHechizo)
+	{
 		hechizos.add(nuevoHechizo)
 	}
 	

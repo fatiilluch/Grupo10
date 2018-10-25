@@ -11,15 +11,15 @@ object hechizoBasico
 	method poder() = 10		
 	method esPoderoso() = false 
 	
-	method precioDeLista(duenio) = 10
+	method precioDeLista(duenio) = self.poder()
 
-	/*method peso()
+	method peso()
 	{
 		if (self.poder().odd())
 			return 2
 		else 
 			return 1
-	}*/
+	}
 	
 	method precioRefuerzo(valorBase, duenio) = valorBase + self.precioDeLista(duenio) 
 }

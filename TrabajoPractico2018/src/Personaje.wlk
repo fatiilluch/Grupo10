@@ -12,6 +12,7 @@ import ArmasFilosas.*
 import CotaMalla.*
 import armadura.*
 import libroDeHechizos.*
+import Comerciante.*
 
 class Personaje 
 {
@@ -22,9 +23,14 @@ class Personaje
 	
 	var property monedas = 100
 	
+	const property capacidadMaximaDeCarga   
+	
+	var property espacioLibre = 0
+	
+	var property pesoTotal = 0
+	var property pesoCargado = 0
+	
 	//const property objetivos = [] // Cada vez que cumple un objetivo gana 10 monedas
-
-	//var property cantidadMaximaDeCarga = 0
 
 	//var comerciante = new Comerciante() 
 	
@@ -34,7 +40,7 @@ class Personaje
 		
 		if (self.podesComprarlo(nuevoProducto).negate()) 
 		{
-			throw new ExcepcionPorFaltaDeMonedas("No puede adquirir este producto")
+			throw new ExcepcionPorFaltaDeArticulo("No puede adquirir este producto")
 		}
 		
 		var costo = nuevoProducto.precioDeLista(self) - mitadMonedas
@@ -50,21 +56,25 @@ class Personaje
 		return self.monedas()
 	}
 	
-	//method puedeCargarlo(objeto)
-	//{
-	//	return !(objeto.pesoTotal() >= self.cantidadMaximaDeCarga())
-	//}
-
-	method compra(artefacto)
+	method podesCargarlo(objeto) =
+			objeto.pesoTotal(self) <= self.capacidadMaximaDeCarga() &&
+		self.espacioLibre(capacidadMaximaDeCarga) <= self.capacidadMaximaDeCarga()
+		
+	method compra(artefacto, comerciante)
 	{
-		if (self.podesComprarlo(artefacto).negate())
+		if (self.podesComprarlo(artefacto).negate() || comerciante.tieneElArtefacto(artefacto).negate())
 		{
-			throw new ExcepcionPorFaltaDeMonedas("No puede Comprar este Artefacto")
+			throw new ExcepcionPorFaltaDeArticulo ("No se puede adquirir este articulo")
 		}
 		self.agregaArtefacto(artefacto)
-		self.monedas((self.monedas() - artefacto.precioDeLista(self)))
+		self.pagar(artefacto.precioDeLista(self),comerciante)
 	}
-
+	
+	method pagar(precio, comerciante) 
+	{
+		self.monedas(self.monedas() - precio - comerciante.cobrarImpuesto(precio))
+	}
+	
 	method podesComprarlo(artefacto) = artefacto.precioDeLista(self) <= self.monedas()
 	
 	// Modificar a gusto el valor base de lucha de Rolando.	
@@ -79,6 +89,7 @@ class Personaje
 	{
 		valorBaseDeLucha = nuevoValorDeLucha
 	}
+	
 	method valorBaseDeLucha() = valorBaseDeLucha
 
 	//Obtener el nivel de hechicería de Rolando. 1	
@@ -101,19 +112,26 @@ class Personaje
 	// Agregar y remover artefactos de Rolando. 2
 	method agregaArtefacto(unArtefacto) 
 	{
-		//if (self.puedeCargarlo(unArtefacto))
-			artefactos.add(unArtefacto)
+		/*if (self.podesCargarlo(unArtefacto).negate())
+		{
+			throw new ExcepcionPorExcesoDePeso("Es mucha carga, no puede cargarlo")
+		}*/
+		artefactos.add(unArtefacto) 
+		self.pesoCargado(self.pesoCargado() + unArtefacto.peso())
 	}
 
 	method removeArtefacto(artefacto) 
 	{
 		artefactos.remove(artefacto)
+		self.pesoCargado(self.pesoCargado() - artefacto.pesoTotal(self))
 	}
 	
 	method removeTodosLosArtefactos() 
 	{
 		self.artefactos().forEach({artefacto => self.removeArtefacto(artefacto)})
 	}
+	
+	method pesoTotal() = self.artefactos().sum({artefacto => artefacto.peso()})
 	
 	// Averiguar si Rolando tiene mayor habilidad de lucha que nivel de hechicería. 2
 	method masLuchaQueHechiceria() = self.habilidadDeLucha() < self.nivelDeHechiceria()
@@ -137,5 +155,6 @@ class Personaje
 	method mejorPoder() = self.artefactoSinEspejo().map({artefacto => artefacto.poderDeLucha(self)}).max()
 }
 
+class ExcepcionPorFaltaDeArticulo inherits Exception {}
 
-class ExcepcionPorFaltaDeMonedas inherits Exception {}
+class ExcepcionPorExcesoDePeso inherits Exception {}
