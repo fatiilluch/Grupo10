@@ -19,12 +19,11 @@ class MascaraOscura
 	{
 		if (self.poderDeLucha(duenio) >= 3 )
     	{  
-           self.resultado(self.poderDeLucha(duenio) + (self.poderDeLucha(duenio) - 3))
-           return self.resultado()
+           return self.poderDeLucha(duenio) - 3
     	}
     	return 0
 	}
-
+	
 	method factorDeCorreccion() = (self.diasDesdeQueSeComproElArtefacto()/1000).min(1)
 	
 	method diasDesdeQueSeComproElArtefacto() = self.fechaHoy() - self.fechaCompra()
@@ -33,19 +32,3 @@ class MascaraOscura
 	
 	method precioDeLista(duenio) = 10 * self.indiceDeOscuridad()
 }
-
-
-5 kg. (3 + 2 que es el peso extra, 
-	la fuerza oscura en un eclipse duplica su poder a 10, 
-	la mitad es 5 y como supera 3 => suma 2
-)
-
-
-/*las máscaras oscuras le agregan un kg. más por cada 
-valor de lucha que supere las 3 unidades. 
-Por ejemplo: si tiene un valor de lucha de 10, le agrega 7 kilos, 
-si tiene 2 unidades como valor de lucha le agrega 0 kilos. 
-Recordamos que el valor de lucha es la mitad del valor de la 
-fuerza oscura multiplicado por el índice de oscuridad, 
-con un mínimo dependiente de cada máscara.*/ 
-	

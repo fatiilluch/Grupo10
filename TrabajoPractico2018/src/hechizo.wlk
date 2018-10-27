@@ -5,6 +5,5 @@ object hechizo
 {
 	var property hechizoDeseado = hechizoBasico
 	 
-	method poder() = hechizoDeseado.poder()  
-		
+	method poder() = hechizoDeseado.poder()  	
 }

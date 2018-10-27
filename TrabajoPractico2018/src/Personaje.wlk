@@ -25,14 +25,13 @@ class Personaje
 	
 	const property capacidadMaximaDeCarga   
 	
-	var property espacioLibre = 0
+	var property pesoTotal = 0 //peso total de los artefactos
 	
-	var property pesoTotal = 0
-	var property pesoCargado = 0
+	var property pesoCargado = 0 //peso que esta cargando la persona
 	
-	//const property objetivos = [] // Cada vez que cumple un objetivo gana 10 monedas
-
-	//var comerciante = new Comerciante() 
+	var property espacioLibre = 0 
+	
+	const property objetivos = [] 
 	
 	method canjeaPor(nuevoProducto) 
 	{
@@ -40,7 +39,7 @@ class Personaje
 		
 		if (self.podesComprarlo(nuevoProducto).negate()) 
 		{
-			throw new ExcepcionPorFaltaDeArticulo("No puede adquirir este producto")
+			throw new ExcepcionPorFaltaDeArticulo("No se puede adquirir este articulo")
 		}
 		
 		var costo = nuevoProducto.precioDeLista(self) - mitadMonedas
@@ -56,9 +55,9 @@ class Personaje
 		return self.monedas()
 	}
 	
-	method podesCargarlo(objeto) =
-			objeto.pesoTotal(self) <= self.capacidadMaximaDeCarga() &&
-		self.espacioLibre(capacidadMaximaDeCarga) <= self.capacidadMaximaDeCarga()
+	method espacioLibre() = self.capacidadMaximaDeCarga() - self.pesoCargado() 
+	
+	method podesCargarlo(objeto) = self.pesoCargado() < self.capacidadMaximaDeCarga() && objeto.peso() <= self.espacioLibre()
 		
 	method compra(artefacto, comerciante)
 	{
@@ -112,18 +111,20 @@ class Personaje
 	// Agregar y remover artefactos de Rolando. 2
 	method agregaArtefacto(unArtefacto) 
 	{
-		/*if (self.podesCargarlo(unArtefacto).negate())
+		if (self.podesCargarlo(unArtefacto).negate())
 		{
-			throw new ExcepcionPorExcesoDePeso("Es mucha carga, no puede cargarlo")
-		}*/
-		artefactos.add(unArtefacto) 
+			throw new ExcepcionPorExcesoDePeso ("Este articulo supera el maximo Permitido")
+		}
+		self.artefactos().add(unArtefacto) 
 		self.pesoCargado(self.pesoCargado() + unArtefacto.peso())
+		self.espacioLibre(self.capacidadMaximaDeCarga() - self.pesoCargado())
 	}
 
 	method removeArtefacto(artefacto) 
 	{
-		artefactos.remove(artefacto)
-		self.pesoCargado(self.pesoCargado() - artefacto.pesoTotal(self))
+		self.artefactos().remove(artefacto)
+		self.pesoCargado(self.pesoCargado() - artefacto.peso())
+		self.espacioLibre(self.espacioLibre() + artefacto.peso())
 	}
 	
 	method removeTodosLosArtefactos() 

@@ -1,0 +1,34 @@
+import Npcs.*
+import Mascara.*
+import Personaje.*
+
+describe "Tests Punto 3 de la Entrega 3" 
+{
+	var navi
+	var ashleyGraham
+	var mascaraClara
+	
+	fixture
+	{
+		navi = new Npcs(nivel = facil, capacidadMaximaDeCarga = 200)
+		ashleyGraham = new Npcs(nivel = medio, capacidadMaximaDeCarga = 200, valorBaseDeLucha = 5)
+		mascaraClara = new MascaraOscura(peso = 2, fechaCompra = new Date())
+		ashleyGraham.agregaArtefacto(mascaraClara)
+	}		
+	
+	test "La habilidad para la lucha de navi es 1"
+	{
+		assert.equals(navi.habilidadDeLucha(),1)
+	}
+	
+	test "La habilidad para la lucha de Ashley Graham es 18"
+	{
+		assert.equals(ashleyGraham.habilidadDeLucha(),18) // 18 = (5 como valor de lucha base + 4 como valor de lucha de la máscara clara) * 2 (multiplicador de la dificultad moderada del personaje no controlado)
+	}
+	
+	test "Si Ashley Graham tiene dificultad dificil, su habilidad para la lucha es 36"
+	{
+		ashleyGraham.nivel(dificil)
+		assert.equals(ashleyGraham.habilidadDeLucha(),36) //36 = (5 + 4 al igual que en el caso anterior) * 4 (dificultad difícil multiplica por 4)
+	} 
+}

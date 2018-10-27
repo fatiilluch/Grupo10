@@ -19,8 +19,4 @@ object collarDivino
 	method poderDeLucha(duenio) = self.perlas()
 	
 	method precioDeLista (duenio) = 2 * self.perlas()
-	
-	
-	
-	
 }

@@ -4,7 +4,8 @@ object hechizoBasico
 	
 	method nombre() = nombre
 	
-	method nombre(nuevoNombre) {
+	method nombre(nuevoNombre) 
+	{
 		nombre = nuevoNombre
 	}
 
@@ -16,9 +17,9 @@ object hechizoBasico
 	method peso()
 	{
 		if (self.poder().odd())
-			return 2
-		else 
 			return 1
+		else 
+			return 2
 	}
 	
 	method precioRefuerzo(valorBase, duenio) = valorBase + self.precioDeLista(duenio) 

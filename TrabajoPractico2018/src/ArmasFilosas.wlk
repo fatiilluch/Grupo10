@@ -24,9 +24,3 @@ class Espada inherits ArmaFilosa {}
 class Hacha inherits ArmaFilosa {}
  
 class Lanza inherits ArmaFilosa {} 
-
-
-/*Por ejemplo, un artefacto que tiene 700 días de comprado 
-restará 0,7 kg. del peso, un artefacto nuevo no resta nada 
-y un artefacto que tiene 2.500 días de comprado restará 1 kg.*/
-	

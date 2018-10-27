@@ -7,7 +7,7 @@ object libroDeHechizos
 	var property hechizos = []
 	var property peso = 0
 	
-	var property fechaCompra
+	var property fechaCompra = new Date()
 	var property fecha = new Date()
 
 	method diasDesdeQueSeComproElArtefacto() = self.fechaCompra() - self.fecha() // ver una manera de convertir esta fehca en un nro

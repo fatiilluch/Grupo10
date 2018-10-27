@@ -32,7 +32,7 @@ describe "Tests Punto 2 de la Entrega 3"
 		espadaVieja = new ArmaFilosa(peso = 7, fechaCompra = new Date(7,5,2006))
 		espadaNueva = new ArmaFilosa (peso = 4, fechaCompra = new Date())
 		espadaComun = new ArmaFilosa (peso = 5, fechaCompra = new Date().minusDays(50))
-		mascaraOscura = new MascaraOscura(peso = 3, minimoDePoder = 1, fechaCompra = new Date())
+		mascaraOscura = new MascaraOscura(peso = 3, minimoDePoder = 1, indiceDeOscuridad = 1, fechaCompra = new Date())
 		mascaraClara = new MascaraOscura(peso = 2, minimoDePoder = 0, indiceDeOscuridad = 0, fechaCompra = new Date())
 		cotaDeMalla = new CotaMalla()
 		hechizoComercial = new HechizoComercial(nombre = "el hechizo comercial", multiplicador = 2)

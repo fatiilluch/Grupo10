@@ -3,11 +3,13 @@ object fuerzaOscura
 	var fuerza = 5 
 	
 	method poder() = fuerza
-	method fuerza(nuevaFuerza) {
+	method fuerza(nuevaFuerza) 
+	{
 		fuerza = nuevaFuerza
 	}
 	
-	method eclipse() {
+	method eclipse() 
+	{
 		fuerza = fuerza * 2
 	} 
 }

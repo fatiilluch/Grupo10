@@ -5,7 +5,7 @@ class Comerciante
 	var property articulos = []
 	var property minimoNoImponible
 	
-	method cobrarImpuesto(precioDeLista) = self.comision() + self.comerciante().valorAgregado(self.comision(), precioDeLista, minimoNoImponible)
+	method cobrarImpuesto(precioDeLista) = self.comerciante().valorAgregado(self.comision(), precioDeLista, minimoNoImponible)
 	
 	method tieneElArtefacto(artefacto) = self.articulos().contains(artefacto)
 	
@@ -13,32 +13,42 @@ class Comerciante
 	{
 		articulos.add(articulo) 
 	}
+	
+	method recategorizate()
+	{
+		if (self.comerciante() == registrado)
+		{
+			self.comerciante(conImpuestoALasGanancias)
+		}
+		else if (self.comerciante() == independiente)
+			{
+				self.comision(self.comision()*2)
+				if(self.comision() > 2.1)
+				{
+					self.comerciante(registrado)
+				}
+			}
+	}
 }
 
-object independiente 
+object independiente inherits Comerciante 
 {
 	method valorAgregado(comision, precio, minimoNoImponible) = comision
 }
 
-object registrado 
+object registrado inherits Comerciante 
 {
-	method valorAgregado(comision, precio, minimoNoImponible) = 0.21
+	method valorAgregado(comision, precio, minimoNoImponible) = precio * 0.21
 }
 
-object conImpuestoALasGanancias
+object conImpuestoALasGanancias inherits Comerciante
 {
-	var property valor
 	method valorAgregado(comision, precio, minimoNoImponible)
 	{
        if (precio >  minimoNoImponible) 
        {
-       	valor = precio + (precio - minimoNoImponible) * 0.35
+       	return (precio - minimoNoImponible) * 0.35
        }
-       return valor
-    }
-    
+       return 0
+    }   
 }
-
-/*si el importe de lo que se vende es menor al mínimo no imponible 
-(definidos para todos por igual), 
-no tiene recargo, pero si lo supera, se le suma el 35% de la diferencia de importes.*/ 

@@ -1,0 +1,75 @@
+import Comerciante.*
+import Personaje.*
+import Mascara.*
+
+describe "Tests Punto 4 de la Entrega 3" 
+{
+	var pastoriza 
+	var prieto
+	var fermepin
+	var ursula
+	var mascaraOscura
+	
+	fixture
+	{
+		pastoriza = new Comerciante(comerciante = independiente, comision = 0.9, minimoNoImponible = 5)
+		prieto = new Comerciante(comerciante = registrado, comision = 0, minimoNoImponible = 5)
+		fermepin = new Comerciante(comerciante = conImpuestoALasGanancias, comision = 0, minimoNoImponible = 5)
+		ursula = new Personaje(monedas = 100, capacidadMaximaDeCarga = 200)
+		mascaraOscura = new MascaraOscura(peso = 3, minimoDePoder = 1, indiceDeOscuridad = 1, fechaCompra = new Date())
+	}
+	
+	test "Si Ursula le compra la mascara oscura a Pastoriza, queda con 89.1 monedas" 
+	{
+		pastoriza.agregaArticulo(mascaraOscura)
+		ursula.compra(mascaraOscura, pastoriza)
+		assert.equals(ursula.monedas(),89.1)  //el resultado de restar a 100 monedas: 10, que es lo que sale la máscara oscura, y 0,9 que es la comisión de Pastoriza (9%)
+	}
+	
+	test "Si Ursula compra la mascara oscura a Prieto, le quedan 87.9 monedas"
+	{
+		prieto.agregaArticulo(mascaraOscura)
+		ursula.compra(mascaraOscura, prieto)
+		assert.equals(ursula.monedas(),87.9)
+	}
+	
+	test "Si Ursula compra la mascara oscura a Fermepin, le quedan 88.25 monedas"
+	{
+		fermepin.agregaArticulo(mascaraOscura)
+		ursula.compra(mascaraOscura, fermepin)
+		assert.equals(ursula.monedas(),88.25)
+	}
+	
+	test "Si recategorizmos a Pastoriza, y Ursula le compra la mascara oscura, le quedan 88.2 monedas"
+	{ 
+		pastoriza.agregaArticulo(mascaraOscura)
+		pastoriza.recategorizate()  
+		ursula.compra(mascaraOscura, pastoriza)
+		assert.equals(ursula.monedas(),88.2)   //Le quedan 88,2 monedas, el resultado de restar a 100 monedas: 10 que es lo que sale la máscara oscura y 1,8 que es la comisión de pastoriza	
+	} 
+	
+	test "Si recategorizmos dos veces a Pastoriza, y Ursula le compra la mascara oscura, le quedan 88.2 monedas"
+	{
+		pastoriza.agregaArticulo(mascaraOscura)
+		pastoriza.recategorizate()
+		pastoriza.recategorizate()  
+		ursula.compra(mascaraOscura, pastoriza)
+		assert.equals(ursula.monedas(),87.9)   //Le quedan 87,9 monedas (el comportamiento es idéntico al registrado)	
+	} 
+	
+	test "Si recategorizmos a Prieto, y Ursula le compra la mascara oscura, le quedan 88.25 monedas"
+	{
+		prieto.agregaArticulo(mascaraOscura)
+		prieto.recategorizate()  
+		ursula.compra(mascaraOscura, prieto)
+		assert.equals(ursula.monedas(),88.25)   //Le quedan 88,25 monedas (el comportamiento es idéntico al de impuesto a las ganancias)
+	} 
+	
+	test "Si recategorizmos a Fermepin, y Ursula le compra la mascara oscura, le quedan 88.25 monedas"
+	{
+		fermepin.agregaArticulo(mascaraOscura)
+		fermepin.recategorizate()  
+		ursula.compra(mascaraOscura, fermepin)
+		assert.equals(ursula.monedas(),88.25)   //Le quedan 88,25 monedas (el comportamiento es idéntico al de impuesto a las ganancias)		
+	}
+}
