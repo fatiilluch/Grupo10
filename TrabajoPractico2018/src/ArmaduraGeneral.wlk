@@ -5,7 +5,7 @@ import hechizoBasico.*
 import HechizoDeLogo.*
 import armadura.*
 
-class ArmaduraGeneral 
+class ArmaduraGeneral
 {	
 	var property refuerzo
 	var property valorBase = 2
@@ -17,14 +17,11 @@ class ArmaduraGeneral
 	
 	method poderDeLucha(duenio) = self.valorBase() + self.refuerzo().poder()
 	
-	method cambiaRefuerzo(unRefuerzo) 
-	{
-		refuerzo = unRefuerzo
-	}
+	method cambiaRefuerzo(unRefuerzo) { refuerzo = unRefuerzo }
 	
 	method diasDesdeQueSeComproElArtefacto() = self.fechaHoy() - self.fechaCompra()
 	
-	method precioDeLista(duenio) = self.refuerzo().precioRefuerzo(self.valorBase(),duenio)
+	method precioDeLista() = self.refuerzo().precioRefuerzo(self.valorBase())
 	
 	method pesoTotal(duenio) = (self.peso() - self.factorDeCorreccion()) + self.refuerzo().peso()
 

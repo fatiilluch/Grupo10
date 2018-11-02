@@ -1,10 +1,9 @@
 import fuerzaOscura.*
 
-class MascaraOscura 
+class MascaraOscura
 {
 	var property indiceDeOscuridad = 0
 	var property minimoDePoder = 4 
-	
 	var property peso
 	var property fechaCompra 
 	var property fechaHoy = new Date()
@@ -13,7 +12,7 @@ class MascaraOscura
 	
 	method fechaCompra(dia,mes,anio) = new Date(dia,mes,anio)
 
-	method pesoTotal(duenio) = self.peso() - self.factorDeCorreccion() + self.superaTresUnidades(duenio)
+	method pesoTotal(duenio) = self.peso() - self.factorDeCorreccion() + self.superaTresUnidades(0)
 		
 	method superaTresUnidades(duenio) 
 	{
@@ -30,5 +29,5 @@ class MascaraOscura
 	
 	method poderDeLucha(duenio) = self.minimoDePoder().max((fuerzaOscura.poder()/2) * self.indiceDeOscuridad())
 	
-	method precioDeLista(duenio) = 10 * self.indiceDeOscuridad()
+	method precioDeLista() = 10 * self.indiceDeOscuridad()
 }

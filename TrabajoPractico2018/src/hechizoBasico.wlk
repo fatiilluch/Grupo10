@@ -12,7 +12,7 @@ object hechizoBasico
 	method poder() = 10		
 	method esPoderoso() = false 
 	
-	method precioDeLista(duenio) = self.poder()
+	method precioDeLista() = self.poder()
 
 	method peso()
 	{
@@ -22,5 +22,5 @@ object hechizoBasico
 			return 2
 	}
 	
-	method precioRefuerzo(valorBase, duenio) = valorBase + self.precioDeLista(duenio) 
+	method precioRefuerzo(valorBase) = valorBase + self.precioDeLista() 
 }

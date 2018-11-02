@@ -15,5 +15,5 @@ object espejo
 
 	method poderDeLucha(duenio) = duenio.mejorPoderDeLucha() 
 	
-	method precioDeLista(duenio) = 90
+	method precioDeLista() = 90
 }

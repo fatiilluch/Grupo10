@@ -43,7 +43,7 @@ describe "Tests Punto 2 de la Entrega 3"
 		armaduraSinRefuerzo = new ArmaduraGeneral(refuerzo = ninguno, peso = 12, fechaCompra = new Date())
 		merlin = new Personaje(monedas = 100, capacidadMaximaDeCarga = 10)
 		ursula = new Personaje(monedas = 100, capacidadMaximaDeCarga = 200)
-		mockHnos = new Comerciante(comision = 0, minimoNoImponible = 0)
+		mockHnos = new Comerciante(comerciante = new Independiente(comision = 0))
 		ursula.agregaArtefacto(mascaraOscura)
 		ursula.agregaArtefacto(armaduraConCotaDeMalla)
 	}
@@ -106,8 +106,6 @@ describe "Tests Punto 2 de la Entrega 3"
 	
 	test "Merlín le compra a Mock Hnos. la máscara clara y la oscura (sin que haya eclipse). El peso total que carga Merlin es 5kg"
 	{
-		mockHnos.agregaArticulo(mascaraClara)
-		mockHnos.agregaArticulo(mascaraOscura)
 		merlin.compra(mascaraClara,mockHnos)
 		merlin.compra(mascaraOscura,mockHnos)
 		assert.equals(merlin.pesoTotal(),5)//2 de la máscara clara y 3 de la oscura		
@@ -115,9 +113,9 @@ describe "Tests Punto 2 de la Entrega 3"
 	
 	test "Merlín le quiere comprar a Mock Hnos. la armadura con hechizo par pero no puede"
 	{
-		const mensajeDeError = "No se puede adquirir este articulo"
+		const mensajeDeError = "Este articulo supera el maximo Permitido"
 		
-		const excepcionEsperada = new ExcepcionPorFaltaDeArticulo (mensajeDeError)
+		const excepcionEsperada = new ExcepcionPorExcesoDePeso (mensajeDeError)
 		
 		const bloqueQueDebeExplotar =
 		{

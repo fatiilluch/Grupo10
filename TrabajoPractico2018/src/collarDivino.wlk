@@ -1,6 +1,6 @@
 import rolando.*
 
-object collarDivino 
+object collarDivino
 {
 	var property perlas = 5
 	
@@ -18,5 +18,5 @@ object collarDivino
 	
 	method poderDeLucha(duenio) = self.perlas()
 	
-	method precioDeLista (duenio) = 2 * self.perlas()
+	method precioDeLista () = 2 * self.perlas()
 }

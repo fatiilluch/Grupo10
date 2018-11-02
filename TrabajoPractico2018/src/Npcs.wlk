@@ -21,4 +21,3 @@ object dificil
 {
 	method estado() = 4
 }
-

@@ -6,7 +6,7 @@ object bendicion
 	
 	method poder() = self.personaje().nivelDeHechiceria()
 	
-	method precioRefuerzo(valorBase, duenio) = valorBase
+	method precioRefuerzo(valorBase) = valorBase
 
 	method peso() = 0	
 }

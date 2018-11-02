@@ -16,14 +16,14 @@ object armadura
 	{
 		refuerzo = unRefuerzo
 	}
-	method precioDeLista(duenio) = self.refuerzo().precioRefuerzo(2)
+	method precioDeLista() = self.refuerzo().precioRefuerzo(2)
 }
 
 object ninguno 
 { 
 	method poder() = 0 
 
-	method precioRefuerzo(valorBase, duenio) = 2
+	method precioRefuerzo(valorBase) = 2
 	
 	method peso() = 0 
 }

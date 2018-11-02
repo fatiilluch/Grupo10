@@ -1,54 +1,59 @@
 class Comerciante
-{
-	var property comision 
-	var property comerciante = independiente
-	var property articulos = []
-	var property minimoNoImponible
+{ 
+	var property comerciante = new Independiente()
 	
-	method cobrarImpuesto(precioDeLista) = self.comerciante().valorAgregado(self.comision(), precioDeLista, minimoNoImponible)
+	method cobrarImpuesto(articulo) = self.comerciante().valorAgregado(articulo.precioDeLista())
 	
-	method tieneElArtefacto(artefacto) = self.articulos().contains(artefacto)
-	
-	method agregaArticulo(articulo)
+	method recategorizate() 
 	{
-		articulos.add(articulo) 
+		self.comerciante(self.comerciante().recategoria())
 	}
 	
-	method recategorizate()
+	//method comision() = self.comerciante().comision()
+	//method minimoNoImponible() = self.comerciante().minimoNoImponible()
+}
+
+class Independiente 
+{	
+	var property comision
+	
+	method valorAgregado(precio) = comision
+	
+	method recategoria() 
 	{
-		if (self.comerciante() == registrado)
+		self.comision(self.comision() * 2)
+		if(self.comision() > 2.1)
 		{
-			self.comerciante(conImpuestoALasGanancias)
+			return new Registrado()
 		}
-		else if (self.comerciante() == independiente)
-			{
-				self.comision(self.comision()*2)
-				if(self.comision() > 2.1)
-				{
-					self.comerciante(registrado)
-				}
-			}
+		return self
 	}
 }
 
-object independiente inherits Comerciante 
+class Registrado
 {
-	method valorAgregado(comision, precio, minimoNoImponible) = comision
-}
-
-object registrado inherits Comerciante 
-{
-	method valorAgregado(comision, precio, minimoNoImponible) = precio * 0.21
-}
-
-object conImpuestoALasGanancias inherits Comerciante
-{
-	method valorAgregado(comision, precio, minimoNoImponible)
+	method valorAgregado(precio) = precio * 0.21
+	
+	method recategoria()
 	{
-       if (precio >  minimoNoImponible) 
+		return new ConImpuestoALasGanancias()
+	}
+}
+class ConImpuestoALasGanancias
+{
+	var property minimoNoImponible = 5
+	
+	method valorAgregado(precio)
+	{
+       if (precio >  self.minimoNoImponible()) 
        {
-       	return (precio - minimoNoImponible) * 0.35
+       	return (precio - self.minimoNoImponible()) * 0.35
        }
        return 0
     }   
+    
+    method recategoria() 
+    {
+    	return self
+    }
 }

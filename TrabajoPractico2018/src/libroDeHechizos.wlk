@@ -2,7 +2,7 @@ import rolando.*
 import hechizoBasico.*
 import espectroMalefico.*
 
-object libroDeHechizos 
+object libroDeHechizos
 {	
 	var property hechizos = []
 	var property peso = 0
@@ -25,8 +25,7 @@ object libroDeHechizos
 		hechizos.add(nuevoHechizo)
 	}
 	
-	method precioDeLista(duenio) = (10 * self.decimeCuantosPoderososHay()) + self.hechizos().sum({poder => poder.poder()})
+	method precioDeLista() = (10 * self.decimeCuantosPoderososHay()) + self.hechizos().sum({poder => poder.poder()})
 		
 	method decimeCuantosPoderososHay() = self.hechizos().filter({hechizo => hechizo.esPoderoso()}).size() 
-	
 }

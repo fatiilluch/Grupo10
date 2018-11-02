@@ -29,9 +29,9 @@ class HechizoDeLogo
 			return 2
 	}
 	
-	method precioDeLista(duenio) = self.poder()	
+	method precioDeLista() = self.poder()	
 	
-	method precioRefuerzo(valorBase, duenio) = valorBase + self.precioDeLista(duenio)
+	method precioRefuerzo(valorBase) = valorBase + self.precioDeLista()
 }
 
 class HechizoComercial inherits HechizoDeLogo

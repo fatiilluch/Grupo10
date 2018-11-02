@@ -1,6 +1,6 @@
 import fuerzaOscura.*
 
-class ArmaFilosa 
+class ArmaFilosa
 {	
 	var property peso
 	var property fechaCompra 
@@ -10,7 +10,7 @@ class ArmaFilosa
 
 	method poderDeLucha(duenio) = 3
 	
-	method precioDeLista(duenio) = 5 * self.pesoTotal(duenio)
+	method precioDeLista() = 5 * self.pesoTotal(0)
 		
 	method pesoTotal(duenio) = self.peso() - self.factorDeCorreccion()
 	

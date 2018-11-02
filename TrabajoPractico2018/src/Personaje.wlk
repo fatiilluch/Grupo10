@@ -1,115 +1,73 @@
-import fuerzaOscura.*
-import collarDivino.*
-import espadaDelDestino.*
-import ArmaduraGeneral.*
+import fuerzaOscura.* 
+import collarDivino.* 
+import espadaDelDestino.* 
+import ArmaduraGeneral.* 
 import espejo.*
-import HechizoDeLogo.*
-import Comerciante.*
-import Mascara.*
-import hechizoBasico.*
-import bendicion.*
+import HechizoDeLogo.* 
+import Comerciante.* 
+import Mascara.* 
+import hechizoBasico.* 
+import bendicion.* 
 import ArmasFilosas.*
-import CotaMalla.*
-import armadura.*
-import libroDeHechizos.*
+import CotaMalla.* 
+import armadura.* 
+import libroDeHechizos.* 
 import Comerciante.*
 
 class Personaje 
 {
-	var valorBaseHechiceria = 3
-	var valorBaseDeLucha = 1
-	var hechizoPreferido = new HechizoDeLogo()
+	var property valorBaseHechiceria = 3
+	var property valorBaseDeLucha = 1
+	var property hechizoPreferido = new HechizoDeLogo()
 	const property artefactos = []
-	
 	var property monedas = 100
-	
 	const property capacidadMaximaDeCarga   
-	
 	var property pesoTotal = 0 //peso total de los artefactos
-	
 	var property pesoCargado = 0 //peso que esta cargando la persona
-	
 	var property espacioLibre = 0 
-	
 	const property objetivos = [] 
 	
 	method canjeaPor(nuevoProducto) 
 	{
-		var mitadMonedas = self.hechizoPreferido().precioDeLista(self) / 2 	
-		
-		if (self.podesComprarlo(nuevoProducto).negate()) 
+		var mitadMonedas = self.hechizoPreferido().precioDeLista() / 2 	
+		if (self.podesComprarlo(nuevoProducto).negate())
 		{
 			throw new ExcepcionPorFaltaDeArticulo("No se puede adquirir este articulo")
 		}
-		
-		var costo = nuevoProducto.precioDeLista(self) - mitadMonedas
-		
+		var costo = nuevoProducto.precioDeLista() - mitadMonedas
 		self.restaMonedas(costo.max(0))
-		
 		self.hechizoPreferido(nuevoProducto)
 	}
-	
 	method restaMonedas(cantidad) 
 	{
 		self.monedas((self.monedas() - cantidad).max(0))
 		return self.monedas()
 	}
-	
 	method espacioLibre() = self.capacidadMaximaDeCarga() - self.pesoCargado() 
 	
 	method podesCargarlo(objeto) = self.pesoCargado() < self.capacidadMaximaDeCarga() && objeto.peso() <= self.espacioLibre()
 		
 	method compra(artefacto, comerciante)
 	{
-		if (self.podesComprarlo(artefacto).negate() || comerciante.tieneElArtefacto(artefacto).negate())
+		if (self.podesComprarlo(artefacto).negate()) 
 		{
 			throw new ExcepcionPorFaltaDeArticulo ("No se puede adquirir este articulo")
 		}
 		self.agregaArtefacto(artefacto)
-		self.pagar(artefacto.precioDeLista(self),comerciante)
+		self.monedas(self.monedas() - artefacto.precioDeLista() - comerciante.cobrarImpuesto(artefacto))
 	}
+		
+	method lasMonedasSonNegativas() = self.monedas() < 0
 	
-	method pagar(precio, comerciante) 
-	{
-		self.monedas(self.monedas() - precio - comerciante.cobrarImpuesto(precio))
-	}
-	
-	method podesComprarlo(artefacto) = artefacto.precioDeLista(self) <= self.monedas()
-	
-	// Modificar a gusto el valor base de lucha de Rolando.	
-	method valorBaseHechiceria(nuevoValorBase)
-	{
-		valorBaseHechiceria = nuevoValorBase
-	}
-	
-	method valorBaseHechiceria() = valorBaseHechiceria
-	
-	method valorBaseDeLucha(nuevoValorDeLucha)
-	{
-		valorBaseDeLucha = nuevoValorDeLucha
-	}
-	
-	method valorBaseDeLucha() = valorBaseDeLucha
-
-	//Obtener el nivel de hechicería de Rolando. 1	
+	method podesComprarlo(artefacto) = artefacto.precioDeLista() <= self.monedas()
+		
 	method nivelDeHechiceria() = self.valorBaseHechiceria() * self.hechizoPreferido().poder() + fuerzaOscura.poder()
-
-	//Cambiar el hechizo preferido de Rolando en cualquier momento. 1	
-	method hechizoPreferido(nuevoHechizoPreferido) 
-	{
-		hechizoPreferido = nuevoHechizoPreferido
-	}
-	
-	method hechizoPreferido() = hechizoPreferido
-	
-	// Saber si Rolando se cree poderoso, lo cual es cierto si su hechizo preferido lo es. 1 	
+	 	
 	method seCreePoderoso() = hechizoPreferido.esPoderoso()
 	
-	// Saber el valor de lucha de Rolando. 2
 	method habilidadDeLucha() = self.artefactos().sum( {poder => poder.poderDeLucha(self)} ) + self.valorBaseDeLucha()
 
-	// Agregar y remover artefactos de Rolando. 2
-	method agregaArtefacto(unArtefacto) 
+	method agregaArtefacto(unArtefacto)
 	{
 		if (self.podesCargarlo(unArtefacto).negate())
 		{
@@ -120,42 +78,30 @@ class Personaje
 		self.espacioLibre(self.capacidadMaximaDeCarga() - self.pesoCargado())
 	}
 
-	method removeArtefacto(artefacto) 
-	{
+	method removeArtefacto(artefacto) {
 		self.artefactos().remove(artefacto)
 		self.pesoCargado(self.pesoCargado() - artefacto.peso())
 		self.espacioLibre(self.espacioLibre() + artefacto.peso())
 	}
-	
-	method removeTodosLosArtefactos() 
-	{
-		self.artefactos().forEach({artefacto => self.removeArtefacto(artefacto)})
-	}
+	method removeTodosLosArtefactos() { self.artefactos().forEach({artefacto => self.removeArtefacto(artefacto)}) }
 	
 	method pesoTotal() = self.artefactos().sum({artefacto => artefacto.peso()})
 	
-	// Averiguar si Rolando tiene mayor habilidad de lucha que nivel de hechicería. 2
 	method masLuchaQueHechiceria() = self.habilidadDeLucha() < self.nivelDeHechiceria()
 	
 	method estaCargado() = self.artefactos().size() >= 5
 	
-	method mejorPoderDeLucha() 
-	{
-		if(self.artefactoSinEspejo().isEmpty())
-		{
+	method mejorPoderDeLucha() {
+		if(self.artefactoSinEspejo().isEmpty()){
 			return 0
 		}
-		else
-		{
+		else {
 			return self.mejorPoder()
 		}
 	}
-	
 	method artefactoSinEspejo() = self.artefactos().filter({elemento => elemento.equals(espejo).negate()})
-	
 	method mejorPoder() = self.artefactoSinEspejo().map({artefacto => artefacto.poderDeLucha(self)}).max()
 }
-
 class ExcepcionPorFaltaDeArticulo inherits Exception {}
-
 class ExcepcionPorExcesoDePeso inherits Exception {}
+class ExcepcionPorMonedasNegativas inherits Exception {}
