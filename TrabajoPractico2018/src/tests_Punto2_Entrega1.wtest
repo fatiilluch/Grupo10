@@ -1,11 +1,13 @@
 import rolando.*
 import fuerzaOscura.*
 import mascaraOscura.*
-import collarDivino.*
+import CollarDivino.*
 import espadaDelDestino.*
 
-describe "Tests Punto 2 de la Entrega 1" {
-		
+describe "Tests Punto 2 de la Entrega 1" 
+{
+	var collarDivino = new CollarDivino()
+
 	test "Si eliminamos los artefactos de Rolando, su habilidad de Lucha es 1" 
 	{
 		rolando.removeTodosLosArtefactos()

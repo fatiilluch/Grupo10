@@ -4,18 +4,10 @@ import Personaje.*
 
 describe "Tests Punto 3 de la Entrega 3" 
 {
-	var navi
-	var ashleyGraham
-	var mascaraClara
-	
-	fixture
-	{
-		navi = new Npcs(nivel = facil, capacidadMaximaDeCarga = 200)
-		ashleyGraham = new Npcs(nivel = medio, capacidadMaximaDeCarga = 200, valorBaseDeLucha = 5)
-		mascaraClara = new MascaraOscura(peso = 2, fechaCompra = new Date())
-		ashleyGraham.agregaArtefacto(mascaraClara)
-	}		
-	
+	var mascaraClara = new MascaraOscura(peso = 2, fechaCompra = new Date())
+	var navi = new Npcs(nivel = facil, capacidadMaximaDeCarga = 200)
+	var ashleyGraham = new Npcs(nivel = medio, capacidadMaximaDeCarga = 200, valorBaseDeLucha = 5, artefactos = [mascaraClara])
+		
 	test "La habilidad para la lucha de navi es 1"
 	{
 		assert.equals(navi.habilidadDeLucha(),1)

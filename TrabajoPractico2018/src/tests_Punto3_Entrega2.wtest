@@ -1,40 +1,24 @@
 import Personaje.*
 import HechizoDeLogo.*
 import ArmasFilosas.*
-import collarDivino.*
+import CollarDivino.*
 import espejo.*
-import bendicion.*
 import ArmaduraGeneral.*
-import CotaMalla.*
-import hechizo.*
+import refuerzos.*
 import armadura.*
 import libroDeHechizos.*
 import Mascara.*
+import hechizoBasico.*
 
-describe "Tests Punto 3 de la Entrega 2" {
-
-	var rolando
-	var espadaDelDestino
-	var mascaraOscura
-	var armaduraPunto3
-	var armadura2
-	var espectroMalefico
-	var cotaDeMalla
-	var cotaDeMalla2
+describe "Tests Punto 3 de la Entrega 2" 
+{
+	var espadaDelDestino = new ArmaFilosa(peso = 0, fechaCompra =  new Date())
+	var mascaraOscura = new MascaraOscura(peso = 0, fechaCompra =  new Date())
+	var armaduraPunto3 = new ArmaduraGeneral(refuerzo = ninguno, peso = 0, fechaCompra = new Date())
+	var espectroMalefico = new HechizoDeLogo(nombre = "espectro malefico", multiplicador = 1)
+	var collarDivino = new CollarDivino(peso = 0, fechaCompra = new Date())
+	var rolando = new Personaje(hechizoPreferido = espectroMalefico, capacidadMaximaDeCarga = 200, artefactos = [espadaDelDestino, mascaraOscura, armaduraPunto3, collarDivino, espejo]) 
 	
-	fixture 
-	{
-		armaduraPunto3 = new ArmaduraGeneral(refuerzo = ninguno, peso = 0, fechaCompra = new Date())
-		mascaraOscura = new MascaraOscura(peso = 0, fechaCompra =  new Date())
-		espadaDelDestino = new ArmaFilosa(peso = 0, fechaCompra =  new Date())
-		espectroMalefico = new HechizoDeLogo(nombre = "espectro malefico", multiplicador = 1) 
-		rolando = new Personaje(hechizoPreferido = espectroMalefico, capacidadMaximaDeCarga = 200)
-		rolando.agregaArtefacto(armaduraPunto3)
-		rolando.agregaArtefacto(mascaraOscura)
-		rolando.agregaArtefacto(espadaDelDestino)
-		rolando.agregaArtefacto(collarDivino)
-		rolando.agregaArtefacto(espejo)
-	}
 	test "Rolando esta cargado" 
 	{
 		assert.that(rolando.estaCargado())
@@ -60,17 +44,16 @@ describe "Tests Punto 3 de la Entrega 2" {
 
 	test "La habilidad para la lucha de la armadura de Rolando si tiene una cota de malla de refuerzo es 3"
 	{
-	    cotaDeMalla = new CotaMalla(poder = 1)
+	    var cotaDeMalla = new CotaMalla(poder = 1)
 		rolando.removeArtefacto(armaduraPunto3)
 		armaduraPunto3.cambiaRefuerzo(cotaDeMalla)
 		assert.equals(armaduraPunto3.poderDeLucha(rolando),3)
-		
 	}
 
 	test "La habilidad para la lucha de la armadura de Rolando si tiene el hechizo básico de refuerzo es 12"
 	{
 		rolando.removeArtefacto(armaduraPunto3)
-		armaduraPunto3.cambiaRefuerzo(hechizo)
+		armaduraPunto3.cambiaRefuerzo(hechizoBasico)
 		assert.equals(armaduraPunto3.poderDeLucha(rolando),12)
 	}
 	
@@ -97,21 +80,10 @@ describe "Tests Punto 3 de la Entrega 2" {
 
 	test "Si le agregamos a Rolando otra armadura (cuyo valor base es 5 y refuerzo cota de malla que tiene un valor de lucha 6), la habilidad para la lucha de Rolando es 37"
 	{
-		cotaDeMalla2 = new CotaMalla(poder = 6)
-		armadura2 = new ArmaduraGeneral(refuerzo = cotaDeMalla2, valorBase = 5, peso = 0, fechaCompra =  new Date())
+		var cotaDeMalla2 = new CotaMalla(poder = 6)
+		var armadura2 = new ArmaduraGeneral(refuerzo = cotaDeMalla2, valorBase = 5, peso = 0, fechaCompra =  new Date())
 		rolando.agregaArtefacto(armadura2)
 		assert.equals(rolando.habilidadDeLucha(),37)
 	} 
-	
-		
-/* Agregarle a Rolando una armadura extra, cuyo valor base es 5, con un refuerzo cota de 
-malla que tiene un valor de lucha 6.
-Saber cuál es la habilidad para la lucha de Rolando.
-37 = 13 (valor de lucha de Rolando + la espada, el collar y la máscara) + 
-2 de la armadura sin refuerzo + 11 de la armadura nueva 
-(5 valor base + 6 del refuerzo) + 11 por el espejo que replica el 
-artefacto que más valor para la lucha le da, que pasa a ser la nueva armadura. 
-*/		
-		
 }
 

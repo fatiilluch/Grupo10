@@ -1,26 +1,7 @@
-object hechizoBasico 
+import HechizoDeLogo.*
+
+object hechizoBasico inherits Hechizos 
 {
-	var nombre = "Hechizo Basico"
-	
-	method nombre() = nombre
-	
-	method nombre(nuevoNombre) 
-	{
-		nombre = nuevoNombre
-	}
-
-	method poder() = 10		
-	method esPoderoso() = false 
-	
-	method precioDeLista() = self.poder()
-
-	method peso()
-	{
-		if (self.poder().odd())
-			return 1
-		else 
-			return 2
-	}
-	
-	method precioRefuerzo(valorBase) = valorBase + self.precioDeLista() 
+	override method poder() = 10		
+	override method esPoderoso() = false
 }

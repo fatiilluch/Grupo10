@@ -1,28 +1,17 @@
 import Personaje.*
 import ArmasFilosas.*
-import collarDivino.*
+import CollarDivino.*
 import fuerzaOscura.*
 import HechizoDeLogo.*
 import Mascara.*
 
-describe "Tests Punto 2 de la Entrega 2" {
-	
-	var rolando
-	var espadaDelDestino
-	var mascaraOscura
-	var espectroMalefico
-	
-	fixture
-	{
-		collarDivino.perlas(5)
-		espadaDelDestino = new ArmaFilosa(peso = 0, fechaCompra = 0)
-		mascaraOscura = new MascaraOscura(indiceDeOscuridad = 1, minimoDePoder = 4, peso = 0, fechaCompra = 0)
-		espectroMalefico = new HechizoDeLogo(nombre = "espectro malefico", multiplicador = 1) 
-		rolando = new Personaje(hechizoPreferido = espectroMalefico , capacidadMaximaDeCarga = 200)
-		rolando.agregaArtefacto(collarDivino)
-		rolando.agregaArtefacto(espadaDelDestino)
-		rolando.agregaArtefacto(mascaraOscura)
-	}
+describe "Tests Punto 2 de la Entrega 2" 
+{	
+	var collarDivino = new CollarDivino()
+	var espectroMalefico = new HechizoDeLogo(nombre = "espectro malefico", multiplicador = 1)
+	var espadaDelDestino = new ArmaFilosa(peso = 0, fechaCompra = 0)
+	var mascaraOscura = new MascaraOscura(indiceDeOscuridad = 1, minimoDePoder = 4, peso = 0, fechaCompra = 0)
+	var rolando = new Personaje(hechizoPreferido = espectroMalefico , capacidadMaximaDeCarga = 200, artefactos = [collarDivino, espadaDelDestino, mascaraOscura])
 	
 	test "Si eliminamos todos los artefactos de Rolando, su habilidad de lucha es 1" 
 	{
@@ -38,7 +27,7 @@ describe "Tests Punto 2 de la Entrega 2" {
 	test "Si cambiamos la cantidad de perlas a 3, la habilidad de lucha de Rolando es de 11"
 	{
 		rolando.removeArtefacto(collarDivino)
-		collarDivino.perlas(3)
+		collarDivino = new CollarDivino(perlas = 3, peso = 0, fechaCompra = 0)
 		rolando.agregaArtefacto(collarDivino)
 		assert.equals(rolando.habilidadDeLucha(),11)
 	}

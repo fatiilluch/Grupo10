@@ -1,5 +1,5 @@
 import fuerzaOscura.* 
-import collarDivino.* 
+import CollarDivino.* 
 import espadaDelDestino.* 
 import ArmaduraGeneral.* 
 import espejo.*
@@ -7,10 +7,9 @@ import HechizoDeLogo.*
 import Comerciante.* 
 import Mascara.* 
 import hechizoBasico.* 
-import bendicion.* 
 import ArmasFilosas.*
-import CotaMalla.* 
-import armadura.* 
+import refuerzos.*
+import armadura.*
 import libroDeHechizos.* 
 import Comerciante.*
 
@@ -21,10 +20,7 @@ class Personaje
 	var property hechizoPreferido = new HechizoDeLogo()
 	const property artefactos = []
 	var property monedas = 100
-	const property capacidadMaximaDeCarga   
-	var property pesoTotal = 0 //peso total de los artefactos
-	var property pesoCargado = 0 //peso que esta cargando la persona
-	var property espacioLibre = 0 
+	const property capacidadMaximaDeCarga  	
 	const property objetivos = [] 
 	
 	method canjeaPor(nuevoProducto) 
@@ -43,7 +39,10 @@ class Personaje
 		self.monedas((self.monedas() - cantidad).max(0))
 		return self.monedas()
 	}
+	
 	method espacioLibre() = self.capacidadMaximaDeCarga() - self.pesoCargado() 
+	
+	method pesoCargado() = self.artefactos().sum({artefacto => artefacto.peso()}) // peso de todos los artefactos que se tiene
 	
 	method podesCargarlo(objeto) = self.pesoCargado() < self.capacidadMaximaDeCarga() && objeto.peso() <= self.espacioLibre()
 		
@@ -54,11 +53,9 @@ class Personaje
 			throw new ExcepcionPorFaltaDeArticulo ("No se puede adquirir este articulo")
 		}
 		self.agregaArtefacto(artefacto)
-		self.monedas(self.monedas() - artefacto.precioDeLista() - comerciante.cobrarImpuesto(artefacto))
+		self.monedas(self.monedas() - comerciante.cobrarPrecio(artefacto))
 	}
 		
-	method lasMonedasSonNegativas() = self.monedas() < 0
-	
 	method podesComprarlo(artefacto) = artefacto.precioDeLista() <= self.monedas()
 		
 	method nivelDeHechiceria() = self.valorBaseHechiceria() * self.hechizoPreferido().poder() + fuerzaOscura.poder()
@@ -74,18 +71,13 @@ class Personaje
 			throw new ExcepcionPorExcesoDePeso ("Este articulo supera el maximo Permitido")
 		}
 		self.artefactos().add(unArtefacto) 
-		self.pesoCargado(self.pesoCargado() + unArtefacto.peso())
-		self.espacioLibre(self.capacidadMaximaDeCarga() - self.pesoCargado())
 	}
 
 	method removeArtefacto(artefacto) {
 		self.artefactos().remove(artefacto)
-		self.pesoCargado(self.pesoCargado() - artefacto.peso())
-		self.espacioLibre(self.espacioLibre() + artefacto.peso())
 	}
-	method removeTodosLosArtefactos() { self.artefactos().forEach({artefacto => self.removeArtefacto(artefacto)}) }
 	
-	method pesoTotal() = self.artefactos().sum({artefacto => artefacto.peso()})
+	method removeTodosLosArtefactos() { self.artefactos().forEach({artefacto => self.removeArtefacto(artefacto)}) }
 	
 	method masLuchaQueHechiceria() = self.habilidadDeLucha() < self.nivelDeHechiceria()
 	

@@ -1,10 +1,8 @@
 import rolando.*
-import hechizo.*
 import cotaDeMalla.*
-import bendicion.*
 import hechizoBasico.*
 import HechizoDeLogo.*
-import CotaMalla.*
+import refuerzos.*
 
 object armadura
 {
@@ -18,16 +16,4 @@ object armadura
 	}
 	method precioDeLista() = self.refuerzo().precioRefuerzo(2)
 }
-
-object ninguno 
-{ 
-	method poder() = 0 
-
-	method precioRefuerzo(valorBase) = 2
-	
-	method peso() = 0 
-}
-
-
-
 

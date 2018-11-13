@@ -1,9 +1,10 @@
 import espectroMalefico.*
 import hechizoBasico.*
 import fuerzaOscura.*
-import collarDivino.*
+import CollarDivino.*
 import espadaDelDestino.*
 import mascaraOscura.*
+import refuerzos.*
 import armadura.*
 import espejo.*
 

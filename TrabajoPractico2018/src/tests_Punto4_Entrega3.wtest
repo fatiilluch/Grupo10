@@ -4,20 +4,11 @@ import Mascara.*
 
 describe "Tests Punto 4 de la Entrega 3" 
 {
-	var pastoriza 
-	var prieto
-	var fermepin
-	var ursula
-	var mascaraOscura
-	
-	fixture
-	{
-		pastoriza = new Comerciante(comerciante = new Independiente(comision = 0.9))
-		prieto = new Comerciante(comerciante = new Registrado())
-		fermepin = new Comerciante(comerciante = new ConImpuestoALasGanancias(minimoNoImponible = 5))
-		ursula = new Personaje(monedas = 100, capacidadMaximaDeCarga = 200)
-		mascaraOscura = new MascaraOscura(peso = 3, minimoDePoder = 1, indiceDeOscuridad = 1, fechaCompra = new Date())
-	}
+	var pastoriza = new Comerciante(comerciante = new Independiente(comision = 0.9)) 
+	var prieto = new Comerciante(comerciante = new Registrado())
+	var fermepin = new Comerciante(comerciante = new ConImpuestoALasGanancias(minimoNoImponible = 5))
+	var ursula = new Personaje(monedas = 100, capacidadMaximaDeCarga = 200)
+	var mascaraOscura = new MascaraOscura(peso = 3, minimoDePoder = 1, indiceDeOscuridad = 1, fechaCompra = new Date())
 	
 	test "Si Ursula le compra la mascara oscura a Pastoriza, queda con 89.1 monedas" 
 	{

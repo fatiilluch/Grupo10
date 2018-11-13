@@ -2,22 +2,21 @@ class Comerciante
 { 
 	var property comerciante = new Independiente()
 	
-	method cobrarImpuesto(articulo) = self.comerciante().valorAgregado(articulo.precioDeLista())
+	method cobrarPrecio(articulo) = self.comerciante().valorAgregado(articulo)
 	
 	method recategorizate() 
 	{
 		self.comerciante(self.comerciante().recategoria())
 	}
 	
-	//method comision() = self.comerciante().comision()
-	//method minimoNoImponible() = self.comerciante().minimoNoImponible()
+	method comision() = self.comerciante().comision()
 }
 
 class Independiente 
 {	
 	var property comision
 	
-	method valorAgregado(precio) = comision
+	method valorAgregado(articulo) = articulo.precioDeLista() + self.comision()
 	
 	method recategoria() 
 	{
@@ -32,7 +31,7 @@ class Independiente
 
 class Registrado
 {
-	method valorAgregado(precio) = precio * 0.21
+	method valorAgregado(articulo) = articulo.precioDeLista()*1.21
 	
 	method recategoria()
 	{
@@ -43,11 +42,11 @@ class ConImpuestoALasGanancias
 {
 	var property minimoNoImponible = 5
 	
-	method valorAgregado(precio)
+	method valorAgregado(articulo)
 	{
-       if (precio >  self.minimoNoImponible()) 
+       if (articulo.precioDeLista() >  self.minimoNoImponible()) 
        {
-       	return (precio - self.minimoNoImponible()) * 0.35
+       		return (articulo.precioDeLista() + (articulo.precioDeLista() - self.minimoNoImponible()) * 0.35)
        }
        return 0
     }   

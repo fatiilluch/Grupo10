@@ -1,122 +1,96 @@
 import ArmasFilosas.*
 import Mascara.*
-import CotaMalla.*
 import ArmaduraGeneral.*
 import HechizoDeLogo.*
 import armadura.*
 import Comerciante.*
 import Personaje.*
-import collarDivino.*
+import CollarDivino.*
 import fuerzaOscura.*
+import refuerzos.*
 
 describe "Tests Punto 2 de la Entrega 3" 
 {
-	var espadaVieja
-	var espadaNueva
-	var espadaComun
-	var mascaraOscura
-	var mascaraClara
-	var armaduraConCotaDeMalla
-	var cotaDeMalla
-	var armaduraHechizoPar
-	var armaduraHechizoImpar
-	var armaduraSinRefuerzo
-	var hechizoComercial
-	var espectroMalefico
-	var mockHnos
-	var merlin
-	var ursula
+	var espadaVieja = new ArmaFilosa(peso = 7, fechaCompra = new Date(7,5,2006))
+	var espadaNueva = new ArmaFilosa (peso = 4, fechaCompra = new Date())
+	var espadaComun = new ArmaFilosa (peso = 5, fechaCompra = new Date().minusDays(50))
+	var mascaraOscura = new MascaraOscura(peso = 3, minimoDePoder = 1, indiceDeOscuridad = 1, fechaCompra = new Date())
+	var mascaraClara = new MascaraOscura(peso = 2, minimoDePoder = 0, indiceDeOscuridad = 0, fechaCompra = new Date())
+	var armaduraConCotaDeMalla = new ArmaduraGeneral(refuerzo = new CotaMalla(), peso = 10, fechaCompra = new Date())
+	var armaduraHechizoPar = new ArmaduraGeneral(refuerzo = new HechizoComercial(nombre = "el hechizo comercial", multiplicador = 2), peso = 12, fechaCompra = new Date())
+	var armaduraHechizoImpar = new ArmaduraGeneral(refuerzo = new HechizoDeLogo(nombre = "espectro malefico", multiplicador = 1), peso = 12, fechaCompra = new Date()) 
+	var armaduraSinRefuerzo = new ArmaduraGeneral(refuerzo = ninguno, peso = 12, fechaCompra = new Date())
+	var mockHnos = new Comerciante(comerciante = new Independiente(comision = 0))
+	var merlin = new Personaje(monedas = 100, capacidadMaximaDeCarga = 10)
+	var ursula = new Personaje(monedas = 100, capacidadMaximaDeCarga = 200, artefactos = [mascaraOscura, armaduraConCotaDeMalla])
 	
-	fixture
+		test "La espada vieja pesa 6 kg" //6 kg. (7 kg. - 1 kg. de corrección)
 	{
-		espadaVieja = new ArmaFilosa(peso = 7, fechaCompra = new Date(7,5,2006))
-		espadaNueva = new ArmaFilosa (peso = 4, fechaCompra = new Date())
-		espadaComun = new ArmaFilosa (peso = 5, fechaCompra = new Date().minusDays(50))
-		mascaraOscura = new MascaraOscura(peso = 3, minimoDePoder = 1, indiceDeOscuridad = 1, fechaCompra = new Date())
-		mascaraClara = new MascaraOscura(peso = 2, minimoDePoder = 0, indiceDeOscuridad = 0, fechaCompra = new Date())
-		cotaDeMalla = new CotaMalla()
-		hechizoComercial = new HechizoComercial(nombre = "el hechizo comercial", multiplicador = 2)
-		espectroMalefico = new HechizoDeLogo(nombre = "espectro malefico", multiplicador = 1)
-		armaduraConCotaDeMalla = new ArmaduraGeneral(refuerzo = cotaDeMalla, peso = 10, fechaCompra = new Date())
-		armaduraHechizoPar = new ArmaduraGeneral(refuerzo = hechizoComercial, peso = 12, fechaCompra = new Date())
-		armaduraHechizoImpar = new ArmaduraGeneral(refuerzo = espectroMalefico, peso = 12, fechaCompra = new Date()) 
-		armaduraSinRefuerzo = new ArmaduraGeneral(refuerzo = ninguno, peso = 12, fechaCompra = new Date())
-		merlin = new Personaje(monedas = 100, capacidadMaximaDeCarga = 10)
-		ursula = new Personaje(monedas = 100, capacidadMaximaDeCarga = 200)
-		mockHnos = new Comerciante(comerciante = new Independiente(comision = 0))
-		ursula.agregaArtefacto(mascaraOscura)
-		ursula.agregaArtefacto(armaduraConCotaDeMalla)
-	}
-
-	test "La espada vieja pesa 6 kg" //6 kg. (7 kg. - 1 kg. de corrección)
-	{
-		assert.equals(espadaVieja.pesoTotal(ursula))
+		assert.equals(espadaVieja.pesoTotal())
 	}
 	
 	test "La espada nueva pesa 4 kg" // 4 kg. (4 kg. y no resta nada de corrección porque la antigüedad es 0)
 	{
-		assert.equals(espadaNueva.pesoTotal(ursula),4)
+		assert.equals(espadaNueva.pesoTotal(),4)
 	}
 	
 	test "La espada comun pesa 4.95 kg"
 	{
-		assert.equals(espadaComun.pesoTotal(ursula),4.95) //4,95 kg. (5 kg. - 0,05 kg. que sale de 50 días de antigüedad dividido 1000, y es menor a 1)
+		assert.equals(espadaComun.pesoTotal(),4.95) //4,95 kg. (5 kg. - 0,05 kg. que sale de 50 días de antigüedad dividido 1000, y es menor a 1)
 	}
 	
 	test "El collar divino pesa 2.5 kg"
 	{
-		assert.equals(collarDivino.pesoTotal(ursula),2.5) //2,5 kg. (0,5 kg. por cada perla y tiene 5 por defecto)
+		var collarDivino = new CollarDivino(perlas = 5, peso = 0, fechaCompra = new Date())
+		assert.equals(collarDivino.pesoTotal(),2.5) //2,5 kg. (0,5 kg. por cada perla y tiene 5 por defecto)
 	}
 	
 	test "La mascara oscura pesa 3 kg"
 	{
-		assert.equals(mascaraOscura.pesoTotal(ursula),3) //3 kg. (3 + 0, ya que el valor de la fuerza oscura es 5, la mitad es 2,5 => es menor a 3, no agrega peso extra)
+		assert.equals(mascaraOscura.pesoTotal(),3) //3 kg. (3 + 0, ya que el valor de la fuerza oscura es 5, la mitad es 2,5 => es menor a 3, no agrega peso extra)
 	}	
 	
 	test "Si ocurre un eclipse, el peso de la mascara oscura es 5 kg"
 	{
 		fuerzaOscura.eclipse()
-		assert.equals(mascaraOscura.pesoTotal(ursula),5) //5 kg. (3 + 2 que es el peso extra, la fuerza oscura en un eclipse duplica su poder a 10, la mitad es 5 y como supera 3 => suma 2)
+		assert.equals(mascaraOscura.pesoTotal(),5) //5 kg. (3 + 2 que es el peso extra, la fuerza oscura en un eclipse duplica su poder a 10, la mitad es 5 y como supera 3 => suma 2)
 	}
 	
 	test " La mascara clara pesa 2 kg"
 	{
-		assert.equals(mascaraClara.pesoTotal(ursula),2) //2 kg. (2 + 0 de peso extra, siendo 0 su poder mínimo)		
+		assert.equals(mascaraClara.pesoTotal(),2) //2 kg. (2 + 0 de peso extra, siendo 0 su poder mínimo)		
 	}
 	
 	test "El peso total de la armadura con cota de malla es 11 kg"
 	{
-		assert.equals(armaduraConCotaDeMalla.pesoTotal(ursula),11) //11 (10 kilos originales + 1 de la cota de malla)
+		assert.equals(armaduraConCotaDeMalla.pesoTotal(),11) //11 (10 kilos originales + 1 de la cota de malla)
 	}
 	
 	test "El peso total del la armadura con hechizo par es 14 kg"
 	{
-		assert.equals(armaduraHechizoPar.pesoTotal(ursula),14)//14 (12 kilos originales + 2 del hechizo par)"
+		assert.equals(armaduraHechizoPar.pesoTotal(),14)//14 (12 kilos originales + 2 del hechizo par)"
 	}
 	
 	test "El peso total de la armadura con hechizo impar es 13 "
 	{
-		assert.equals(armaduraHechizoImpar.pesoTotal(ursula),13)//13 (12 kilos originales + 1 del hechizo impar)
+		assert.equals(armaduraHechizoImpar.pesoTotal(),13)//13 (12 kilos originales + 1 del hechizo impar)
 	}
 	
 	test "El peso total de la armadura sin ningun tipo de refuerzo es 12 kg"
 	{
-		assert.equals(armaduraSinRefuerzo.pesoTotal(ursula),12) //12 (12 kilos originales a los que no le suma nada)"
+		assert.equals(armaduraSinRefuerzo.pesoTotal(),12) //12 (12 kilos originales a los que no le suma nada)"
 	}
 	
 	test "Merlín le compra a Mock Hnos. la máscara clara y la oscura (sin que haya eclipse). El peso total que carga Merlin es 5kg"
 	{
 		merlin.compra(mascaraClara,mockHnos)
 		merlin.compra(mascaraOscura,mockHnos)
-		assert.equals(merlin.pesoTotal(),5)//2 de la máscara clara y 3 de la oscura		
+		assert.equals(merlin.pesoCargado(),5)//2 de la máscara clara y 3 de la oscura		
 	}
 	
 	test "Merlín le quiere comprar a Mock Hnos. la armadura con hechizo par pero no puede"
 	{
-		const mensajeDeError = "Este articulo supera el maximo Permitido"
-		
-		const excepcionEsperada = new ExcepcionPorExcesoDePeso (mensajeDeError)
-		
+		const excepcionEsperada = new ExcepcionPorExcesoDePeso ("Este articulo supera el maximo Permitido")
 		const bloqueQueDebeExplotar =
 		{
 			merlin.compra(armaduraHechizoPar,mockHnos)

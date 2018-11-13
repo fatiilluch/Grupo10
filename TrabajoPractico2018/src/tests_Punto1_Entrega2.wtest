@@ -4,17 +4,11 @@ import hechizoBasico.*
 import fuerzaOscura.*
 
 
-describe "Tests Punto 1 de la Entrega 2" {
-	
-	var rolando
-	var espectroMalefico
-	
-	fixture
-	{
-		espectroMalefico = new HechizoDeLogo (nombre = "espectro malefico", multiplicador = 1)
-		rolando = new Personaje (hechizoPreferido = espectroMalefico, capacidadMaximaDeCarga = 200)
-	}
-	
+describe "Tests Punto 1 de la Entrega 2" 
+{
+	var espectroMalefico = new HechizoDeLogo (nombre = "espectro malefico", multiplicador = 1)
+	var rolando = new Personaje (hechizoPreferido = espectroMalefico, capacidadMaximaDeCarga = 200)
+		
 	test "El nivel de hechiceria de rolando es 56" 
 	{
 		assert.equals(rolando.nivelDeHechiceria(),56)

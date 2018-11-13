@@ -1,29 +1,19 @@
 import Personaje.*
-import CotaMalla.*
-import bendicion.*
 import hechizoBasico.*
 import HechizoDeLogo.*
-import armadura.*
+import refuerzos.*
+import Artefacto.*
 
-class ArmaduraGeneral
+class ArmaduraGeneral inherits Artefacto
 {	
-	var property refuerzo
+	var property refuerzo = ninguno
 	var property valorBase = 2
-	var property peso
-	var property fechaCompra 
-	var property fechaHoy = new Date()
-	
-	method fechaCompra(dia,mes,anio) = new Date(dia,mes,anio)
-	
+		
 	method poderDeLucha(duenio) = self.valorBase() + self.refuerzo().poder()
 	
 	method cambiaRefuerzo(unRefuerzo) { refuerzo = unRefuerzo }
 	
-	method diasDesdeQueSeComproElArtefacto() = self.fechaHoy() - self.fechaCompra()
-	
 	method precioDeLista() = self.refuerzo().precioRefuerzo(self.valorBase())
 	
-	method pesoTotal(duenio) = (self.peso() - self.factorDeCorreccion()) + self.refuerzo().peso()
-
-	method factorDeCorreccion() = (self.diasDesdeQueSeComproElArtefacto() / 1000).min(1)
+	override method pesoTotal() = super() + self.refuerzo().peso()
 }

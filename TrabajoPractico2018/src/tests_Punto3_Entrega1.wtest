@@ -1,18 +1,18 @@
 import rolando.*
 import espadaDelDestino.*
 import mascaraOscura.*
-import collarDivino.*
+import CollarDivino.*
 import armadura.*
 import espejo.*
-import bendicion.*
 import cotaDeMalla.*
-import hechizo.*
+import refuerzos.*
 import hechizoBasico.*
 import espectroMalefico.*
 import libroDeHechizos.*
 
-describe "Tests Punto 3 de la Entrega 1" {
-
+describe "Tests Punto 3 de la Entrega 1" 
+{
+	var collarDivino = new CollarDivino()
 	fixture
 	{
 		rolando.agregaArtefacto(espadaDelDestino)
@@ -54,20 +54,14 @@ describe "Tests Punto 3 de la Entrega 1" {
 	
 	test "Si Rolando tiene un hechizo basico de refuerzo, la habilidad de lucha de la armadura es 12"
 	{
-		armadura.cambiaRefuerzo(hechizo)
+		armadura.cambiaRefuerzo(hechizoBasico)
 		rolando.agregaArtefacto(armadura)
 		assert.equals(armadura.poderDeLucha(rolando),12)	
 	}
 		
 	test "Si Rolando tiene el hechizo espectro malefico de refuerzo, la habilidad de lucha de la armadura es 19"
 	{
-		hechizo.hechizoDeseado(espectroMalefico)
-		armadura.cambiaRefuerzo(hechizo)
-		rolando.agregaArtefacto(espadaDelDestino)
-		rolando.agregaArtefacto(collarDivino)
-		rolando.agregaArtefacto(mascaraOscura)
-		rolando.agregaArtefacto(armadura)
-		rolando.agregaArtefacto(espejo)
+		armadura.cambiaRefuerzo(espectroMalefico)
 		assert.equals(armadura.poderDeLucha(rolando),19)
 	}
 	

@@ -1,26 +1,13 @@
-class HechizoDeLogo 
-{
+class Hechizos 
+{	
 	var property nombre
 	var property multiplicador
-	
-	method nombre () = nombre 
-	
-	method nombre(unNombre) 
-	{
-		nombre = unNombre
-	}
-	
-	method multiplicador() = multiplicador
-	
-	method multiplicador(nuevoMultiplicador)
-	{
-		multiplicador = nuevoMultiplicador
-	}
-	
-	method poder() = self.nombre().size() * self.multiplicador()
 		
+	method poder() = self.nombre().size() 
 	method esPoderoso() = self.poder() > 15 
-
+	
+	method precioDeLista() = self.poder() 
+	
 	method peso()
 	{
 		if (self.poder().odd())
@@ -29,13 +16,15 @@ class HechizoDeLogo
 			return 2
 	}
 	
-	method precioDeLista() = self.poder()	
-	
 	method precioRefuerzo(valorBase) = valorBase + self.precioDeLista()
+}
+
+class HechizoDeLogo inherits Hechizos 
+{		
+	override method poder() = super() * self.multiplicador()	
 }
 
 class HechizoComercial inherits HechizoDeLogo
 {
-	var property multiplicadorComercial = 2
-	override method poder() = self.nombre().size() * 0.2 * self.multiplicadorComercial()
+	override method poder() = super() * 0.2
 }
